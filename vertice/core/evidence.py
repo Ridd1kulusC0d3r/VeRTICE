@@ -2,8 +2,8 @@
 
 Cada fato coletado vira um registro *append-only* num SQLite do workspace. O
 hash de cada evidência inclui o hash da anterior (encadeamento estilo
-blockchain simplificado): adulterar ou remover qualquer registro quebra a
-cadeia e é detectável por `verify_chain()`.
+blockchain simplificado): alterações internas são detectáveis por `verify_chain()`. Remoção do final
+ou reescrita integral exige comparar com um head preservado externamente.
 
 Herança da família DEIVOSINT (F.I.O. Lab, GARIMPO, PRISMA), aplicada aqui à
 superfície de ataque — requisito para uso investigativo/forense e para
@@ -70,21 +70,24 @@ class EvidenceLedger:
     def record(self, collector: str, kind: str, subject: str,
                data: dict) -> str:
         """Acrescenta uma evidência ao ledger. Devolve o hash do registro."""
-        prev = self._last_hash()
-        ts = _utc()
-        body = {
-            "ts": ts, "collector": collector, "kind": kind,
-            "subject": subject, "data": data, "prev_hash": prev,
-        }
-        h = _digest(body)
         with self._lock:
-            self.conn.execute(
-                "INSERT INTO evidence (ts, collector, kind, subject, data, "
-                "prev_hash, hash) VALUES (?,?,?,?,?,?,?)",
-                (ts, collector, kind, subject,
-                 json.dumps(data, ensure_ascii=False), prev, h),
-            )
-            self.conn.commit()
+            # Serialize reading the head and inserting, including other connections.
+            self.conn.execute("BEGIN IMMEDIATE")
+            try:
+                prev = self._last_hash()
+                ts = _utc()
+                body = {"ts": ts, "collector": collector, "kind": kind,
+                        "subject": subject, "data": data, "prev_hash": prev}
+                h = _digest(body)
+                self.conn.execute(
+                    "INSERT INTO evidence (ts, collector, kind, subject, data, "
+                    "prev_hash, hash) VALUES (?,?,?,?,?,?,?)",
+                    (ts, collector, kind, subject,
+                     json.dumps(data, ensure_ascii=False), prev, h))
+                self.conn.commit()
+            except Exception:
+                self.conn.rollback()
+                raise
         return h
 
     # ------------------------------------------------------------------ #

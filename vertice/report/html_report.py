@@ -13,6 +13,9 @@ Stdlib-only. Sem CDN, sem JS externo; um pouco de JS inline para filtro/tabs.
 from __future__ import annotations
 
 import html
+import json
+from ..core.history import runs
+from .. import __version__
 from datetime import datetime, timezone
 from typing import Dict
 
@@ -61,7 +64,8 @@ details{margin:6px 0}summary{cursor:pointer;font-weight:600}
 input.filter{width:100%;padding:8px 10px;border:1px solid var(--line);
 border-radius:8px;background:var(--bg);color:var(--fg);margin-bottom:8px}
 footer{color:var(--muted);font-size:12px;margin-top:30px;text-align:center}
-code{background:var(--chip);padding:1px 5px;border-radius:5px;font-size:12px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}
+code{overflow-wrap:anywhere;background:var(--chip);padding:1px 5px;border-radius:5px;font-size:12px}
 """
 
 _LOGO = (
@@ -118,7 +122,7 @@ def render_report(workspace) -> str:
 
     # KPIs
     s = surface["summary"]
-    kpis = [("Hosts/domínios", s["hosts"]), ("Vivos (resolvem)", s["live"]),
+    kpis = [("Hosts/domínios", s["hosts"]), ("Com IP observado", s["live"]),
             ("Com serviços", s["with_services"]),
             ("Alta prioridade", s["high_priority"]),
             ("Nós no grafo", len(g.nodes)), ("Arestas", len(g.edges)),
@@ -138,7 +142,30 @@ def render_report(workspace) -> str:
                  f"{chain.get('broken_at')} — {e(chain.get('reason',''))}</span>")
     out.append(f"<h2>Cadeia de custódia (SHA-256)</h2><div class='card'>{badge}"
                "<div class='sub'>Cada evidência referencia o hash da anterior; "
-               "qualquer alteração ou remoção quebra a cadeia.</div></div>")
+               "alterações internas são verificáveis. Remoção do final ou reescrita total "
+               "exigem comparar com um head guardado externamente.</div></div>")
+
+    history = runs(workspace)
+    out.append("<h2>Execuções e cobertura</h2><div class='card'>")
+    if not history:
+        out.append("Sem execuções registradas (workspace legado ou demonstração original).")
+    for run in history[-20:]:
+        out.append(f"<details><summary>{e(run['run_id'][:12])} · "
+                   f"{e(run.get('status', 'unknown'))}</summary>"
+                   f"<pre>{e(json.dumps(run, indent=2, ensure_ascii=False))}</pre></details>")
+    out.append("</div><h2>Por que este vínculo existe?</h2><div class='card'>"
+               "<p>Uma associação não comprova propriedade. IP compartilhado e tecnologia "
+               "detectada exigem validação. Não reobservado não significa removido.</p>")
+    rows = workspace.evidence.all()
+    observations = [r for r in rows if r['kind'] in ('entity', 'note')][-100:]
+    for row in reversed(observations):
+        data = json.loads(row['data'])
+        out.append(f"<details><summary>{e(row['subject'])} · {e(row['collector'])}</summary>"
+                   f"<p>Coletado: {e(row['ts'])}<br>Observado na fonte: "
+                   f"{e(str(data.get('observed_at') or 'não informado'))}<br>"
+                   f"Evidência: <code>{e(row['hash'])}</code></p>"
+                   f"<pre>{e(json.dumps(data, indent=2, ensure_ascii=False))}</pre></details>")
+    out.append("<p class='sub'>Últimas 100 observações; histórico completo no evidence.db.</p></div>")
 
     # grafo
     out.append("<h2>Grafo de superfície (visão de vínculos)</h2>")
@@ -212,7 +239,7 @@ def render_report(workspace) -> str:
                                 for x in surface["netblocks"]))
         out.append("</div>")
 
-    out.append(f"<footer>VÉRTICE v1.0 · família DEIVOSINT · "
+    out.append(f"<footer>VÉRTICE v{__version__} · família DEIVOSINT · "
                f"Attack Surface Mapping &amp; Intelligence Gathering<br>"
                f"Coleta passiva por padrão. Use apenas sobre ativos que você "
                f"está autorizado a investigar.</footer>")

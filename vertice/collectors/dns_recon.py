@@ -30,27 +30,28 @@ class DnsReconCollector(Collector):
         for rtype in self.RTYPES:
             for ans in util.dns_over_https(name, rtype):
                 data = ans["data"]
-                if rtype in ("A", "AAAA"):
+                answer_type = ans["type"]
+                if answer_type in ("A", "AAAA"):
                     findings.append(Finding(
                         value=data, etype=T_IP, rel="resolves-to",
                         raw={"rtype": rtype}))
-                elif rtype == "CNAME":
+                elif answer_type == "CNAME":
                     findings.append(Finding(
                         value=data.rstrip("."), etype=T_HOST,
                         rel="cname", raw={"rtype": rtype}))
-                elif rtype == "MX":
+                elif answer_type == "MX":
                     mx = data.split()[-1].rstrip(".")
                     if classify(mx) in (T_DOMAIN, T_HOST):
                         findings.append(Finding(
                             value=mx, etype=T_HOST, rel="mail-exchange",
                             raw={"rtype": rtype}))
-                elif rtype == "NS":
+                elif answer_type == "NS":
                     ns = data.rstrip(".")
                     if classify(ns) in (T_DOMAIN, T_HOST):
                         findings.append(Finding(
                             value=ns, etype=T_HOST, rel="name-server",
                             raw={"rtype": rtype}))
-                elif rtype == "TXT":
+                elif answer_type == "TXT":
                     # TXT fica como atributo da semente (não vira entidade),
                     # mas gravamos a evidência bruta.
                     findings.append(Finding(

@@ -122,13 +122,13 @@ class TestAttackSurface(unittest.TestCase):
         self.assertTrue(any("admin" in h or "vpn" in h or "api" in h
                             for h in top))
         # host só-histórico não deve ser "vivo"
-        self.assertNotIn("old.exemplo-alvo.com.br", s["live_hosts"])
+        self.assertNotIn("old.aurora.example", s["live_hosts"])
 
     def test_report_renders(self):
         html = render_report(self.ws)
         self.assertIn("VÉRTICE", html)
         self.assertIn("Cadeia de custódia", html)
-        self.assertIn("exemplo-alvo.com.br", html)
+        self.assertIn("aurora.example", html)
         self.assertGreater(len(html), 10000)
 
 

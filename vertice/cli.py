@@ -20,6 +20,7 @@ Exemplos:
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import sys
 
@@ -50,13 +51,17 @@ def cmd_init(a):
 def cmd_run(a):
     ws = _ws(a.workspace)
     eng = Engine(ws, allow_active=a.active, max_workers=a.workers,
-                 log=(print if not a.quiet else (lambda m: None)))
+                 log=(print if not a.quiet else (lambda m: None)),
+                 selected=a.collectors.split(",") if a.collectors else None,
+                 max_tasks=a.max_tasks)
     print(f"[info] collectors ativos: {', '.join(eng.enabled_collectors())}")
     if a.active:
         print("[aviso] modo ATIVO habilitado — collectors ativos só agem "
               "sobre o escopo autorizado.")
-    stats = eng.run(a.seed, depth=a.depth)
-    ws.close()
+    try:
+        stats = eng.run(a.seed, depth=a.depth)
+    finally:
+        ws.close()
     print("\n=== resumo ===")
     for k, v in stats.items():
         print(f"  {k:16} {v}")
@@ -136,10 +141,38 @@ def cmd_bench(a):
 def cmd_demo(a):
     from .demo_data import build_demo
     path = a.workspace or "demo-vertice"
-    build_demo(path)
+    build_demo(path).close()
     print(f"[ok] workspace de demonstração criado em: {path}")
     print("     gere o dossiê:  python -m vertice report "
           f"{path} -o {path}/dossie.html")
+
+
+def cmd_runs(a):
+    from .core.history import runs, compare
+    ws = _ws(a.workspace)
+    try:
+        data = compare(ws, a.before, a.after) if a.cmd == "diff" else runs(ws)
+        print(json.dumps(data, indent=2, ensure_ascii=False))
+    finally:
+        ws.close()
+
+
+def cmd_import(a):
+    from .core.importers import import_file
+    ws = _ws(a.workspace)
+    try:
+        print(json.dumps(import_file(ws, a.file, a.format, a.domain), indent=2))
+    finally:
+        ws.close()
+
+
+def cmd_collectors(a):
+    from .collectors.base import REGISTRY
+    print(json.dumps([{"name": name, "passive": cls.passive,
+                      "inputs": cls.etypes, "credential": cls.needs_cred,
+                      "description": cls.description}
+                     for name, cls in sorted(REGISTRY.items())],
+                     indent=2, ensure_ascii=False))
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -166,6 +199,8 @@ def build_parser() -> argparse.ArgumentParser:
                     help="habilita collectors ativos (respeitam escopo)")
     pr.add_argument("--workers", type=int, default=8)
     pr.add_argument("--quiet", action="store_true")
+    pr.add_argument("--collectors", help="nomes separados por vírgula; veja collectors")
+    pr.add_argument("--max-tasks", type=int, default=200)
     pr.set_defaults(func=cmd_run)
 
     prp = sub.add_parser("report", help="gera o dossiê HTML")
@@ -200,12 +235,30 @@ def build_parser() -> argparse.ArgumentParser:
     pd.add_argument("workspace", nargs="?")
     pd.set_defaults(func=cmd_demo)
 
+    ph = sub.add_parser("runs", help="histórico de execuções e cobertura")
+    ph.add_argument("workspace")
+    ph.set_defaults(func=cmd_runs)
+    pf = sub.add_parser("diff", help="compara observações de duas execuções")
+    pf.add_argument("workspace")
+    pf.add_argument("--before", required=True)
+    pf.add_argument("--after", required=True)
+    pf.set_defaults(func=cmd_runs)
+    pi = sub.add_parser("import", help="importa resultados sem executar scanners")
+    pi.add_argument("workspace")
+    pi.add_argument("--format", choices=("subfinder", "nmap"), required=True)
+    pi.add_argument("--file", required=True)
+    pi.add_argument("--domain")
+    pi.set_defaults(func=cmd_import)
+    sub.add_parser("collectors", help="contratos dos conectores").set_defaults(func=cmd_collectors)
     return p
 
 
 def main(argv=None):
     args = build_parser().parse_args(argv)
-    args.func(args)
+    try:
+        args.func(args)
+    except ValueError as exc:
+        sys.exit(f"[erro] {exc}")
 
 
 if __name__ == "__main__":

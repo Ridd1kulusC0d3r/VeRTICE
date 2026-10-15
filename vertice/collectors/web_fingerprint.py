@@ -7,10 +7,8 @@ ligado ao host. Também calcula o hash de favicon (pivô estilo FOFA).
 Base de assinaturas embutida e extensível por JSON em
 `<workspace>/signatures.json` (se existir).
 
-Semente: host ou domínio. Observação: baixar a home do próprio alvo é uma
-interação mínima com o alvo; por isso este collector é marcado passive=True
-apenas por ser uma requisição única de leitura pública — mas respeita escopo
-e é o limite do que o VÉRTICE faz sem flag ativa.
+Semente: host ou domínio. Requisições diretas são ATIVAS: exigem --active
+com escopo explícito. Redirecionamentos não são seguidos.
 """
 from __future__ import annotations
 
@@ -76,7 +74,7 @@ def _load_signatures(workspace) -> Dict[str, dict]:
 class WebFingerprintCollector(Collector):
     name = "fingerprint"
     etypes = (T_HOST, T_DOMAIN)
-    passive = True
+    passive = False
     description = "Tecnologias do site (estilo BuiltWith) + favicon hash"
 
     def collect(self, entity) -> List[Finding]:
@@ -86,7 +84,7 @@ class WebFingerprintCollector(Collector):
 
         status = body = headers = None
         for scheme in ("https", "http"):
-            status, raw, headers = util.http_get(f"{scheme}://{host}/")
+            status, raw, headers = util.http_get(f"{scheme}://{host}/", follow_redirects=False)
             if status:
                 body = (raw or b"").decode("utf-8", "replace")
                 break
@@ -129,8 +127,8 @@ class WebFingerprintCollector(Collector):
                                     raw={"from": "server-header"}))
 
         # Favicon hash (pivô estilo FOFA)
-        fstatus, fbody, _ = util.http_get(f"https://{host}/favicon.ico")
-        if fstatus and fbody:
+        fstatus, fbody, _ = util.http_get(f"https://{host}/favicon.ico", follow_redirects=False)
+        if fstatus == 200 and fbody:
             fh = util.favicon_mmh3_like(fbody)
             findings.append(Finding(fh, T_FAVICON, rel="has-favicon",
                                     raw={"bytes": len(fbody)}))

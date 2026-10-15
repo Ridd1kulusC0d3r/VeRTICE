@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<nmaprun scanner="nmap"><host endtime="1767225600"><status state="up"/><address addr="192.0.2.10" addrtype="ipv4"/><ports><port protocol="tcp" portid="443"><state state="open"/><service name="https" product="synthetic-fixture"/></port><port protocol="tcp" portid="22"><state state="closed"/></port></ports></host></nmaprun>

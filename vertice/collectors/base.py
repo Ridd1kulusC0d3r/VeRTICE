@@ -32,6 +32,7 @@ class Finding:
     rel: str = "related-to"          # rótulo da aresta semente -> achado
     attrs: dict = field(default_factory=dict)
     raw: Optional[dict] = None       # payload bruto p/ o ledger de evidência
+    observed_at: Optional[str] = None  # timestamp da fonte, se conhecido
 
 
 # Registro global de collectors (preenchido pelo decorador @register).

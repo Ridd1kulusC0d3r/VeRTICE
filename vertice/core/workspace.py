@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import os
+import tempfile
 from datetime import datetime, timezone
 from typing import Dict, List, Optional
 
@@ -58,8 +59,18 @@ class Workspace:
         return Graph()
 
     def save_graph(self):
-        with open(self.graph_path, "w", encoding="utf-8") as fh:
-            fh.write(self.graph.to_json())
+        self._atomic_write(self.graph_path, self.graph.to_json())
+
+    @staticmethod
+    def _atomic_write(path, content):
+        fd, temporary = tempfile.mkstemp(dir=os.path.dirname(path), prefix=".vertice-")
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as stream:
+                stream.write(content)
+            os.replace(temporary, path)
+        finally:
+            if os.path.exists(temporary):
+                os.unlink(temporary)
 
     def _load_meta(self) -> Dict:
         if os.path.exists(self.meta_path):
@@ -94,25 +105,46 @@ class Workspace:
 
     # --- escopo (gate de autorização) ---------------------------------- #
     def in_scope(self, value: str) -> bool:
-        """True se `value` cai sob algum item do escopo autorizado.
+        """Explicit domain/IP/CIDR scope; empty scope never authorizes a target.
 
-        Se o escopo está vazio, nada é barrado (modo exploratório), mas a
-        coleta ativa deve sempre respeitar escopo — ver engine.
+        Domain scope covers its subdomains, never the IP they resolve to.
+        URL scope uses only its hostname. No network lookup is performed.
         """
+        import ipaddress
+        from urllib.parse import urlsplit
+        from .entities import normalize
         scope = self.meta.get("scope") or []
-        if not scope:
-            return True
-        v = value.lower().rstrip(".")
-        for s in scope:
-            s = s.lower().rstrip(".")
-            if v == s or v.endswith("." + s):
-                return True
+        v = urlsplit(value).hostname if "://" in value else value
+        if not v:
+            return False
+        v = normalize(v).lower().rstrip(".")
+        try:
+            address = ipaddress.ip_address(v)
+        except ValueError:
+            address = None
+        for item in scope:
+            item = item.strip().lower().rstrip(".")
+            if address is not None:
+                try:
+                    if address in ipaddress.ip_network(item, strict=False):
+                        return True
+                except ValueError:
+                    continue
+            else:
+                try:
+                    ipaddress.ip_network(item, strict=False)
+                    continue  # an IP scope is never a domain suffix
+                except ValueError:
+                    pass
+                if "/" not in item and (v == item or v.endswith("." + item)):
+                    return True
         return False
 
     def save(self):
         self.save_graph()
         self.save_meta()
 
-    def close(self):
-        self.save()
+    def close(self, save=True):
+        if save:
+            self.save()
         self.evidence.close()

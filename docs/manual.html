@@ -403,6 +403,7 @@ cada acesso). Útil enquanto a coleta ainda roda.</li>
 </ul>
 
 <!-- ================= CUSTÓDIA ================= -->
+<p><b>Atualização v1.1:</b> fingerprint exige modo ativo e escopo explícito. Consulte o README para histórico, comparação, imports e Colab. Hashes encadeados não substituem assinatura digital ou custódia completa.</p>
 <h2 id="custodia">Cadeia de custódia — por que o VÉRTICE é diferente</h2>
 <p>Cada evidência é selada com um <b>hash SHA-256</b> que inclui o hash da
 evidência anterior. É uma corrente: mexer em um elo quebra todos os seguintes.</p>
@@ -463,7 +464,7 @@ evidência anterior. É uma corrente: mexer em um elo quebra todos os seguintes.
 <tr><td><b>Collector</b></td><td>Um coletor de uma fonte específica (crt.sh, DNS...).</td></tr>
 <tr><td><b>Pivô</b></td><td>Saltar de um identificador para buscas em vários serviços (ideia do Mitaka).</td></tr>
 <tr><td><b>Proveniência</b></td><td>Registro de qual fonte afirmou cada achado.</td></tr>
-<tr><td><b>Cadeia de custódia</b></td><td>Prova de que as evidências não foram adulteradas.</td></tr>
+<tr><td><b>Cadeia de custódia</b></td><td>Verificação interna de hashes; exige referência externa para detectar reescrita total ou truncamento final.</td></tr>
 <tr><td><b>Workspace</b></td><td>A pasta de um caso (grafo + evidências + config).</td></tr>
 <tr><td><b>Fingerprint</b></td><td>Reconhecer a tecnologia por assinaturas (ideia do BuiltWith).</td></tr>
 <tr><td><b>Favicon hash</b></td><td>Impressão do ícone do site — liga ativos do mesmo dono (ideia do FOFA).</td></tr>

@@ -22,3 +22,8 @@ venv/
 # SO
 .DS_Store
 Thumbs.db
+
+# Build and notebook cache
+build/
+dist/
+.ipynb_checkpoints/

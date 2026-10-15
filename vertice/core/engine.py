@@ -1,149 +1,167 @@
-"""Engine de orquestração (síntese de Amass engine + Recon-ng runner).
-
-O engine:
-  1. Percorre uma fila de entidades-semente (BFS até uma profundidade).
-  2. Para cada semente, roda os collectors que a aceitam.
-  3. Aplica cada Finding ao grafo (nó + aresta, com proveniência) e grava a
-     evidência no ledger com custódia SHA-256.
-  4. Enfileira os novos nós (respeitando escopo e profundidade).
-
-Regras de segurança/ética embutidas:
-  - PASSIVO por padrão: collectors ativos (passive=False) só rodam com
-    `allow_active=True` E se a semente estiver no escopo autorizado.
-  - Collectors que exigem credencial ausente são pulados silenciosamente.
-  - Concorrência leve com threads (stdlib), com teto configurável.
-"""
+"""Bounded collector orchestration with evidence-linked observations and runs."""
 from __future__ import annotations
 
 import concurrent.futures as cf
-from typing import Callable, Dict, List, Optional
+import json
+from time import monotonic
 
-from ..collectors.base import Collector, Finding, REGISTRY
-from .entities import Entity, make
-from .workspace import Workspace
+from ..collectors.base import REGISTRY
+from .. import util
+from .entities import make
+from .history import start_run, utc
 
 
 class Engine:
-    def __init__(self, workspace: Workspace, allow_active: bool = False,
-                 max_workers: int = 8,
-                 log: Optional[Callable[[str], None]] = None):
+    def __init__(self, workspace, allow_active=False, max_workers=8, log=None,
+                 selected=None, max_tasks=200):
+        if not 1 <= max_workers <= 32 or max_tasks < 1:
+            raise ValueError("workers deve estar entre 1 e 32; max_tasks deve ser positivo")
+        if allow_active and not workspace.meta.get("scope"):
+            raise ValueError("Coleta ativa exige escopo explícito não vazio")
+        if selected and set(selected) - REGISTRY.keys():
+            raise ValueError("Collector desconhecido: " + ", ".join(set(selected) - REGISTRY.keys()))
         self.ws = workspace
         self.allow_active = allow_active
         self.max_workers = max_workers
+        self.max_tasks = max_tasks
+        self.selected = set(selected) if selected else None
         self.log = log or (lambda m: None)
-        self.collectors: List[Collector] = self._load_collectors()
+        self.skipped = []
+        self.run_id = None
+        self.collectors = self._load_collectors()
 
-    def _load_collectors(self) -> List[Collector]:
+    def _load_collectors(self):
         out = []
         for name, cls in sorted(REGISTRY.items()):
-            # pula ativos se não autorizado
-            if not cls.passive and not self.allow_active:
+            if self.selected is not None and name not in self.selected:
                 continue
+            reason = None
             inst = cls(workspace=self.ws)
-            # pula se exige credencial ausente
-            if cls.needs_cred and not inst.cred():
-                self.log(f"[skip] {name}: credencial '{cls.needs_cred}' ausente")
-                continue
-            out.append(inst)
+            if not cls.passive and not self.allow_active:
+                reason = "active_disabled"
+            elif cls.needs_cred and not inst.cred():
+                reason = "missing_credential"
+            if reason:
+                self.skipped.append({"collector": name, "reason": reason})
+                self.log(f"[skip] {name}: {reason}")
+            else:
+                out.append(inst)
         return out
 
-    def enabled_collectors(self) -> List[str]:
+    def enabled_collectors(self):
         return [c.name for c in self.collectors]
 
-    # ------------------------------------------------------------------ #
-    def _apply(self, seed: Entity, collector: Collector,
-               findings: List[Finding]) -> List[Entity]:
-        new_entities: List[Entity] = []
+    def _apply(self, seed, collector, findings):
+        new_entities = []
+        seen = set()
         for f in findings:
             ent = make(f.value, f.etype, source=collector.name, **f.attrs)
             if ent is None:
                 continue
-            added = self.ws.graph.add_entity(ent)
-            if added.key == seed.key:
-                # achado sobre a própria semente (ex.: registro TXT): guarda
-                # atributo e evidência, sem criar auto-aresta nem reenfileirar.
-                for k, v in f.attrs.items():
-                    seed.attrs.setdefault(k, v)
-                self.ws.evidence.record(
-                    collector=collector.name, kind="note", subject=seed.key,
-                    data={"rel": f.rel, "attrs": f.attrs, "raw": f.raw})
+            signature = (ent.key, f.rel, json.dumps(f.attrs, sort_keys=True),
+                         json.dumps(f.raw, sort_keys=True))
+            if signature in seen:
                 continue
-            self.ws.graph.link(seed, added, f.rel, source=collector.name)
-            # evidência com custódia
-            self.ws.evidence.record(
-                collector=collector.name, kind="entity",
-                subject=added.key,
-                data={"from": seed.key, "rel": f.rel,
-                      "attrs": f.attrs, "raw": f.raw},
-            )
-            new_entities.append(added)
+            seen.add(signature)
+            added = self.ws.graph.add_entity(ent)
+            collected_at = utc()
+            data = {"run_id": self.run_id, "from": seed.key, "rel": f.rel,
+                    "attrs": f.attrs, "raw": f.raw,
+                    "collected_at": collected_at, "observed_at": f.observed_at}
+            evidence_hash = self.ws.evidence.record(
+                collector.name, "note" if added.key == seed.key else "entity",
+                added.key, data)
+            added.attrs.setdefault("first_seen", collected_at)
+            added.attrs["last_seen"] = collected_at
+            added.attrs["latest_evidence"] = evidence_hash
+            if added.key != seed.key:
+                edge = self.ws.graph.link(seed, added, f.rel, source=collector.name)
+                edge.attrs.setdefault("first_seen", collected_at)
+                edge.attrs["last_seen"] = collected_at
+                edge.attrs["latest_evidence"] = evidence_hash
+                new_entities.append(added)
         return new_entities
 
-    def _run_collector(self, collector: Collector, seed: Entity):
-        try:
-            return collector, collector.collect(seed)
-        except Exception as exc:  # collectors nunca derrubam o engine
-            self.log(f"[erro] {collector.name} em {seed.key}: {exc}")
-            return collector, []
+    def _run_collector(self, collector, seed):
+        started = monotonic()
+        error = None
+        with util.capture_requests() as requests:
+            try:
+                findings = collector.collect(seed)
+            except Exception as exc:
+                error = type(exc).__name__
+                findings = []
+        failures = any(r["error"] or r["truncated"] for r in requests)
+        status = ("partial" if findings else "error") if error or failures else (
+            "success" if findings else "empty")
+        return collector, findings, {"status": status, "error": error,
+            "duration_ms": round((monotonic() - started) * 1000), "requests": requests}
 
-    # ------------------------------------------------------------------ #
-    def run(self, seeds: List[str], depth: int = 1) -> Dict[str, int]:
-        """Executa a investigação a partir das sementes, em BFS até `depth`."""
-        # normaliza sementes em entidades
-        frontier: List[Entity] = []
-        for s in seeds:
-            ent = make(s, source="seed")
-            if ent:
-                self.ws.graph.add_entity(ent)
-                self.ws.evidence.record("seed", "entity", ent.key,
-                                        {"note": "semente inicial"})
-                frontier.append(ent)
-            else:
-                self.log(f"[aviso] semente não classificada: {s}")
-
+    def run(self, seeds, depth=1):
+        if not 1 <= depth <= 5:
+            raise ValueError("depth deve estar entre 1 e 5")
+        self.run_id = start_run(self.ws, seeds, self.enabled_collectors(), depth,
+                                self.allow_active)
+        stats = {"run_id": self.run_id, "seed_count": 0, "collectors_run": 0,
+                 "findings": 0, "errors": 0, "partial": 0,
+                 "skipped_scope": 0, "limited": False}
+        self.ws.evidence.record("engine", "run-config", self.run_id,
+                                {"run_id": self.run_id, "skipped": self.skipped,
+                                 "max_tasks": self.max_tasks})
+        frontier = []
+        for value in seeds:
+            ent = make(value, source="seed")
+            if ent is None:
+                raise ValueError("Semente não classificada: " + value)
+            if self.ws.meta.get("scope") and not self.ws.in_scope(ent.value):
+                stats["skipped_scope"] += 1
+                continue
+            self.ws.graph.add_entity(ent)
+            self.ws.evidence.record("seed", "entity", ent.key,
+                                    {"run_id": self.run_id, "note": "semente inicial"})
+            frontier.append(ent)
+        stats["seed_count"] = len(frontier)
         visited = set()
-        stats = {"seeds": len(frontier), "collectors_run": 0, "findings": 0}
-
-        for level in range(depth):
-            if not frontier:
-                break
-            self.log(f"--- nível {level + 1}/{depth} "
-                     f"({len(frontier)} entidade(s)) ---")
-            next_frontier: List[Entity] = []
-
+        for _ in range(depth):
+            next_frontier = []
             for seed in frontier:
                 if seed.key in visited:
                     continue
                 visited.add(seed.key)
-
-                applicable = [c for c in self.collectors if c.accepts(seed)]
-                # collector ativo só com escopo autorizado
-                applicable = [
-                    c for c in applicable
-                    if c.passive or self.ws.in_scope(seed.value)
-                ]
-                if not applicable:
+                if self.ws.meta.get("scope") and not self.ws.in_scope(seed.value):
+                    stats["skipped_scope"] += 1
                     continue
-
-                with cf.ThreadPoolExecutor(max_workers=self.max_workers) as ex:
-                    futures = [ex.submit(self._run_collector, c, seed)
-                               for c in applicable]
-                    for fut in cf.as_completed(futures):
-                        collector, findings = fut.result()
+                applicable = [c for c in self.collectors if c.accepts(seed)
+                              and (c.passive or self.ws.in_scope(seed.value))]
+                remaining = self.max_tasks - stats["collectors_run"]
+                if len(applicable) > remaining:
+                    stats["limited"] = True
+                    applicable = applicable[:remaining]
+                with cf.ThreadPoolExecutor(max_workers=self.max_workers) as pool:
+                    futures = [pool.submit(self._run_collector, c, seed) for c in applicable]
+                    for future in cf.as_completed(futures):
+                        collector, findings, result = future.result()
                         stats["collectors_run"] += 1
-                        if findings:
-                            new = self._apply(seed, collector, findings)
-                            stats["findings"] += len(new)
-                            next_frontier.extend(new)
-                            self.log(f"[{collector.name}] {seed.value} "
-                                     f"-> {len(new)} achado(s)")
-
-                self.ws.save_graph()  # checkpoint incremental
-
+                        for request in result.pop("requests"):
+                            self.ws.evidence.record(collector.name, "raw", seed.key,
+                                {"run_id": self.run_id, "collected_at": utc(), **request})
+                        stats["errors"] += result["status"] == "error"
+                        stats["partial"] += result["status"] == "partial"
+                        self.ws.evidence.record(collector.name, "collection", seed.key,
+                            {"run_id": self.run_id, "finding_count": len(findings), **result})
+                        new = self._apply(seed, collector, findings)
+                        stats["findings"] += len(new)
+                        next_frontier.extend(new)
+                        self.log(f"[{collector.name}] {seed.value}: {result['status']} ({len(new)})")
+                self.ws.save_graph()
             frontier = next_frontier
-
+            if not frontier or stats["limited"]:
+                break
+        stats.update(nodes=len(self.ws.graph.nodes), edges=len(self.ws.graph.edges))
+        status = "partial" if (stats["errors"] or stats["partial"] or stats["limited"]
+                                or stats["skipped_scope"] or (self.selected and self.skipped)) else "completed"
+        self.ws.evidence.record("engine", "run-end", self.run_id,
+            {**stats, "status": status, "finished_at": utc()})
         self.ws.save()
-        stats["nodes"] = len(self.ws.graph.nodes)
-        stats["edges"] = len(self.ws.graph.edges)
         stats["evidence"] = self.ws.evidence.count()
         return stats

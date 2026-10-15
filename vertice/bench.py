@@ -29,6 +29,7 @@ def _handler(workspace):
                 self._send(html.encode("utf-8"),
                            "text/html; charset=utf-8")
             elif self.path == "/graph.json":
+                workspace.graph = workspace._load_graph()
                 self._send(workspace.graph.to_json().encode("utf-8"),
                            "application/json; charset=utf-8")
             elif self.path == "/verify":
@@ -51,4 +52,6 @@ def serve(workspace, host: str = "127.0.0.1", port: int = 8713):
         srv.serve_forever()
     except KeyboardInterrupt:
         print("\n[bench] encerrado.")
+    finally:
         srv.server_close()
+        workspace.close(save=False)

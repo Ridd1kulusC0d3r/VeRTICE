@@ -1,6 +1,6 @@
 """Gerador de workspace de demonstração — dados sintéticos rotulados, offline.
 
-Monta um engajamento fictício ("Aurora Pagamentos", alvo exemplo-alvo.com.br)
+Monta um engajamento fictício ("Aurora Pagamentos", alvo aurora.example)
 sem tocar a rede: injeta entidades, arestas e evidências como se os collectors
 tivessem rodado. Serve para (a) demonstrar o produto sem internet e (b) servir
 de *ground truth* para os testes (sabemos exatamente o que deveria aparecer).
@@ -15,46 +15,46 @@ from .core.entities import (make, T_DOMAIN, T_HOST, T_IP, T_TECH, T_SERVICE,
 
 # Ground truth sintético: (host, [ips], [techs], [services], [sources])
 _HOSTS = [
-    ("exemplo-alvo.com.br", ["192.0.2.10"], ["Nginx", "WordPress", "PHP"],
+    ("aurora.example", ["192.0.2.10"], ["Nginx", "WordPress", "PHP"],
      [], ["crtsh", "dns"]),
-    ("www.exemplo-alvo.com.br", ["192.0.2.10"], ["Nginx", "WordPress"],
+    ("www.aurora.example", ["192.0.2.10"], ["Nginx", "WordPress"],
      [], ["crtsh", "dns", "wayback"]),
-    ("api.exemplo-alvo.com.br", ["192.0.2.11"], ["Nginx", "Express"],
+    ("api.aurora.example", ["192.0.2.11"], ["Nginx", "Express"],
      ["192.0.2.11:443/https"], ["crtsh", "dns"]),
-    ("admin.exemplo-alvo.com.br", ["192.0.2.12"], ["Apache", "PHP"],
+    ("admin.aurora.example", ["192.0.2.12"], ["Apache", "PHP"],
      ["192.0.2.12:8080/http-alt"], ["crtsh", "dns"]),
-    ("vpn.exemplo-alvo.com.br", ["198.51.100.5"], [],
+    ("vpn.aurora.example", ["198.51.100.5"], [],
      ["198.51.100.5:443/https"], ["crtsh", "dns"]),
-    ("hml.exemplo-alvo.com.br", ["192.0.2.13"], ["Nginx", "Laravel"],
+    ("hml.aurora.example", ["192.0.2.13"], ["Nginx", "Laravel"],
      [], ["crtsh"]),
-    ("mail.exemplo-alvo.com.br", ["203.0.113.25"], [],
+    ("mail.aurora.example", ["203.0.113.25"], [],
      ["203.0.113.25:25/smtp"], ["dns", "rdap"]),
-    ("gitlab.exemplo-alvo.com.br", ["192.0.2.14"], ["Nginx"],
+    ("gitlab.aurora.example", ["192.0.2.14"], ["Nginx"],
      ["192.0.2.14:443/https"], ["crtsh"]),
-    ("old.exemplo-alvo.com.br", [], [], [], ["wayback"]),
-    ("legacy.exemplo-alvo.com.br", [], [], [], ["wayback"]),
-    ("cdn.exemplo-alvo.com.br", ["198.51.100.80"], ["AWS CloudFront"],
+    ("old.aurora.example", [], [], [], ["wayback"]),
+    ("legacy.aurora.example", [], [], [], ["wayback"]),
+    ("cdn.aurora.example", ["198.51.100.80"], ["AWS CloudFront"],
      [], ["crtsh", "dns"]),
-    ("blog.exemplo-alvo.com.br", ["192.0.2.10"], ["WordPress", "WooCommerce"],
+    ("blog.aurora.example", ["192.0.2.10"], ["WordPress", "WooCommerce"],
      [], ["crtsh", "dns"]),
 ]
 
 _NETBLOCKS = [("192.0.2.0/24", ["192.0.2.10", "192.0.2.11", "192.0.2.12",
                                 "192.0.2.13", "192.0.2.14"])]
-_EMAILS = ["ti@exemplo-alvo.com.br", "noc@exemplo-alvo.com.br"]
-_URLS = ["https://exemplo-alvo.com.br/wp-login.php",
-         "https://old.exemplo-alvo.com.br/backup.zip",
-         "https://api.exemplo-alvo.com.br/v1/health"]
+_EMAILS = ["ti@aurora.example", "noc@aurora.example"]
+_URLS = ["https://aurora.example/wp-login.php",
+         "https://old.aurora.example/backup.zip",
+         "https://api.aurora.example/v1/health"]
 
 
 def build_demo(path: str) -> Workspace:
     ws = Workspace.create(
         path, name="Aurora Pagamentos (DEMO sintético)",
-        scope=["exemplo-alvo.com.br"],
+        scope=["aurora.example"],
         authorized_by="Caso de demonstração — dados fictícios (RFC 2606/5737)",
         notes="Workspace gerado offline por demo_data.py. Ground truth para testes.")
     g = ws.graph
-    root = make("exemplo-alvo.com.br", T_DOMAIN, source="seed")
+    root = make("aurora.example", T_DOMAIN, source="seed")
     g.add_entity(root)
     ws.evidence.record("seed", "entity", root.key, {"note": "semente"})
 

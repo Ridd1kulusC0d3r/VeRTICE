@@ -1,3 +1,13 @@
+# Testar no navegador (v1.1)
+
+[Abra o notebook Colab](https://colab.research.google.com/github/Ridd1kulusC0d3r/VeRTICE/blob/main/notebooks/VeRTICE_Colab.ipynb)
+e selecione **Ambiente de execução → Executar tudo**. A demo é sintética, offline após
+instalação e não exige chaves. Há comparação de execuções, bancada web e exportação ZIP.
+A coleta real é opcional e vem desativada. Consulte o [README](README.md) para os novos
+comandos `runs`, `diff`, `import` e `collectors` e os limites de validação.
+
+---
+
 # 🔺 COMECE AQUI — VÉRTICE
 
 > **Uma ação por vez.** Faça só o passo atual, confira o resultado esperado, e
@@ -5,7 +15,7 @@
 
 **O que é o VÉRTICE:** plataforma OSINT de *Attack Surface Mapping & Intelligence
 Gathering* — mapeia a superfície de ataque de um alvo autorizado, guarda as
-evidências com custódia criptográfica e prepara a fase de pentest. Família
+evidências com integridade verificável e prepara a fase de pentest. Família
 DEIVOSINT. Python stdlib puro (zero dependências).
 
 ---

@@ -89,7 +89,8 @@ class ShodanConnector(Collector):
                         f"{entity.value}:{port}/{product}".strip("/"),
                         T_SERVICE, rel="exposes-service",
                         attrs={"port": port, "product": product},
-                        raw={"transport": svc.get("transport")}))
+                        raw={"transport": svc.get("transport")},
+                        observed_at=svc.get("timestamp")))
         else:
             url = (f"https://api.shodan.io/dns/domain/{entity.value}?key={key}")
             data = util.get_json(url)
