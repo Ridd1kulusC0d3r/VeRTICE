@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VÉRTICE — Manual Ilustrado</title>
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--fg:#0f172a;--muted:#64748b;
+--line:#e2e8f0;--brand:#2563eb;--brand2:#0891b2;--accent:#ea580c;--ok:#16a34a;
+--warn:#dc2626;--chip:#eff6ff;--termbg:#0b1220;--termfg:#e2e8f0}
+@media(prefers-color-scheme:dark){:root{--bg:#0b1220;--card:#111a2e;--fg:#e2e8f0;
+--muted:#94a3b8;--line:#1e293b;--brand:#60a5fa;--brand2:#22d3ee;--accent:#fb923c;
+--chip:#15223b;--termbg:#020617}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);line-height:1.6;
+font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.layout{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+nav.side{background:var(--card);border-right:1px solid var(--line);padding:20px 16px;
+position:sticky;top:0;height:100vh;overflow:auto}
+nav.side h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;
+color:var(--muted);margin:18px 0 6px}
+nav.side a{display:block;color:var(--fg);text-decoration:none;font-size:14px;
+padding:5px 8px;border-radius:7px}
+nav.side a:hover{background:var(--chip);color:var(--brand)}
+main{padding:30px 34px;max-width:900px}
+h1{font-size:30px;margin:.2em 0}
+h2{font-size:22px;margin:40px 0 12px;border-bottom:2px solid var(--brand);
+padding-bottom:6px}
+h3{font-size:17px;margin:24px 0 8px}
+.lead{color:var(--muted);font-size:15px}
+.brandbar{display:flex;align-items:center;gap:14px}
+.logo{width:54px;height:54px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+padding:18px;margin:14px 0}
+.note{border-left:4px solid var(--brand);background:var(--chip);padding:10px 14px;
+border-radius:8px;margin:12px 0;font-size:14px}
+.warn{border-left:4px solid var(--warn);background:#fef2f2;color:#7f1d1d;
+padding:10px 14px;border-radius:8px;margin:12px 0;font-size:14px}
+@media(prefers-color-scheme:dark){.warn{background:#2a0e0e;color:#fecaca}}
+code{background:var(--chip);padding:2px 6px;border-radius:6px;font-size:13px;
+font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0}
+.tabs button{border:1px solid var(--line);background:var(--card);color:var(--fg);
+padding:8px 16px;border-radius:9px 9px 0 0;cursor:pointer;font-size:14px}
+.tabs button.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.tabpane{display:none;border:1px solid var(--line);border-radius:0 12px 12px 12px;
+padding:16px;background:var(--card)}
+.tabpane.active{display:block}
+.term{background:var(--termbg);color:var(--termfg);border-radius:10px;padding:14px 16px;
+font-family:ui-monospace,Menlo,monospace;font-size:13px;overflow:auto;position:relative;
+white-space:pre;border:1px solid #1e293b}
+.term .c-g{color:#4ade80}.term .c-b{color:#60a5fa}.term .c-y{color:#fde047}
+.term .c-m{color:#94a3b8}.term .c-r{color:#f87171}
+.marker{display:inline-flex;align-items:center;justify-content:center;width:20px;
+height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;
+font-weight:700;margin-right:6px;flex:0 0 auto}
+.callouts{margin:10px 0 0;padding:0;list-style:none}
+.callouts li{display:flex;gap:8px;align-items:flex-start;margin:6px 0;font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:10px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted)}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;background:var(--chip);
+color:var(--brand);font-size:12px;margin:2px}
+.pill.pass{background:#dcfce7;color:#166534}.pill.warn2{background:#fef9c3;color:#854d0e}
+@media(prefers-color-scheme:dark){.pill.pass{background:#052e16;color:#86efac}
+.pill.warn2{background:#422006;color:#fde047}}
+footer{color:var(--muted);font-size:13px;margin-top:40px;border-top:1px solid var(--line);
+padding-top:14px}
+@media(max-width:820px){.layout{grid-template-columns:1fr}nav.side{position:static;
+height:auto}}
+.step{display:flex;gap:12px;margin:12px 0}
+.step .n{flex:0 0 30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;
+display:flex;align-items:center;justify-content:center;font-weight:700}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="side">
+  <div class="brandbar">
+    <svg class="logo" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#2563eb"/>
+    <path d="M50 18 L78 70 L22 70 Z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>
+    <circle cx="50" cy="18" r="6" fill="#fde047"/><circle cx="78" cy="70" r="6" fill="#22d3ee"/>
+    <circle cx="22" cy="70" r="6" fill="#22d3ee"/></svg>
+    <b>VÉRTICE</b>
+  </div>
+  <h3>Início</h3>
+  <a href="#oque">O que é</a>
+  <a href="#como-funciona">Como funciona</a>
+  <a href="#jornada">Jornada de uso</a>
+  <a href="#arquitetura">Arquitetura</a>
+  <h3>Instalação</h3>
+  <a href="#instalar">Passo a passo (por SO)</a>
+  <h3>Uso guiado</h3>
+  <a href="#primeiros-passos">Primeiros passos</a>
+  <a href="#investigacao">Investigação real</a>
+  <a href="#conectores">Conectores (com chave)</a>
+  <a href="#relatorio">Gerar relatórios</a>
+  <a href="#custodia">Cadeia de custódia</a>
+  <h3>Referência</h3>
+  <a href="#problemas">Solução de problemas</a>
+  <a href="#glossario">Glossário</a>
+  <a href="#tecnico">Seção técnica / testes</a>
+</nav>
+
+<main>
+<div class="brandbar">
+  <svg class="logo" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#2563eb"/>
+  <path d="M50 18 L78 70 L22 70 Z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>
+  <circle cx="50" cy="18" r="6" fill="#fde047"/><circle cx="78" cy="70" r="6" fill="#22d3ee"/>
+  <circle cx="22" cy="70" r="6" fill="#22d3ee"/></svg>
+  <div><h1>VÉRTICE — Manual Ilustrado</h1>
+  <div class="lead">Attack Surface Mapping &amp; Intelligence Gathering · família DEIVOSINT</div></div>
+</div>
+
+<div class="note">Este manual é para <b>usuários leigos</b>. Cada seção tem um
+objetivo claro, telas anotadas com marcadores numerados e diagramas. Se tiver
+pressa, veja <code>COMECE-AQUI.md</code> — ele te leva ao primeiro resultado em 3 passos.</div>
+
+<!-- ================= O QUE É ================= -->
+<h2 id="oque">O que é o VÉRTICE</h2>
+<p>O VÉRTICE descobre, organiza e documenta a <b>superfície de ataque</b> de um
+alvo autorizado — todos os pontos pelos quais ele é visível na internet:
+domínios, subdomínios, IPs, tecnologias, serviços expostos, e-mails, certificados.
+Ele faz isso de forma <b>passiva</b> (sem atacar nada), guarda cada achado num
+diário de evidências <b>à prova de adulteração</b> e entrega um <b>dossiê</b>
+pronto para a próxima fase (pentest autorizado ou defesa).</p>
+
+<div class="card">
+<b>Três ideias que dão nome à ferramenta — os três vértices:</b>
+<ul>
+<li><b>Fonte</b> — de onde veio cada informação (proveniência).</li>
+<li><b>Identificador</b> — a entidade observável (domínio, IP, e-mail...).</li>
+<li><b>Vínculo</b> — como as entidades se ligam (o grafo).</li>
+</ul>
+</div>
+
+<!-- ================= COMO FUNCIONA ================= -->
+<h2 id="como-funciona">Como funciona (visão geral)</h2>
+<p>Você dá uma <b>semente</b> (ex.: um domínio). O VÉRTICE roda vários
+<b>collectors</b> passivos sobre ela, transforma cada achado em <b>entidade</b>
+no <b>grafo</b>, registra a <b>evidência</b> com um selo criptográfico e repete o
+processo sobre os novos achados, até a profundidade que você escolher.</p>
+
+<div class="card">
+<svg viewBox="0 0 760 220" width="100%" style="font-family:system-ui">
+  <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+  <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/></marker></defs>
+  <rect x="10" y="80" width="120" height="56" rx="10" fill="#2563eb"/>
+  <text x="70" y="104" fill="#fff" font-size="14" text-anchor="middle">semente</text>
+  <text x="70" y="122" fill="#dbeafe" font-size="11" text-anchor="middle">ex.: alvo.com</text>
+  <line x1="130" y1="108" x2="190" y2="108" stroke="#64748b" stroke-width="2" marker-end="url(#ar)"/>
+  <rect x="195" y="60" width="150" height="96" rx="10" fill="#0891b2"/>
+  <text x="270" y="90" fill="#fff" font-size="14" text-anchor="middle">ENGINE</text>
+  <text x="270" y="110" fill="#e0f2fe" font-size="11" text-anchor="middle">roda collectors</text>
+  <text x="270" y="126" fill="#e0f2fe" font-size="11" text-anchor="middle">passivo por padrão</text>
+  <line x1="345" y1="108" x2="405" y2="108" stroke="#64748b" stroke-width="2" marker-end="url(#ar)"/>
+  <rect x="410" y="40" width="150" height="56" rx="10" fill="#7c3aed"/>
+  <text x="485" y="64" fill="#fff" font-size="13" text-anchor="middle">GRAFO</text>
+  <text x="485" y="82" fill="#ede9fe" font-size="11" text-anchor="middle">entidades+vínculos</text>
+  <rect x="410" y="120" width="150" height="56" rx="10" fill="#16a34a"/>
+  <text x="485" y="144" fill="#fff" font-size="13" text-anchor="middle">LEDGER</text>
+  <text x="485" y="162" fill="#dcfce7" font-size="11" text-anchor="middle">SHA-256 encadeado</text>
+  <line x1="560" y1="68" x2="620" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="560" y1="148" x2="620" y2="116" stroke="#64748b" stroke-width="2" marker-end="url(#ar)"/>
+  <rect x="625" y="80" width="125" height="56" rx="10" fill="#ea580c"/>
+  <text x="687" y="104" fill="#fff" font-size="13" text-anchor="middle">DOSSIÊ</text>
+  <text x="687" y="122" fill="#ffedd5" font-size="11" text-anchor="middle">HTML + grafo SVG</text>
+</svg>
+<div class="lead">Diagrama 1 — do alvo ao dossiê, com evidência selada no caminho.</div>
+</div>
+
+<!-- ================= JORNADA ================= -->
+<h2 id="jornada">Jornada de uso</h2>
+<div class="card">
+<svg viewBox="0 0 760 120" width="100%" style="font-family:system-ui">
+  <defs><marker id="ar2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+  <path d="M0,0 L8,3 L0,6 Z" fill="#2563eb"/></marker></defs>
+  <g font-size="12" text-anchor="middle">
+  <circle cx="70" cy="40" r="22" fill="#2563eb"/><text x="70" y="45" fill="#fff">init</text>
+  <text x="70" y="86" fill="#334155">criar caso</text>
+  <circle cx="230" cy="40" r="22" fill="#0891b2"/><text x="230" y="45" fill="#fff">run</text>
+  <text x="230" y="86" fill="#334155">coletar</text>
+  <circle cx="390" cy="40" r="22" fill="#7c3aed"/><text x="390" y="45" fill="#fff">report</text>
+  <text x="390" y="86" fill="#334155">dossiê</text>
+  <circle cx="550" cy="40" r="22" fill="#16a34a"/><text x="550" y="45" fill="#fff">verify</text>
+  <text x="550" y="86" fill="#334155">auditar</text>
+  <circle cx="700" cy="40" r="22" fill="#ea580c"/><text x="700" y="45" fill="#fff">prep</text>
+  <text x="700" y="86" fill="#334155">pentest</text>
+  </g>
+  <line x1="92" y1="40" x2="208" y2="40" stroke="#2563eb" stroke-width="2" marker-end="url(#ar2)"/>
+  <line x1="252" y1="40" x2="368" y2="40" stroke="#2563eb" stroke-width="2" marker-end="url(#ar2)"/>
+  <line x1="412" y1="40" x2="528" y2="40" stroke="#2563eb" stroke-width="2" marker-end="url(#ar2)"/>
+  <line x1="572" y1="40" x2="678" y2="40" stroke="#2563eb" stroke-width="2" marker-end="url(#ar2)"/>
+</svg>
+<div class="lead">Diagrama 2 — a jornada em 5 marcos.</div>
+</div>
+
+<!-- ================= ARQUITETURA ================= -->
+<h2 id="arquitetura">Arquitetura (para quem quer o mapa)</h2>
+<div class="card">
+<svg viewBox="0 0 760 300" width="100%" style="font-family:system-ui">
+  <rect x="20" y="20" width="720" height="260" rx="12" fill="none" stroke="#2563eb" stroke-width="2"/>
+  <text x="34" y="42" fill="#2563eb" font-size="13" font-weight="700">VÉRTICE</text>
+  <rect x="40" y="60" width="200" height="120" rx="10" fill="#eff6ff" stroke="#2563eb"/>
+  <text x="140" y="80" text-anchor="middle" font-size="12" fill="#1e3a8a" font-weight="700">collectors</text>
+  <text x="140" y="100" text-anchor="middle" font-size="10" fill="#334155">crtsh · dns(DoH) · rdap</text>
+  <text x="140" y="116" text-anchor="middle" font-size="10" fill="#334155">fingerprint · wayback</text>
+  <text x="140" y="132" text-anchor="middle" font-size="10" fill="#334155">pivot (Mitaka)</text>
+  <text x="140" y="152" text-anchor="middle" font-size="10" fill="#64748b">+ censys/shodan/</text>
+  <text x="140" y="166" text-anchor="middle" font-size="10" fill="#64748b">zoomeye/fofa (chave)</text>
+  <rect x="280" y="60" width="200" height="120" rx="10" fill="#f5f3ff" stroke="#7c3aed"/>
+  <text x="380" y="80" text-anchor="middle" font-size="12" fill="#5b21b6" font-weight="700">core</text>
+  <text x="380" y="100" text-anchor="middle" font-size="10" fill="#334155">entities (classificador)</text>
+  <text x="380" y="116" text-anchor="middle" font-size="10" fill="#334155">graph (nós+arestas)</text>
+  <text x="380" y="132" text-anchor="middle" font-size="10" fill="#334155">engine (orquestra)</text>
+  <text x="380" y="148" text-anchor="middle" font-size="10" fill="#334155">workspace (SQLite)</text>
+  <text x="380" y="164" text-anchor="middle" font-size="10" fill="#16a34a">evidence (SHA-256)</text>
+  <rect x="520" y="60" width="200" height="120" rx="10" fill="#fff7ed" stroke="#ea580c"/>
+  <text x="620" y="80" text-anchor="middle" font-size="12" fill="#9a3412" font-weight="700">report</text>
+  <text x="620" y="100" text-anchor="middle" font-size="10" fill="#334155">html_report (dossiê)</text>
+  <text x="620" y="116" text-anchor="middle" font-size="10" fill="#334155">graph_svg (visão)</text>
+  <text x="620" y="132" text-anchor="middle" font-size="10" fill="#334155">pentest_prep (escopo,</text>
+  <text x="620" y="146" text-anchor="middle" font-size="10" fill="#334155">superfície, risco)</text>
+  <rect x="40" y="205" width="680" height="55" rx="10" fill="#ecfeff" stroke="#0891b2"/>
+  <text x="380" y="227" text-anchor="middle" font-size="12" fill="#155e75" font-weight="700">workspace no disco</text>
+  <text x="380" y="247" text-anchor="middle" font-size="10" fill="#334155">graph.json · evidence.db · credentials.json (600) · meta.json · dossie.html</text>
+</svg>
+<div class="lead">Diagrama 3 — módulos e o que fica gravado no disco.</div>
+</div>
+
+<!-- ================= INSTALAÇÃO ================= -->
+<h2 id="instalar">Instalação — passo a passo por sistema</h2>
+<p>O VÉRTICE é <b>Python puro</b>: não instala pacote nenhum. Só precisa do
+Python 3.9 ou mais novo. Escolha a aba do seu sistema.</p>
+
+<div class="tabs" role="tablist">
+  <button class="active" onclick="vtab(event,'win')">🪟 Windows</button>
+  <button onclick="vtab(event,'mac')"> macOS</button>
+  <button onclick="vtab(event,'lin')">🐧 Linux</button>
+</div>
+
+<div id="win" class="tabpane active">
+<div class="step"><div class="n">1</div><div>Instale o Python em
+<code>python.org/downloads</code>. Na primeira tela, <b>marque “Add Python to
+PATH”</b> antes de clicar em Install.</div></div>
+<div class="step"><div class="n">2</div><div>Abra o <b>Prompt de Comando</b>
+(tecle Win, digite <code>cmd</code>, Enter).</div></div>
+<div class="step"><div class="n">3</div><div>Confira: <code>python --version</code>.</div></div>
+<div class="step"><div class="n">4</div><div>Entre na pasta do VÉRTICE:
+<code>cd C:\caminho\para\vertice</code>.</div></div>
+<div class="step"><div class="n">5</div><div>Duplo-clique em
+<code>launchers\vertice-demo.bat</code> — ou rode os comandos do próximo capítulo.</div></div>
+</div>
+
+<div id="mac" class="tabpane">
+<div class="step"><div class="n">1</div><div>O macOS já traz Python 3. Confirme no
+<b>Terminal</b>: <code>python3 --version</code>. Se pedir, instale as ferramentas
+de linha de comando (<code>xcode-select --install</code>).</div></div>
+<div class="step"><div class="n">2</div><div>No Terminal, entre na pasta:
+<code>cd ~/Downloads/vertice</code>.</div></div>
+<div class="step"><div class="n">3</div><div>Duplo-clique em
+<code>launchers/vertice-demo.command</code> (se o Gatekeeper reclamar: clique com o
+botão direito → Abrir).</div></div>
+</div>
+
+<div id="lin" class="tabpane">
+<div class="step"><div class="n">1</div><div>Confirme o Python:
+<code>python3 --version</code> (quase toda distro já tem).</div></div>
+<div class="step"><div class="n">2</div><div>Entre na pasta:
+<code>cd ~/vertice</code>.</div></div>
+<div class="step"><div class="n">3</div><div>Rode o lançador:
+<code>./launchers/vertice-demo.sh</code> (se precisar: <code>chmod +x launchers/*.sh</code>).</div></div>
+</div>
+
+<!-- ================= PRIMEIROS PASSOS ================= -->
+<h2 id="primeiros-passos">Uso guiado — primeiros passos</h2>
+<p>Vamos ver o VÉRTICE funcionando com a <b>demonstração offline</b> (dados
+fictícios, sem internet). Abra o terminal na pasta do projeto.</p>
+
+<h3>Tela 1 — criar a demonstração</h3>
+<div class="term"><span class="c-m">$</span> python3 -m vertice <span class="c-b">demo</span> demo-vertice
+<span class="c-g">[ok]</span> workspace de demonstração criado em: demo-vertice      <span class="marker">1</span>
+     gere o dossiê:  python -m vertice report demo-vertice ...   <span class="marker">2</span></div>
+<ul class="callouts">
+<li><span class="marker">1</span> Confirmação de que o <b>workspace</b> (a pasta do caso) foi criado.</li>
+<li><span class="marker">2</span> A própria ferramenta sugere o próximo comando.</li>
+</ul>
+
+<h3>Tela 2 — gerar o dossiê</h3>
+<div class="term"><span class="c-m">$</span> python3 -m vertice <span class="c-b">report</span> demo-vertice -o demo-vertice/dossie.html
+<span class="c-g">[ok]</span> dossiê gerado: demo-vertice/dossie.html               <span class="marker">1</span></div>
+<ul class="callouts">
+<li><span class="marker">1</span> Abra esse arquivo no navegador. Você verá KPIs, o grafo, a
+tabela de alvos priorizados e o menu de pivô.</li>
+</ul>
+
+<h3>Tela 3 — o dossiê no navegador (representação)</h3>
+<div class="card">
+<svg viewBox="0 0 760 330" width="100%" style="font-family:system-ui">
+  <rect x="0" y="0" width="760" height="330" rx="10" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="0" y="0" width="760" height="44" rx="10" fill="#2563eb"/>
+  <text x="18" y="28" fill="#fff" font-size="15" font-weight="700">VÉRTICE — Dossiê de Superfície de Ataque</text>
+  <!-- KPIs -->
+  <g>
+  <rect x="18" y="58" width="110" height="52" rx="8" fill="#fff" stroke="#e2e8f0"/>
+  <text x="30" y="82" fill="#2563eb" font-size="20" font-weight="700">12</text>
+  <text x="30" y="100" fill="#64748b" font-size="10">hosts</text>
+  <rect x="140" y="58" width="110" height="52" rx="8" fill="#fff" stroke="#e2e8f0"/>
+  <text x="152" y="82" fill="#2563eb" font-size="20" font-weight="700">9</text>
+  <text x="152" y="100" fill="#64748b" font-size="10">vivos</text>
+  <rect x="262" y="58" width="110" height="52" rx="8" fill="#fff" stroke="#e2e8f0"/>
+  <text x="274" y="82" fill="#16a34a" font-size="20" font-weight="700">✓</text>
+  <text x="274" y="100" fill="#64748b" font-size="10">cadeia íntegra</text>
+  </g>
+  <text x="18" y="134" fill="#0f172a" font-size="13" font-weight="700">Grafo de superfície</text>
+  <!-- mini graph -->
+  <g>
+  <circle cx="140" cy="210" r="10" fill="#2563eb"/>
+  <circle cx="70" cy="170" r="6" fill="#0891b2"/><line x1="140" y1="210" x2="70" y2="170" stroke="#94a3b8"/>
+  <circle cx="80" cy="250" r="6" fill="#0891b2"/><line x1="140" y1="210" x2="80" y2="250" stroke="#94a3b8"/>
+  <circle cx="210" cy="160" r="6" fill="#0891b2"/><line x1="140" y1="210" x2="210" y2="160" stroke="#94a3b8"/>
+  <circle cx="230" cy="250" r="6" fill="#0891b2"/><line x1="140" y1="210" x2="230" y2="250" stroke="#94a3b8"/>
+  <circle cx="260" cy="200" r="5" fill="#16a34a"/><line x1="210" y1="160" x2="260" y2="200" stroke="#94a3b8"/>
+  <circle cx="40" cy="210" r="5" fill="#ea580c"/><line x1="70" y1="170" x2="40" y2="210" stroke="#94a3b8"/>
+  </g>
+  <text x="360" y="134" fill="#0f172a" font-size="13" font-weight="700">Alvos priorizados</text>
+  <g font-size="11">
+  <rect x="360" y="145" width="380" height="24" fill="#eff6ff"/>
+  <text x="368" y="161" fill="#dc2626" font-weight="700">8.5</text>
+  <text x="410" y="161" fill="#0f172a">admin.exemplo-alvo.com.br</text>
+  <text x="620" y="161" fill="#64748b">Apache · PHP</text>
+  <rect x="360" y="171" width="380" height="24" fill="#fff"/>
+  <text x="368" y="187" fill="#dc2626" font-weight="700">8.0</text>
+  <text x="410" y="187" fill="#0f172a">api.exemplo-alvo.com.br</text>
+  <text x="620" y="187" fill="#64748b">Nginx · Express</text>
+  <rect x="360" y="197" width="380" height="24" fill="#fff"/>
+  <text x="368" y="213" fill="#d97706" font-weight="700">5.5</text>
+  <text x="410" y="213" fill="#0f172a">vpn.exemplo-alvo.com.br</text>
+  <text x="620" y="213" fill="#64748b">https</text>
+  <rect x="360" y="223" width="380" height="24" fill="#fff"/>
+  <text x="368" y="239" fill="#64748b" font-weight="700">-1.0</text>
+  <text x="410" y="239" fill="#0f172a">old.exemplo-alvo.com.br</text>
+  <text x="620" y="239" fill="#64748b">só histórico</text>
+  </g>
+  <text x="18" y="300" fill="#64748b" font-size="11">① KPIs  ② grafo (visão Maltego)  ③ alvos com score explicável</text>
+</svg>
+<div class="lead">Representação do dossiê — o arquivo real é interativo (filtro, pivôs clicáveis).</div>
+</div>
+
+<!-- ================= INVESTIGAÇÃO REAL ================= -->
+<h2 id="investigacao">Investigação real</h2>
+<div class="warn">⚠️ <b>Só investigue o que você tem autorização para investigar.</b>
+O escopo definido no <code>init</code> é respeitado pelo VÉRTICE em toda coleta ativa.</div>
+
+<div class="step"><div class="n">1</div><div><b>Criar o engajamento</b> com escopo e autorização:
+<div class="term"><span class="c-m">$</span> python3 -m vertice <span class="c-b">init</span> meu-caso --scope alvo.com --by <span class="c-y">"Contrato 2026-10"</span>
+<span class="c-g">[ok]</span> workspace criado: meu-caso
+     escopo: ['alvo.com']</div></div></div>
+
+<div class="step"><div class="n">2</div><div><b>Coletar</b> (passivo, profundidade 2):
+<div class="term"><span class="c-m">$</span> python3 -m vertice <span class="c-b">run</span> meu-caso --seed alvo.com --depth 2
+<span class="c-m">[info]</span> collectors ativos: crtsh, dns, fingerprint, pivot, rdap, wayback
+<span class="c-b">[crtsh]</span> alvo.com -> 37 achado(s)                            <span class="marker">1</span>
+<span class="c-b">[dns]</span> www.alvo.com -> 2 achado(s)
+...
+<span class="c-g">=== resumo ===</span>
+  nodes            214                                           <span class="marker">2</span>
+  edges            389
+  evidence         403</div>
+<ul class="callouts">
+<li><span class="marker">1</span> Cada linha mostra <b>qual collector</b> trouxe quantos achados (proveniência).</li>
+<li><span class="marker">2</span> Resumo final: tamanho do grafo e quantas evidências foram seladas.</li>
+</ul></div></div>
+
+<div class="step"><div class="n">3</div><div><b>Gerar o dossiê</b>:
+<code>python3 -m vertice report meu-caso -o meu-caso/dossie.html</code></div></div>
+
+<!-- ================= CONECTORES ================= -->
+<h2 id="conectores">Conectores opcionais (com chave de API)</h2>
+<p>Censys, Shodan, ZoomEye e FOFA ampliam a coleta, mas exigem chave. Ficam
+<b>desligados</b> até você colar a credencial — que fica só no seu workspace.</p>
+<div class="term"><span class="c-m">$</span> python3 -m vertice <span class="c-b">creds</span> meu-caso --set censys_token=<span class="c-y">SEU_ID:SEU_SECRET</span>
+<span class="c-g">[ok]</span> credencial 'censys_token' salva (apenas local).</div>
+<table>
+<tr><th>Conector</th><th>Credencial</th><th>Formato</th></tr>
+<tr><td>Censys</td><td><code>censys_token</code></td><td><code>API_ID:API_SECRET</code></td></tr>
+<tr><td>Shodan</td><td><code>shodan_key</code></td><td>chave</td></tr>
+<tr><td>ZoomEye</td><td><code>zoomeye_key</code></td><td>chave</td></tr>
+<tr><td>FOFA</td><td><code>fofa_key</code></td><td><code>email:key</code></td></tr>
+</table>
+<div class="note">Na próxima vez que você rodar <code>run</code>, o conector com chave
+entra automaticamente. Sem chave, ele é pulado — sem erro.</div>
+
+<!-- ================= RELATÓRIO ================= -->
+<h2 id="relatorio">Gerar relatórios</h2>
+<p>Duas formas:</p>
+<ul>
+<li><b>Arquivo</b>: <code>python3 -m vertice report CASO -o dossie.html</code> — gera
+um HTML autocontido (pode enviar por e-mail, imprimir, anexar).</li>
+<li><b>Bancada web</b>: <code>python3 -m vertice bench CASO</code> — sobe
+<code>http://127.0.0.1:8713</code> e mostra o dossiê ao vivo (recarrega o grafo a
+cada acesso). Útil enquanto a coleta ainda roda.</li>
+</ul>
+
+<!-- ================= CUSTÓDIA ================= -->
+<h2 id="custodia">Cadeia de custódia — por que o VÉRTICE é diferente</h2>
+<p>Cada evidência é selada com um <b>hash SHA-256</b> que inclui o hash da
+evidência anterior. É uma corrente: mexer em um elo quebra todos os seguintes.</p>
+<div class="card">
+<svg viewBox="0 0 760 120" width="100%" style="font-family:system-ui">
+  <defs><marker id="ar3" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+  <path d="M0,0 L7,3 L0,6 Z" fill="#16a34a"/></marker></defs>
+  <g font-size="11" text-anchor="middle">
+  <rect x="20" y="40" width="150" height="48" rx="8" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="95" y="60" fill="#166534" font-weight="700">evidência #1</text>
+  <text x="95" y="78" fill="#334155">hash = H(dados+GENESIS)</text>
+  <rect x="300" y="40" width="150" height="48" rx="8" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="375" y="60" fill="#166534" font-weight="700">evidência #2</text>
+  <text x="375" y="78" fill="#334155">hash = H(dados+hash#1)</text>
+  <rect x="580" y="40" width="150" height="48" rx="8" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="655" y="60" fill="#166534" font-weight="700">evidência #3</text>
+  <text x="655" y="78" fill="#334155">hash = H(dados+hash#2)</text>
+  </g>
+  <line x1="170" y1="64" x2="298" y2="64" stroke="#16a34a" stroke-width="2" marker-end="url(#ar3)"/>
+  <line x1="450" y1="64" x2="578" y2="64" stroke="#16a34a" stroke-width="2" marker-end="url(#ar3)"/>
+  <text x="380" y="108" text-anchor="middle" fill="#64748b" font-size="11">cada elo "trava" o anterior — <code>verify</code> reprocessa tudo</text>
+</svg>
+</div>
+<div class="term"><span class="c-m">$</span> python3 -m vertice <span class="c-b">verify</span> meu-caso
+<span class="c-g">[ok]</span> cadeia íntegra — 403 registros                          <span class="marker">1</span>
+     head: bf39310fa452b6425d...                              <span class="marker">2</span></div>
+<ul class="callouts">
+<li><span class="marker">1</span> Se algum registro tivesse sido alterado, apareceria <span class="c-r">[FALHA]</span> apontando o número do registro.</li>
+<li><span class="marker">2</span> O <b>head</b> é a "impressão digital" de toda a investigação — anote-o num relatório para provar integridade depois.</li>
+</ul>
+
+<!-- ================= PROBLEMAS ================= -->
+<h2 id="problemas">Solução de problemas</h2>
+<table>
+<tr><th>Sintoma</th><th>Causa provável</th><th>Solução</th></tr>
+<tr><td><code>python: command not found</code></td><td>Python não instalado ou fora do PATH</td>
+<td>Instale do python.org marcando "Add to PATH"; no mac/Linux use <code>python3</code></td></tr>
+<tr><td><code>workspace não encontrado</code></td><td>Rodou <code>run</code> antes do <code>init</code></td>
+<td>Rode <code>init</code> primeiro, ou use <code>demo</code></td></tr>
+<tr><td>Coleta volta vazia</td><td>Sem internet, ou fontes bloqueadas pela rede</td>
+<td>Teste a rede; a demo offline sempre funciona</td></tr>
+<tr><td>Conector não aparece em "collectors ativos"</td><td>Credencial ausente</td>
+<td>Defina com <code>creds --set</code></td></tr>
+<tr><td><code>[FALHA] cadeia quebrada</code></td><td>O <code>evidence.db</code> foi alterado</td>
+<td>Esperado se alguém mexeu no banco — a detecção é o recurso funcionando</td></tr>
+<tr><td>Porta da bancada ocupada</td><td>Outro processo no 8713</td>
+<td><code>bench CASO --port 8720</code></td></tr>
+</table>
+
+<!-- ================= GLOSSÁRIO ================= -->
+<h2 id="glossario">Glossário</h2>
+<table>
+<tr><td><b>Superfície de ataque</b></td><td>Tudo do alvo que é visível/alcançável de fora.</td></tr>
+<tr><td><b>OSINT</b></td><td>Inteligência de fontes abertas (dados públicos).</td></tr>
+<tr><td><b>Passivo</b></td><td>Coleta que não interage com o alvo (não "bate" nele).</td></tr>
+<tr><td><b>Entidade</b></td><td>Um identificador: domínio, IP, e-mail, tecnologia...</td></tr>
+<tr><td><b>Grafo</b></td><td>Entidades (nós) ligadas por relações (arestas).</td></tr>
+<tr><td><b>Collector</b></td><td>Um coletor de uma fonte específica (crt.sh, DNS...).</td></tr>
+<tr><td><b>Pivô</b></td><td>Saltar de um identificador para buscas em vários serviços (ideia do Mitaka).</td></tr>
+<tr><td><b>Proveniência</b></td><td>Registro de qual fonte afirmou cada achado.</td></tr>
+<tr><td><b>Cadeia de custódia</b></td><td>Prova de que as evidências não foram adulteradas.</td></tr>
+<tr><td><b>Workspace</b></td><td>A pasta de um caso (grafo + evidências + config).</td></tr>
+<tr><td><b>Fingerprint</b></td><td>Reconhecer a tecnologia por assinaturas (ideia do BuiltWith).</td></tr>
+<tr><td><b>Favicon hash</b></td><td>Impressão do ícone do site — liga ativos do mesmo dono (ideia do FOFA).</td></tr>
+</table>
+
+<!-- ================= TÉCNICO ================= -->
+<h2 id="tecnico">Seção técnica — resultado dos testes</h2>
+<p>Testes automatizados (<code>python3 -m unittest discover -s tests</code>) e
+validação em nuvem. Detalhe completo em <code>RELATORIO-TESTES.md</code>.</p>
+<table>
+<tr><th>Área</th><th>O que foi verificado</th><th>Status</th></tr>
+<tr><td>Classificação de entidades</td><td>domínio, IP, netblock, e-mail, ASN, CVE, URL, hash, refang</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>Grafo</td><td>deduplicação, proveniência acumulada, ida-e-volta JSON</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>Pivôs</td><td>menu correto por tipo (domínio, CVE)</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>Cadeia de custódia</td><td>íntegra após 51 registros; <b>adulteração detectada</b> no elo 3</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>Superfície de ataque</td><td>priorização (admin/api/vpn no topo; só-histórico não é "vivo")</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>Relatório HTML</td><td>renderiza grafo, custódia e alvos (&gt;10 KB)</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>Bancada web</td><td><code>/</code>, <code>/graph.json</code>, <code>/verify</code> respondem 200</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>Coleta online real</td><td>crt.sh/DoH <b>bloqueados pelo allowlist do ambiente de nuvem</b></td><td><span class="pill warn2">N/D na nuvem</span></td></tr>
+</table>
+<div class="note">A coleta online não pôde ser exercitada no ambiente de nuvem
+porque o proxy só libera registries de pacote (bloqueio de política, HTTP 403
+para <code>dns.google</code> e <code>crt.sh</code>). O código de rede é
+stdlib e tolerante a falha; rode na sua máquina/rede para a coleta real. Todo o
+restante foi validado offline com dados sintéticos rotulados (ground truth).</div>
+
+<footer>
+VÉRTICE v1.0 · família DEIVOSINT · Attack Surface Mapping &amp; Intelligence Gathering<br>
+Passivo por padrão. Use apenas sobre ativos que você está autorizado a investigar.
+</footer>
+</main>
+</div>
+
+<script>
+function vtab(ev, id){
+  var panes=document.querySelectorAll('.tabpane');
+  panes.forEach(function(p){p.classList.remove('active')});
+  var btns=ev.target.parentNode.querySelectorAll('button');
+  btns.forEach(function(b){b.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+  ev.target.classList.add('active');
+}
+</script>
+</body>
+</html>

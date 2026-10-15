@@ -1,0 +1,24 @@
+# workspaces de investigação (dados de casos — nunca versionar)
+/caso*/
+/meu-caso/
+/demo-vertice/
+*/evidence.db
+*/graph.json
+*/credentials.json
+*/meta.json
+*/dossie.html
+
+# mas mantém a demo de exemplo publicada
+!demo/dossie-exemplo.html
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# SO
+.DS_Store
+Thumbs.db

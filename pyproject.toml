@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vertice"
+version = "1.0.0"
+description = "VÉRTICE — Attack Surface Mapping & Intelligence Gathering (DEIVOSINT, stdlib-only)"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{ name = "Deivison Lourenço" }]
+keywords = ["osint", "attack-surface", "recon", "threat-intelligence", "deivosint"]
+dependencies = []   # stdlib-only, de propósito
+
+[project.scripts]
+vertice = "vertice.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["vertice*"]
