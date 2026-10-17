@@ -9,13 +9,19 @@ Stdlib-only; serializa/deserializa em JSON.
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from typing import Dict, Iterable, List, Optional, Tuple
 
 from .entities import Entity, make, normalize, classify
 
 
+def _utc() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
 class Edge:
-    __slots__ = ("src", "dst", "label", "sources", "attrs")
+    __slots__ = ("src", "dst", "label", "sources", "attrs", "first_seen",
+                 "last_seen")
 
     def __init__(self, src: str, dst: str, label: str,
                  source: Optional[str] = None, **attrs):
@@ -26,6 +32,9 @@ class Edge:
         if source:
             self.sources.add(source)
         self.attrs = dict(attrs)
+        now = _utc()
+        self.first_seen = now
+        self.last_seen = now
 
     @property
     def key(self) -> Tuple[str, str, str]:
@@ -35,6 +44,7 @@ class Edge:
         return {
             "src": self.src, "dst": self.dst, "label": self.label,
             "sources": sorted(self.sources), "attrs": self.attrs,
+            "first_seen": self.first_seen, "last_seen": self.last_seen,
         }
 
 
@@ -54,7 +64,10 @@ class Graph:
             existing.sources |= entity.sources
             for k, v in entity.attrs.items():
                 existing.attrs.setdefault(k, v)
+            existing.touch()               # reafirmada agora
+            existing.recompute_confidence()  # corroboração pode ter subido
             return existing
+        entity.recompute_confidence()
         self.nodes[entity.key] = entity
         return entity
 
@@ -77,6 +90,7 @@ class Graph:
         existing = self.edges.get(e.key)
         if existing:
             existing.sources |= e.sources
+            existing.last_seen = _utc()
             return existing
         self.edges[e.key] = e
         return e
@@ -90,6 +104,20 @@ class Graph:
     def neighbors(self, key: str) -> List[Tuple[str, str]]:
         """Devolve (key_vizinho, rótulo) para arestas que saem de `key`."""
         return [(e.dst, e.label) for e in self.edges.values() if e.src == key]
+
+    def neighbors_in(self, key: str) -> List[Tuple[str, str]]:
+        """Devolve (key_origem, rótulo) para arestas que chegam em `key`."""
+        return [(e.src, e.label) for e in self.edges.values() if e.dst == key]
+
+    def adjacent(self, key: str) -> List[str]:
+        """Vizinhos em qualquer direção (keys)."""
+        out = set()
+        for e in self.edges.values():
+            if e.src == key:
+                out.add(e.dst)
+            elif e.dst == key:
+                out.add(e.src)
+        return sorted(out)
 
     def count_by_type(self) -> Dict[str, int]:
         out: Dict[str, int] = {}
@@ -114,11 +142,20 @@ class Graph:
         for nd in data.get("nodes", []):
             ent = Entity(value=nd["value"], etype=nd["etype"],
                          attrs=nd.get("attrs", {}),
-                         sources=set(nd.get("sources", [])))
+                         sources=set(nd.get("sources", [])),
+                         first_seen=nd.get("first_seen"),
+                         last_seen=nd.get("last_seen"),
+                         confidence=nd.get("confidence", 0.0))
+            if not ent.confidence:
+                ent.recompute_confidence()
             g.nodes[ent.key] = ent
         for ed in data.get("edges", []):
             edge = Edge(ed["src"], ed["dst"], ed["label"])
             edge.sources = set(ed.get("sources", []))
             edge.attrs = ed.get("attrs", {})
+            if ed.get("first_seen"):
+                edge.first_seen = ed["first_seen"]
+            if ed.get("last_seen"):
+                edge.last_seen = ed["last_seen"]
             g.edges[edge.key] = edge
         return g

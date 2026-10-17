@@ -1,8 +1,16 @@
-"""Bounded collector orchestration with evidence-linked observations and runs."""
+"""Bounded collector orchestration with evidence-linked observations and runs.
+
+v2: além do runner instrumentado (runs/history, captura de requests, max_tasks,
+escopo por semente), o engine honra a config do workspace (collectors
+`disabled`, `rate_limit_s` por fonte) e grava um snapshot automático ao fim de
+cada run — base do diff de superfície.
+"""
 from __future__ import annotations
 
 import concurrent.futures as cf
 import json
+import threading
+import time
 from time import monotonic
 
 from ..collectors.base import REGISTRY
@@ -15,11 +23,13 @@ class Engine:
     def __init__(self, workspace, allow_active=False, max_workers=8, log=None,
                  selected=None, max_tasks=200):
         if not 1 <= max_workers <= 32 or max_tasks < 1:
-            raise ValueError("workers deve estar entre 1 e 32; max_tasks deve ser positivo")
+            raise ValueError("workers deve estar entre 1 e 32; "
+                             "max_tasks deve ser positivo")
         if allow_active and not workspace.meta.get("scope"):
             raise ValueError("Coleta ativa exige escopo explícito não vazio")
         if selected and set(selected) - REGISTRY.keys():
-            raise ValueError("Collector desconhecido: " + ", ".join(set(selected) - REGISTRY.keys()))
+            raise ValueError("Collector desconhecido: "
+                             + ", ".join(set(selected) - REGISTRY.keys()))
         self.ws = workspace
         self.allow_active = allow_active
         self.max_workers = max_workers
@@ -28,12 +38,20 @@ class Engine:
         self.log = log or (lambda m: None)
         self.skipped = []
         self.run_id = None
+        self._cfg = workspace.config()
+        self._rate_last = {}
+        self._rate_lock = threading.Lock()
         self.collectors = self._load_collectors()
 
     def _load_collectors(self):
+        disabled = set(self._cfg.get("disabled", []))
         out = []
         for name, cls in sorted(REGISTRY.items()):
             if self.selected is not None and name not in self.selected:
+                continue
+            if name in disabled:
+                self.skipped.append({"collector": name, "reason": "disabled_config"})
+                self.log(f"[skip] {name}: desabilitado na config")
                 continue
             reason = None
             inst = cls(workspace=self.ws)
@@ -50,6 +68,17 @@ class Engine:
 
     def enabled_collectors(self):
         return [c.name for c in self.collectors]
+
+    def _respect_rate(self, name):
+        """Intervalo mínimo entre chamadas de um mesmo collector (config)."""
+        wait = self._cfg.get("rate_limit_s", {}).get(name, 0)
+        if not wait:
+            return
+        with self._rate_lock:
+            delta = time.monotonic() - self._rate_last.get(name, 0.0)
+            if delta < wait:
+                time.sleep(wait - delta)
+            self._rate_last[name] = time.monotonic()
 
     def _apply(self, seed, collector, findings):
         new_entities = []
@@ -75,7 +104,8 @@ class Engine:
             added.attrs["last_seen"] = collected_at
             added.attrs["latest_evidence"] = evidence_hash
             if added.key != seed.key:
-                edge = self.ws.graph.link(seed, added, f.rel, source=collector.name)
+                edge = self.ws.graph.link(seed, added, f.rel,
+                                          source=collector.name)
                 edge.attrs.setdefault("first_seen", collected_at)
                 edge.attrs["last_seen"] = collected_at
                 edge.attrs["latest_evidence"] = evidence_hash
@@ -85,6 +115,7 @@ class Engine:
     def _run_collector(self, collector, seed):
         started = monotonic()
         error = None
+        self._respect_rate(collector.name)
         with util.capture_requests() as requests:
             try:
                 findings = collector.collect(seed)
@@ -94,14 +125,16 @@ class Engine:
         failures = any(r["error"] or r["truncated"] for r in requests)
         status = ("partial" if findings else "error") if error or failures else (
             "success" if findings else "empty")
-        return collector, findings, {"status": status, "error": error,
-            "duration_ms": round((monotonic() - started) * 1000), "requests": requests}
+        return collector, findings, {
+            "status": status, "error": error,
+            "duration_ms": round((monotonic() - started) * 1000),
+            "requests": requests}
 
     def run(self, seeds, depth=1):
         if not 1 <= depth <= 5:
             raise ValueError("depth deve estar entre 1 e 5")
-        self.run_id = start_run(self.ws, seeds, self.enabled_collectors(), depth,
-                                self.allow_active)
+        self.run_id = start_run(self.ws, seeds, self.enabled_collectors(),
+                                depth, self.allow_active)
         stats = {"run_id": self.run_id, "seed_count": 0, "collectors_run": 0,
                  "findings": 0, "errors": 0, "partial": 0,
                  "skipped_scope": 0, "limited": False}
@@ -118,7 +151,8 @@ class Engine:
                 continue
             self.ws.graph.add_entity(ent)
             self.ws.evidence.record("seed", "entity", ent.key,
-                                    {"run_id": self.run_id, "note": "semente inicial"})
+                                    {"run_id": self.run_id,
+                                     "note": "semente inicial"})
             frontier.append(ent)
         stats["seed_count"] = len(frontier)
         visited = set()
@@ -138,30 +172,41 @@ class Engine:
                     stats["limited"] = True
                     applicable = applicable[:remaining]
                 with cf.ThreadPoolExecutor(max_workers=self.max_workers) as pool:
-                    futures = [pool.submit(self._run_collector, c, seed) for c in applicable]
+                    futures = [pool.submit(self._run_collector, c, seed)
+                               for c in applicable]
                     for future in cf.as_completed(futures):
                         collector, findings, result = future.result()
                         stats["collectors_run"] += 1
                         for request in result.pop("requests"):
-                            self.ws.evidence.record(collector.name, "raw", seed.key,
-                                {"run_id": self.run_id, "collected_at": utc(), **request})
+                            self.ws.evidence.record(
+                                collector.name, "raw", seed.key,
+                                {"run_id": self.run_id, "collected_at": utc(),
+                                 **request})
                         stats["errors"] += result["status"] == "error"
                         stats["partial"] += result["status"] == "partial"
-                        self.ws.evidence.record(collector.name, "collection", seed.key,
-                            {"run_id": self.run_id, "finding_count": len(findings), **result})
+                        self.ws.evidence.record(
+                            collector.name, "collection", seed.key,
+                            {"run_id": self.run_id,
+                             "finding_count": len(findings), **result})
                         new = self._apply(seed, collector, findings)
                         stats["findings"] += len(new)
                         next_frontier.extend(new)
-                        self.log(f"[{collector.name}] {seed.value}: {result['status']} ({len(new)})")
+                        self.log(f"[{collector.name}] {seed.value}: "
+                                 f"{result['status']} ({len(new)})")
                 self.ws.save_graph()
             frontier = next_frontier
             if not frontier or stats["limited"]:
                 break
-        stats.update(nodes=len(self.ws.graph.nodes), edges=len(self.ws.graph.edges))
-        status = "partial" if (stats["errors"] or stats["partial"] or stats["limited"]
-                                or stats["skipped_scope"] or (self.selected and self.skipped)) else "completed"
+        stats.update(nodes=len(self.ws.graph.nodes),
+                     edges=len(self.ws.graph.edges))
+        status = "partial" if (stats["errors"] or stats["partial"]
+                               or stats["limited"] or stats["skipped_scope"]
+                               or (self.selected and self.skipped)) else "completed"
         self.ws.evidence.record("engine", "run-end", self.run_id,
-            {**stats, "status": status, "finished_at": utc()})
+                                {**stats, "status": status,
+                                 "finished_at": utc()})
         self.ws.save()
+        # snapshot automático: permite diff de superfície entre execuções
+        stats["snapshot"] = self.ws.save_snapshot(label="run")
         stats["evidence"] = self.ws.evidence.count()
         return stats

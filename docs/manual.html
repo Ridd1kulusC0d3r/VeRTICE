@@ -116,6 +116,20 @@ display:flex;align-items:center;justify-content:center;font-weight:700}
 objetivo claro, telas anotadas com marcadores numerados e diagramas. Se tiver
 pressa, veja <code>COMECE-AQUI.md</code> — ele te leva ao primeiro resultado em 3 passos.</div>
 
+<div class="card" style="border-left:4px solid var(--accent)">
+<b>🆕 Novidades da v2.0</b>
+<ul>
+<li><b>Mais fontes (sem chave):</b> InternetDB (portas + CVEs de um IP), RIPEstat
+(ASN/netblock), postura de e-mail (SPF/DMARC), certificado TLS e dorks.</li>
+<li><b>Integração FAROL:</b> importa o que há "dentro" de cada host (endpoints,
+parâmetros, formulários, e-mails) — segredos entram <b>redigidos</b> (só o rótulo).</li>
+<li><b>Inteligência:</b> confiança por corroboração, correlação de ativos
+(co-hospedagem/ASN/favicon) e <b>diff de superfície</b> (o que mudou entre varreduras).</li>
+<li><b>Saídas:</b> export <code>jsonl</code>/<code>csv</code>/<b>STIX 2.1</b>/
+<code>nmap</code>/<code>httpx</code> e bancada web interativa.</li>
+</ul>
+</div>
+
 <!-- ================= O QUE É ================= -->
 <h2 id="oque">O que é o VÉRTICE</h2>
 <p>O VÉRTICE descobre, organiza e documenta a <b>superfície de ataque</b> de um
@@ -479,11 +493,15 @@ validação em nuvem. Detalhe completo em <code>RELATORIO-TESTES.md</code>.</p>
 <tr><td>Classificação de entidades</td><td>domínio, IP, netblock, e-mail, ASN, CVE, URL, hash, refang</td><td><span class="pill pass">PASS</span></td></tr>
 <tr><td>Grafo</td><td>deduplicação, proveniência acumulada, ida-e-volta JSON</td><td><span class="pill pass">PASS</span></td></tr>
 <tr><td>Pivôs</td><td>menu correto por tipo (domínio, CVE)</td><td><span class="pill pass">PASS</span></td></tr>
-<tr><td>Cadeia de custódia</td><td>íntegra após 51 registros; <b>adulteração detectada</b> no elo 3</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>Cadeia de custódia</td><td>íntegra após 61 registros; <b>adulteração detectada</b> no elo 3</td><td><span class="pill pass">PASS</span></td></tr>
 <tr><td>Superfície de ataque</td><td>priorização (admin/api/vpn no topo; só-histórico não é "vivo")</td><td><span class="pill pass">PASS</span></td></tr>
 <tr><td>Relatório HTML</td><td>renderiza grafo, custódia e alvos (&gt;10 KB)</td><td><span class="pill pass">PASS</span></td></tr>
 <tr><td>Bancada web</td><td><code>/</code>, <code>/graph.json</code>, <code>/verify</code> respondem 200</td><td><span class="pill pass">PASS</span></td></tr>
-<tr><td>Coleta online real</td><td>crt.sh/DoH <b>bloqueados pelo allowlist do ambiente de nuvem</b></td><td><span class="pill warn2">N/D na nuvem</span></td></tr>
+<tr><td>Collectors v2</td><td>internetdb/asn/emailsec/tlscert/dorks registram e produzem entidades</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>Confiança/diff/correlação</td><td>corroboração sobe confiança; diff detecta +/−; cluster de favicon</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>Import FAROL</td><td>importa JSONL e <b>redige segredo</b> (valor nunca persiste)</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>Exporters</td><td>jsonl/csv/stix/targets/nmap/httpx; STIX 2.1 válido e com escaping</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>Coleta online real</td><td>crt.sh/DoH/InternetDB <b>bloqueados pelo allowlist do ambiente de nuvem</b></td><td><span class="pill warn2">N/D na nuvem</span></td></tr>
 </table>
 <div class="note">A coleta online não pôde ser exercitada no ambiente de nuvem
 porque o proxy só libera registries de pacote (bloqueio de política, HTTP 403
@@ -492,7 +510,7 @@ stdlib e tolerante a falha; rode na sua máquina/rede para a coleta real. Todo o
 restante foi validado offline com dados sintéticos rotulados (ground truth).</div>
 
 <footer>
-VÉRTICE v1.0 · família DEIVOSINT · Attack Surface Mapping &amp; Intelligence Gathering<br>
+VÉRTICE v2.0 · família DEIVOSINT · Attack Surface Mapping &amp; Intelligence Gathering<br>
 Passivo por padrão. Use apenas sobre ativos que você está autorizado a investigar.
 </footer>
 </main>

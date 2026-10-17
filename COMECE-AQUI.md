@@ -3,8 +3,9 @@
 [Abra o notebook Colab](https://colab.research.google.com/github/Ridd1kulusC0d3r/VeRTICE/blob/main/notebooks/VeRTICE_Colab.ipynb)
 e selecione **Ambiente de execução → Executar tudo**. A demo é sintética, offline após
 instalação e não exige chaves. Há comparação de execuções, bancada web e exportação ZIP.
-A coleta real é opcional e vem desativada. Consulte o [README](README.md) para os novos
-comandos `runs`, `diff`, `import` e `collectors` e os limites de validação.
+A coleta real é opcional e vem desativada. Consulte o [README](README.md) para os
+comandos `runs`/`rundiff` (histórico), `import`/`ingest` (FAROL e scanners),
+`export`, `snapshot`/`diff` e `collectors`, e os limites de validação.
 
 ---
 
@@ -73,7 +74,7 @@ de pivô e a verificação da cadeia de custódia.
 python3 -m vertice verify demo-vertice
 ```
 
-**Esperado:** `[ok] cadeia íntegra — 51 registros`. Isso prova que nenhuma
+**Esperado:** `[ok] cadeia íntegra — 61 registros`. Isso prova que nenhuma
 evidência foi adulterada (cada registro é selado por SHA-256 encadeado).
 
 ➡️ Funcionou? Você já domina o básico. Vá ao Passo 4 quando quiser investigar de verdade.
@@ -105,6 +106,25 @@ evidência foi adulterada (cada registro é selado por SHA-256 encadeado).
 
 **Pronto.** Para o manual completo (ilustrado, com telas, diagramas e solução de
 problemas), abra **`docs/manual.html`** no navegador.
+
+---
+
+## ✅ Passo 5 — recursos v2 (quando quiser ir além)
+
+```
+# importar o que o FAROL achou dentro dos hosts (JSONL)
+python3 -m vertice import meu-caso --farol farol.jsonl
+
+# exportar para a próxima fase / plataforma CTI
+python3 -m vertice export meu-caso --format nmap -o alvos.txt   # nmap -iL alvos.txt
+python3 -m vertice export meu-caso --format stix -o caso.stix.json
+
+# o que mudou na superfície desde a última varredura?
+python3 -m vertice diff meu-caso
+
+# navegar tudo no browser (bancada interativa)
+python3 -m vertice bench meu-caso
+```
 
 ---
 

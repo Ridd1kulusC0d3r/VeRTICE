@@ -354,3 +354,62 @@ O VÉRTICE **não é** mais um enumerador de subdomínio. É a convergência:
 
 Passivo por padrão, stdlib-only, com dossiê pronto para entregar e um ledger de
 evidências que aguenta escrutínio. É isso que o código a seguir implementa.
+
+---
+
+# Apêndice v2 — novas engenharias reversas e integrações
+
+A v2 amplia o conjunto com mais três referências reimplementadas e a costura
+com a ferramenta irmã FAROL.
+
+## 14. Shodan InternetDB
+
+**O que faz.** `https://internetdb.shodan.io/{ip}` devolve, **sem chave e de
+graça**, as portas abertas, CPEs (produtos), hostnames, tags e **CVEs
+conhecidas** de um IP — tudo a partir da varredura que o Shodan já fez.
+
+**Padrão essencial — VULNERABILIDADE PASSIVA.** *Dá para saber o que está aberto
+e quais CVEs batem, sem tocar o alvo e sem conta.* É o "serviço+vulnerabilidade"
+do ZoomEye/Censys, democratizado.
+
+**No VÉRTICE.** `collectors/internetdb.py`: semente IP → nós `port`, `cpe`,
+`vulnerability`, `host`. Alimenta diretamente o scoring v2 (CVE tem peso alto).
+
+## 15. RIPEstat (RIPE NCC)
+
+**O que faz.** API de dados aberta (`stat.ripe.net`) com roteamento global: de um
+IP → prefixo e ASN; de um ASN → holder e prefixos anunciados.
+
+**Padrão essencial — ASN/NETBLOCK SEM CHAVE.** Reimplementa o eixo de
+roteamento do Amass/BGP.he.net via fonte pública e estável.
+
+**No VÉRTICE.** `collectors/asn_bgp.py`: semente IP/ASN → `netblock`, `asn`,
+`organization`. Base da correlação por netblock/ASN em `intel.correlate`.
+
+## 16. Photon (s0md3v) → FAROL
+
+**O que faz (Photon).** Crawler OSINT que, a partir de uma URL, extrai endpoints,
+parâmetros, e-mails, arquivos, chaves e segredos "dentro" do site.
+
+**Padrão essencial — SUPERFÍCIE INTERNA.** Enquanto o VÉRTICE descobre *quais*
+hosts existem, o Photon descreve *o que há dentro* de cada um.
+
+**No VÉRTICE.** O usuário reescreveu o Photon como **FAROL** (Go, moderno, estilo
+katana/ProjectDiscovery, SHA-256 por resposta, saída JSONL). O VÉRTICE não
+recria o FAROL — ele **o integra**: `importers/farol.py` lê o JSONL e costura
+`endpoint`/`parameter`/`form`/`email`/`secret` ao host no grafo. **Decisão de
+projeto responsável:** o valor de um segredo nunca é persistido — guarda-se só o
+rótulo (`segredo:<tipo>@<host>`) e `redacted: true`. O VÉRTICE descobre os
+hosts; o FAROL descreve o que há dentro; o grafo une os dois.
+
+## Padrão 9 — INTELIGÊNCIA SOBRE O GRAFO
+
+A v2 acrescenta um nono padrão, que não é coleta e sim **análise** do que já foi
+coletado, e que nenhuma das 16 ferramentas entrega junto:
+
+> **Confiança por corroboração + diff de superfície + correlação.** Cada fato
+> ganha uma confiança que cresce com o número de fontes independentes; dois
+> snapshots viram um *diff* (o que surgiu/sumiu na superfície — detecção de
+> mudança); e o grafo é varrido em busca de ativos do mesmo dono por pista
+> compartilhada (co-hospedagem, ASN, favicon). É o que transforma uma lista de
+> achados em inteligência acionável — e fecha o ciclo com o scoring de pentest.

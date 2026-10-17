@@ -32,6 +32,9 @@ class Workspace:
         self.evidence_path = os.path.join(self.path, "evidence.db")
         self.cred_path = os.path.join(self.path, "credentials.json")
         self.meta_path = os.path.join(self.path, "meta.json")
+        self.config_path = os.path.join(self.path, "config.json")
+        self.snapshots_dir = os.path.join(self.path, "snapshots")
+        os.makedirs(self.snapshots_dir, exist_ok=True)
         self.graph = self._load_graph()
         self.evidence = EvidenceLedger(self.evidence_path)
         self.meta = self._load_meta()
@@ -139,6 +142,39 @@ class Workspace:
                 if "/" not in item and (v == item or v.endswith("." + item)):
                     return True
         return False
+
+    # --- config de collectors (enable/disable, pesos, rate-limit) ------ #
+    def config(self) -> Dict:
+        if os.path.exists(self.config_path):
+            with open(self.config_path, encoding="utf-8") as fh:
+                return json.load(fh)
+        return {"disabled": [], "rate_limit_s": {}, "weights": {}}
+
+    def save_config(self, cfg: Dict):
+        with open(self.config_path, "w", encoding="utf-8") as fh:
+            json.dump(cfg, fh, indent=2, ensure_ascii=False)
+
+    # --- snapshots (para diff de superfície) --------------------------- #
+    def save_snapshot(self, label: Optional[str] = None) -> str:
+        """Congela o grafo atual num snapshot timestampado. Devolve o nome."""
+        ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        safe = "".join(c for c in (label or "snap")
+                       if c.isalnum() or c in "-_")[:40]
+        name = f"{ts}_{safe}.json"
+        with open(os.path.join(self.snapshots_dir, name), "w",
+                  encoding="utf-8") as fh:
+            fh.write(self.graph.to_json())
+        return name
+
+    def list_snapshots(self) -> List[str]:
+        if not os.path.isdir(self.snapshots_dir):
+            return []
+        return sorted(f for f in os.listdir(self.snapshots_dir)
+                      if f.endswith(".json"))
+
+    def load_snapshot(self, name: str) -> Graph:
+        with open(os.path.join(self.snapshots_dir, name), encoding="utf-8") as fh:
+            return Graph.from_dict(json.load(fh))
 
     def save(self):
         self.save_graph()

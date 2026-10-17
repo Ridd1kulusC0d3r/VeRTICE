@@ -132,5 +132,132 @@ class TestAttackSurface(unittest.TestCase):
         self.assertGreater(len(html), 10000)
 
 
+class TestV2Collectors(unittest.TestCase):
+    def test_all_registered(self):
+        import vertice.collectors as c
+        for name in ("internetdb", "asn", "emailsec", "tlscert", "dorks"):
+            self.assertIn(name, c.REGISTRY)
+
+    def test_new_entity_types(self):
+        from vertice.core.entities import make, T_PORT, T_VULN
+        self.assertEqual(make("1.2.3.4:443", T_PORT).etype, T_PORT)
+        self.assertEqual(make("CVE-2021-44228", T_VULN).etype, T_VULN)
+
+
+class TestConfidence(unittest.TestCase):
+    def test_corroboration(self):
+        from vertice.core.graph import Graph
+        g = Graph()
+        g.add("exemplo.com", "domain", source="crtsh")
+        n = g.add("exemplo.com", "domain", source="dns")   # 2ª fonte
+        self.assertAlmostEqual(n.confidence, 0.75, places=2)
+        seed = g.add("alvo.com", "domain", source="seed")
+        self.assertEqual(seed.confidence, 1.0)
+
+
+class TestIntel(unittest.TestCase):
+    def setUp(self):
+        self.dir = tempfile.mkdtemp()
+        self.ws = build_demo(os.path.join(self.dir, "ws"))
+
+    def tearDown(self):
+        self.ws.close()
+
+    def test_surface_diff(self):
+        from vertice.core.intel import surface_diff
+        import copy
+        old = self.ws.graph
+        new = Graph.from_dict(copy.deepcopy(old.to_dict()))
+        new.add("inedito.aurora.example", "host", source="crtsh")
+        d = surface_diff(old, new)
+        self.assertEqual(d["summary"]["added"], 1)
+        self.assertIn("host:inedito.aurora.example", d["added"])
+
+    def test_correlate_favicon_cluster(self):
+        from vertice.core.intel import correlate
+        clusters = correlate(self.ws.graph)
+        # favicon compartilhado por >=2 hosts na demo
+        self.assertTrue(any(c["count"] >= 2
+                            for c in clusters["by_favicon"]))
+
+    def test_risk_signals_vuln(self):
+        from vertice.core.intel import risk_signals
+        api = self.ws.graph.get("api.aurora.example", "host")
+        sig = risk_signals(self.ws.graph, api.key)
+        self.assertIn("CVE-2021-44228", sig["vulns"])
+
+
+class TestExporters(unittest.TestCase):
+    def setUp(self):
+        self.dir = tempfile.mkdtemp()
+        self.ws = build_demo(os.path.join(self.dir, "ws"))
+
+    def tearDown(self):
+        self.ws.close()
+
+    def test_all_formats(self):
+        from vertice.report.exporters import export, EXPORTERS
+        for fmt in EXPORTERS:
+            out = export(self.ws.graph, fmt)
+            self.assertIsInstance(out, str)
+
+    def test_stix_valid(self):
+        import json as _json
+        from vertice.report.exporters import to_stix
+        b = _json.loads(to_stix(self.ws.graph))
+        self.assertEqual(b["type"], "bundle")
+        types = {o["type"] for o in b["objects"]}
+        self.assertIn("indicator", types)
+        self.assertIn("vulnerability", types)
+
+    def test_stix_no_injection(self):
+        # garante escaping básico de aspas no pattern
+        from vertice.report.exporters import to_stix
+        self.ws.graph.add("a'b.exemplo.com", "domain", source="t")
+        out = to_stix(self.ws.graph)
+        self.assertIn("\\'", out)
+
+
+class TestFarolImport(unittest.TestCase):
+    def setUp(self):
+        self.dir = tempfile.mkdtemp()
+        self.ws = build_demo(os.path.join(self.dir, "ws"))
+
+    def tearDown(self):
+        self.ws.close()
+
+    def test_secret_redaction(self):
+        from vertice.importers import import_farol_jsonl
+        path = os.path.join(self.dir, "farol.jsonl")
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write('{"type":"secret","host":"api.aurora.example",'
+                     '"kind":"aws_key","value":"AKIAIOSFODNN7EXAMPLE"}\n')
+            fh.write('{"type":"endpoint","host":"api.aurora.example",'
+                     '"value":"https://api.aurora.example/v1/x"}\n')
+        stats = import_farol_jsonl(self.ws, path)
+        self.assertEqual(stats["imported"], 2)
+        # o VALOR do segredo nunca pode aparecer no grafo nem no ledger
+        self.assertNotIn("AKIAIOSFODNN7EXAMPLE", self.ws.graph.to_json())
+        leak = any("AKIAIOSFODNN7EXAMPLE" in r["data"]
+                   for r in self.ws.evidence.all())
+        self.assertFalse(leak)
+
+
+class TestSnapshots(unittest.TestCase):
+    def test_save_and_diff(self):
+        import copy
+        from vertice.core.intel import surface_diff
+        d = tempfile.mkdtemp()
+        ws = build_demo(os.path.join(d, "ws"))
+        snaps = ws.list_snapshots()
+        self.assertGreaterEqual(len(snaps), 1)
+        ws.graph.add("x.aurora.example", "host", source="crtsh")
+        s2 = ws.save_snapshot(label="t")
+        old = ws.load_snapshot(snaps[0])
+        new = ws.load_snapshot(s2)
+        self.assertEqual(surface_diff(old, new)["summary"]["added"], 1)
+        ws.close()
+
+
 if __name__ == "__main__":
     unittest.main()

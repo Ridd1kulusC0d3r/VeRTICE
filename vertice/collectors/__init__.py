@@ -14,5 +14,11 @@ from . import web_fingerprint  # noqa: F401,E402
 from . import archive        # noqa: F401,E402
 from . import ioc_pivot      # noqa: F401,E402
 from . import cyberspace     # noqa: F401,E402
+# --- novos na v2 --- #
+from . import internetdb     # noqa: F401,E402
+from . import asn_bgp        # noqa: F401,E402
+from . import email_sec      # noqa: F401,E402
+from . import tls_cert       # noqa: F401,E402
+from . import dorks          # noqa: F401,E402
 
 __all__ = ["Collector", "REGISTRY", "register"]

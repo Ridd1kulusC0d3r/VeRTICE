@@ -1,0 +1,485 @@
+{
+  "type": "bundle",
+  "id": "bundle--7a2307f8-fe33-4282-92a6-c46550c2b0f6",
+  "objects": [
+    {
+      "type": "identity",
+      "spec_version": "2.1",
+      "id": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "name": "VÉRTICE",
+      "identity_class": "system"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--c638f8c6-fb5c-4dcc-947e-676e64f4a46a",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "domain: aurora.example",
+      "pattern": "[domain-name:value = 'aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.618372+00:00",
+      "labels": [
+        "seed"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--36c1c1af-5054-4498-a55c-127220162b53",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "host: aurora.example",
+      "pattern": "[domain-name:value = 'aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.620654+00:00",
+      "labels": [
+        "crtsh",
+        "dns"
+      ],
+      "confidence": 75
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--ec15e503-9943-4961-8752-57c1785b0924",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "ip: 192.0.2.10",
+      "pattern": "[ipv4-addr:value = '192.0.2.10']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.621731+00:00",
+      "labels": [
+        "dns"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--0bf99ce5-0764-4501-b17b-1703eb22654d",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "host: www.aurora.example",
+      "pattern": "[domain-name:value = 'www.aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.627336+00:00",
+      "labels": [
+        "crtsh",
+        "dns",
+        "wayback"
+      ],
+      "confidence": 88
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--2ce3ad68-6209-47a6-b179-b7f3c738a085",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "host: api.aurora.example",
+      "pattern": "[domain-name:value = 'api.aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.631213+00:00",
+      "labels": [
+        "crtsh",
+        "dns"
+      ],
+      "confidence": 75
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--7fb1dde2-85c4-469e-97f2-fe48e6357289",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "ip: 192.0.2.11",
+      "pattern": "[ipv4-addr:value = '192.0.2.11']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.632068+00:00",
+      "labels": [
+        "dns"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--6096f2d9-eae6-4e6c-8d66-58be9ee91e6e",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "host: admin.aurora.example",
+      "pattern": "[domain-name:value = 'admin.aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.635101+00:00",
+      "labels": [
+        "crtsh",
+        "dns"
+      ],
+      "confidence": 75
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--4e53eebe-cf89-4c88-9a93-8b05b85d548a",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "ip: 192.0.2.12",
+      "pattern": "[ipv4-addr:value = '192.0.2.12']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.635914+00:00",
+      "labels": [
+        "dns"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--6200e7a6-af24-49c7-ba55-b18146ea0986",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "host: vpn.aurora.example",
+      "pattern": "[domain-name:value = 'vpn.aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.639777+00:00",
+      "labels": [
+        "crtsh",
+        "dns"
+      ],
+      "confidence": 75
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--667d876d-04b4-4252-a123-6366d7c7d002",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "ip: 198.51.100.5",
+      "pattern": "[ipv4-addr:value = '198.51.100.5']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.640692+00:00",
+      "labels": [
+        "dns"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--14dbdecd-07f4-41e7-8b54-364b8fbe2d4b",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "host: hml.aurora.example",
+      "pattern": "[domain-name:value = 'hml.aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.642598+00:00",
+      "labels": [
+        "crtsh"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--3654730b-ffbd-4847-804c-32920f061c5a",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "ip: 192.0.2.13",
+      "pattern": "[ipv4-addr:value = '192.0.2.13']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.644254+00:00",
+      "labels": [
+        "dns"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--7ff56458-cea8-491c-b046-2923c3b60e89",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "host: mail.aurora.example",
+      "pattern": "[domain-name:value = 'mail.aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.646870+00:00",
+      "labels": [
+        "dns",
+        "rdap"
+      ],
+      "confidence": 75
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--697900ea-ee9e-4332-93bb-628e03a3a55d",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "ip: 203.0.113.25",
+      "pattern": "[ipv4-addr:value = '203.0.113.25']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.647654+00:00",
+      "labels": [
+        "dns"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--eda6dcd0-19bf-477a-9912-855d2ad6393a",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "host: gitlab.aurora.example",
+      "pattern": "[domain-name:value = 'gitlab.aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.649348+00:00",
+      "labels": [
+        "crtsh"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--15d57bb6-a19e-4285-a4f3-022a9f1e2806",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "ip: 192.0.2.14",
+      "pattern": "[ipv4-addr:value = '192.0.2.14']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.650176+00:00",
+      "labels": [
+        "dns"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--74b6b1f3-6ea5-43a0-97eb-75083001fa0b",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "host: old.aurora.example",
+      "pattern": "[domain-name:value = 'old.aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.652683+00:00",
+      "labels": [
+        "wayback"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--a4db8ced-94ae-4124-9086-dbbe370f5427",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "host: legacy.aurora.example",
+      "pattern": "[domain-name:value = 'legacy.aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.653806+00:00",
+      "labels": [
+        "wayback"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--724f9b57-7732-4b35-92ca-807c2b52d8b3",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "host: cdn.aurora.example",
+      "pattern": "[domain-name:value = 'cdn.aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.655269+00:00",
+      "labels": [
+        "crtsh",
+        "dns"
+      ],
+      "confidence": 75
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--ba7bb143-94ab-4103-8652-35d84e58de05",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "ip: 198.51.100.80",
+      "pattern": "[ipv4-addr:value = '198.51.100.80']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.657840+00:00",
+      "labels": [
+        "dns"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--ed22b02a-91e4-4d70-a9e0-b156afdd41a9",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "host: blog.aurora.example",
+      "pattern": "[domain-name:value = 'blog.aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.661248+00:00",
+      "labels": [
+        "crtsh",
+        "dns"
+      ],
+      "confidence": 75
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--2a82f0a5-2b4b-4259-9311-63c4733a5e9f",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "email: ti@aurora.example",
+      "pattern": "[email-addr:value = 'ti@aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.667172+00:00",
+      "labels": [
+        "rdap"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--fda416d7-278e-46d4-bca8-cd2a9ece1ccc",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "email: noc@aurora.example",
+      "pattern": "[email-addr:value = 'noc@aurora.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.668368+00:00",
+      "labels": [
+        "rdap"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--a21a4023-733f-479a-930a-15a8b52c8408",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "url: https://aurora.example/wp-login.php",
+      "pattern": "[url:value = 'https://aurora.example/wp-login.php']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.669510+00:00",
+      "labels": [
+        "wayback"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--edeac320-d357-4a9b-88a1-256279608fdd",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "url: https://old.aurora.example/backup.zip",
+      "pattern": "[url:value = 'https://old.aurora.example/backup.zip']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.670331+00:00",
+      "labels": [
+        "wayback"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--46ebe36c-3775-4429-9d43-590c1227b410",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "url: https://api.aurora.example/v1/health",
+      "pattern": "[url:value = 'https://api.aurora.example/v1/health']",
+      "pattern_type": "stix",
+      "valid_from": "2026-10-17T11:08:37.671943+00:00",
+      "labels": [
+        "wayback"
+      ],
+      "confidence": 50
+    },
+    {
+      "type": "vulnerability",
+      "spec_version": "2.1",
+      "id": "vulnerability--1befd503-df00-434f-bea6-ed4403044bd7",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "CVE-2021-44228",
+      "external_references": [
+        {
+          "source_name": "cve",
+          "external_id": "CVE-2021-44228"
+        }
+      ]
+    },
+    {
+      "type": "vulnerability",
+      "spec_version": "2.1",
+      "id": "vulnerability--262daedd-874d-4422-a4d7-76da6366a894",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "CVE-2017-5638",
+      "external_references": [
+        {
+          "source_name": "cve",
+          "external_id": "CVE-2017-5638"
+        }
+      ]
+    },
+    {
+      "type": "vulnerability",
+      "spec_version": "2.1",
+      "id": "vulnerability--da81923b-ca70-463f-86cf-35954b98d732",
+      "created": "2026-10-17T11:08:37.000Z",
+      "modified": "2026-10-17T11:08:37.000Z",
+      "created_by_ref": "identity--353ede98-29f6-4cd9-9d9e-8ec93f11b45a",
+      "name": "CVE-2019-0708",
+      "external_references": [
+        {
+          "source_name": "cve",
+          "external_id": "CVE-2019-0708"
+        }
+      ]
+    }
+  ]
+}

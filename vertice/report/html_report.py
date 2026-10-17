@@ -22,6 +22,8 @@ from typing import Dict
 from .graph_svg import render_graph_svg
 from .pentest_prep import build_attack_surface
 from ..pivots.registry import pivots_for
+from ..core.intel import correlate
+from ..core.entities import T_VULN, T_FINDING
 
 _CSS = """
 :root{--bg:#f8fafc;--card:#ffffff;--fg:#0f172a;--muted:#64748b;
@@ -54,6 +56,9 @@ th{color:var(--muted);font-weight:600;position:sticky;top:0;background:var(--car
 .chip{display:inline-block;background:var(--chip);color:var(--brand);
 border-radius:999px;padding:1px 9px;font-size:11px;margin:1px 2px}
 .chip.tech{background:#fff7ed;color:#c2410c}
+.chip.bad-chip{background:#fef2f2;color:#b91c1c}
+.sev-high{color:#b91c1c;font-weight:700}.sev-medium{color:#d97706}
+.sev-low{color:#16a34a}
 .score{font-weight:700}.score.hi{color:var(--warn)}.score.md{color:#d97706}
 .score.lo{color:var(--muted)}
 a{color:var(--brand);text-decoration:none}a:hover{text-decoration:underline}
@@ -124,6 +129,7 @@ def render_report(workspace) -> str:
     s = surface["summary"]
     kpis = [("Hosts/domínios", s["hosts"]), ("Com IP observado", s["live"]),
             ("Com serviços", s["with_services"]),
+            ("Com vulns", s.get("with_vulns", 0)),
             ("Alta prioridade", s["high_priority"]),
             ("Nós no grafo", len(g.nodes)), ("Arestas", len(g.edges)),
             ("Evidências", workspace.evidence.count())]
@@ -180,7 +186,8 @@ def render_report(workspace) -> str:
                "oninput=\"vfilter('tgt',this)\">")
     out.append("<div style='max-height:520px;overflow:auto'>"
                "<table id='tgt'><thead><tr><th>Score</th><th>Host</th>"
-               "<th>IPs</th><th>Tecnologias</th><th>Serviços</th>"
+               "<th>Conf.</th><th>IPs</th><th>Tecnologias</th>"
+               "<th>Serviços/Portas</th><th>Vulns</th>"
                "<th>Fontes</th></tr></thead><tbody>")
     for t in surface["targets"]:
         sc = t["score"]
@@ -188,15 +195,64 @@ def render_report(workspace) -> str:
                         for x in t["technologies"])
         svcs = "".join(f"<span class='chip'>{e(x)}</span>"
                        for x in t["services"]) or "—"
+        vulns = "".join(f"<span class='chip bad-chip'>{e(x)}</span>"
+                        for x in t.get("vulns", [])) or "—"
         ips = "<br>".join(e(i) for i in t["ips"]) or "—"
         srcs = "".join(f"<span class='chip'>{e(x)}</span>" for x in t["sources"])
         why = "; ".join(e(w) for w in t["rationale"])
+        conf = t.get("confidence", 0.0)
         out.append(
             f"<tr><td class='score {_score_class(sc)}'>{sc}"
             f"<br><span class='sub' style='font-weight:400'>{why}</span></td>"
-            f"<td><b>{e(t['host'])}</b></td><td>{ips}</td>"
-            f"<td>{techs or '—'}</td><td>{svcs}</td><td>{srcs}</td></tr>")
+            f"<td><b>{e(t['host'])}</b></td>"
+            f"<td><span class='sub'>{conf:.2f}</span></td><td>{ips}</td>"
+            f"<td>{techs or '—'}</td><td>{svcs}</td><td>{vulns}</td>"
+            f"<td>{srcs}</td></tr>")
     out.append("</tbody></table></div></div>")
+
+    # vulnerabilidades & postura (v2)
+    vulns = g.entities(T_VULN)
+    posture = g.entities(T_FINDING)
+    if vulns or posture:
+        out.append("<h2>Vulnerabilidades e postura</h2><div class='card'>")
+        if vulns:
+            out.append("<b>CVEs observadas (InternetDB/Shodan):</b><br>")
+            for v in sorted(vulns, key=lambda n: n.value):
+                hosts = [k.split(":", 1)[1] for k, _ in g.neighbors_in(v.key)]
+                out.append(
+                    f"<div><span class='chip bad-chip'>{e(v.value)}</span> "
+                    f"<a href='https://nvd.nist.gov/vuln/detail/{e(v.value)}' "
+                    f"target='_blank' rel='noopener'>NVD</a> "
+                    f"<span class='sub'>{e(', '.join(sorted(set(hosts))[:8]))}</span></div>")
+        if posture:
+            out.append("<br><b>Postura (SPF/DMARC):</b><table><thead><tr>"
+                       "<th>Achado</th><th>Controle</th><th>Severidade</th>"
+                       "</tr></thead><tbody>")
+            for p in sorted(posture, key=lambda n: n.attrs.get("severity", "")):
+                sev = p.attrs.get("severity", "—")
+                out.append(f"<tr><td>{e(p.value)}</td>"
+                           f"<td>{e(p.attrs.get('control','—'))}</td>"
+                           f"<td class='sev-{e(sev)}'>{e(sev)}</td></tr>")
+            out.append("</tbody></table>")
+        out.append("</div>")
+
+    # correlação / clusters (v2)
+    clusters = correlate(g)
+    has_cluster = any(clusters[k] for k in clusters)
+    if has_cluster:
+        labels = {"by_ip": "Co-hospedagem (mesmo IP)",
+                  "by_netblock": "Mesmo netblock", "by_asn": "Mesmo ASN",
+                  "by_favicon": "Mesmo favicon"}
+        out.append("<h2>Correlação de ativos (clusters)</h2><div class='card'>"
+                   "<div class='sub'>Hosts que compartilham pista — provável "
+                   "mesmo dono/infra (pivô estilo FOFA/Censys sobre o grafo).</div>")
+        for bucket, label in labels.items():
+            for cl in clusters.get(bucket, [])[:10]:
+                out.append(
+                    f"<details><summary>{e(label)}: <code>{e(cl['pivot'])}</code> "
+                    f"<span class='sub'>({cl['count']} hosts)</span></summary>"
+                    f"<div>{e(', '.join(cl['hosts']))}</div></details>")
+        out.append("</div>")
 
     # por tecnologia
     if surface["by_technology"]:
@@ -225,6 +281,21 @@ def render_report(workspace) -> str:
     if len(pivotable) == 0:
         out.append("<div class='sub'>Sem entidades pivotáveis.</div>")
     out.append("</div>")
+
+    # dorks (Google/Bing/GitHub) — anexados pelo collector 'dorks'
+    dork_nodes = [n for n in g.nodes.values() if n.attrs.get("dorks")]
+    if dork_nodes:
+        out.append("<h2>Dorks de busca (Google/Bing/GitHub)</h2>"
+                   "<div class='card'>")
+        for node in dork_nodes[:5]:
+            out.append(f"<details><summary><code>{e(node.value)}</code> "
+                       f"<span class='sub'>({len(node.attrs['dorks'])} dorks)"
+                       f"</span></summary><div class='pivots'>")
+            for d in node.attrs["dorks"]:
+                out.append(f"<a href='{e(d['url'])}' target='_blank' "
+                           f"rel='noopener'>[{e(d['engine'])}] {e(d['label'])}</a>")
+            out.append("</div></details>")
+        out.append("</div>")
 
     # e-mails / netblocks
     if surface["emails"] or surface["netblocks"]:

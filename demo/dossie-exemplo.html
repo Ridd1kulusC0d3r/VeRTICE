@@ -32,6 +32,9 @@ th{color:var(--muted);font-weight:600;position:sticky;top:0;background:var(--car
 .chip{display:inline-block;background:var(--chip);color:var(--brand);
 border-radius:999px;padding:1px 9px;font-size:11px;margin:1px 2px}
 .chip.tech{background:#fff7ed;color:#c2410c}
+.chip.bad-chip{background:#fef2f2;color:#b91c1c}
+.sev-high{color:#b91c1c;font-weight:700}.sev-medium{color:#d97706}
+.sev-low{color:#16a34a}
 .score{font-weight:700}.score.hi{color:var(--warn)}.score.md{color:#d97706}
 .score.lo{color:var(--muted)}
 a{color:var(--brand);text-decoration:none}a:hover{text-decoration:underline}
@@ -45,40 +48,71 @@ footer{color:var(--muted);font-size:12px;margin-top:30px;text-align:center}
 pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}
 code{overflow-wrap:anywhere;background:var(--chip);padding:1px 5px;border-radius:5px;font-size:12px}
 </style></head><body><div class='wrap'>
-<header class='top'><svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="46" fill="#2563eb"/><path d="M50 18 L78 70 L22 70 Z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/><circle cx="50" cy="18" r="6" fill="#fde047"/><circle cx="78" cy="70" r="6" fill="#22d3ee"/><circle cx="22" cy="70" r="6" fill="#22d3ee"/></svg><div><h1>VÉRTICE — Dossiê de Superfície de Ataque</h1><div class='sub'>Engajamento: <b>Aurora Pagamentos (DEMO sintético)</b> · gerado em 2026-10-15 12:43 UTC</div></div></header>
-<div class='card'><table><tr><th>Escopo autorizado</th><td><code>aurora.example</code></td></tr><tr><th>Autorizado por</th><td>Caso de demonstração — dados fictícios (RFC 2606/5737)</td></tr><tr><th>Criado</th><td>2026-10-15T12:43:57.891402+00:00</td></tr><tr><th>Notas</th><td>Workspace gerado offline por demo_data.py. Ground truth para testes.</td></tr></table></div>
+<header class='top'><svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="46" fill="#2563eb"/><path d="M50 18 L78 70 L22 70 Z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/><circle cx="50" cy="18" r="6" fill="#fde047"/><circle cx="78" cy="70" r="6" fill="#22d3ee"/><circle cx="22" cy="70" r="6" fill="#22d3ee"/></svg><div><h1>VÉRTICE — Dossiê de Superfície de Ataque</h1><div class='sub'>Engajamento: <b>Aurora Pagamentos (DEMO sintético)</b> · gerado em 2026-10-17 11:08 UTC</div></div></header>
+<div class='card'><table><tr><th>Escopo autorizado</th><td><code>aurora.example</code></td></tr><tr><th>Autorizado por</th><td>Caso de demonstração — dados fictícios (RFC 2606/5737)</td></tr><tr><th>Criado</th><td>2026-10-17T11:08:37.618216+00:00</td></tr><tr><th>Notas</th><td>Workspace gerado offline por demo_data.py. Ground truth para testes.</td></tr></table></div>
 <div class='kpis'>
 <div class='kpi'><div class='n'>13</div><div class='l'>Hosts/domínios</div></div>
 <div class='kpi'><div class='n'>10</div><div class='l'>Com IP observado</div></div>
 <div class='kpi'><div class='n'>5</div><div class='l'>Com serviços</div></div>
+<div class='kpi'><div class='n'>2</div><div class='l'>Com vulns</div></div>
 <div class='kpi'><div class='n'>6</div><div class='l'>Alta prioridade</div></div>
-<div class='kpi'><div class='n'>42</div><div class='l'>Nós no grafo</div></div>
-<div class='kpi'><div class='n'>51</div><div class='l'>Arestas</div></div>
-<div class='kpi'><div class='n'>51</div><div class='l'>Evidências</div></div>
+<div class='kpi'><div class='n'>52</div><div class='l'>Nós no grafo</div></div>
+<div class='kpi'><div class='n'>63</div><div class='l'>Arestas</div></div>
+<div class='kpi'><div class='n'>61</div><div class='l'>Evidências</div></div>
 </div>
-<h2>Cadeia de custódia (SHA-256)</h2><div class='card'><span class='pill ok'>✓ íntegra — 51 registros</span> <code>head: 5ae4839ae75319c4…</code><div class='sub'>Cada evidência referencia o hash da anterior; alterações internas são verificáveis. Remoção do final ou reescrita total exigem comparar com um head guardado externamente.</div></div>
+<h2>Cadeia de custódia (SHA-256)</h2><div class='card'><span class='pill ok'>✓ íntegra — 61 registros</span> <code>head: 5c7edc5f88050759…</code><div class='sub'>Cada evidência referencia o hash da anterior; alterações internas são verificáveis. Remoção do final ou reescrita total exigem comparar com um head guardado externamente.</div></div>
 <h2>Execuções e cobertura</h2><div class='card'>
 Sem execuções registradas (workspace legado ou demonstração original).
 </div><h2>Por que este vínculo existe?</h2><div class='card'><p>Uma associação não comprova propriedade. IP compartilhado e tecnologia detectada exigem validação. Não reobservado não significa removido.</p>
-<details><summary>favicon:vfav:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6 · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.895732+00:00<br>Observado na fonte: não informado<br>Evidência: <code>5ae4839ae75319c47bd2a1a54c9e1603ee1d963504c03fe19a07ca4bc1fee452</code></p><pre>{
+<details><summary>finding:SPF presente em aurora.example · emailsec</summary><p>Coletado: 2026-10-17T11:08:37.684510+00:00<br>Observado na fonte: não informado<br>Evidência: <code>5c7edc5f88050759b164373b030faeeee1669bc123b974a71ec4209e1c22dd1b</code></p><pre>{
+  &quot;severity&quot;: &quot;low&quot;
+}</pre></details>
+<details><summary>finding:DMARC ausente em aurora.example · emailsec</summary><p>Coletado: 2026-10-17T11:08:37.683566+00:00<br>Observado na fonte: não informado<br>Evidência: <code>05a4ef6875a38f53563b377ceef156a95d10c02312a4cf1346d1324f454259e8</code></p><pre>{
+  &quot;severity&quot;: &quot;high&quot;
+}</pre></details>
+<details><summary>port:198.51.100.5:443 · internetdb</summary><p>Coletado: 2026-10-17T11:08:37.682427+00:00<br>Observado na fonte: não informado<br>Evidência: <code>f7fed9872c4341a0ce8c488cbf005e310a9a63cf68b47036da1270269f114597</code></p><pre>{
+  &quot;from&quot;: &quot;198.51.100.5&quot;
+}</pre></details>
+<details><summary>vulnerability:CVE-2019-0708 · internetdb</summary><p>Coletado: 2026-10-17T11:08:37.681257+00:00<br>Observado na fonte: não informado<br>Evidência: <code>31872a8314c989bd658d1b24304b53f4418fa9d73a0fa25a3f21ef47b26e2f1e</code></p><pre>{
+  &quot;from&quot;: &quot;192.0.2.12&quot;
+}</pre></details>
+<details><summary>vulnerability:CVE-2017-5638 · internetdb</summary><p>Coletado: 2026-10-17T11:08:37.679746+00:00<br>Observado na fonte: não informado<br>Evidência: <code>a25d97b97f682e18e7135a3359e5b5a8bbbe6836fcf67a375ebc80e4fee1968d</code></p><pre>{
+  &quot;from&quot;: &quot;192.0.2.12&quot;
+}</pre></details>
+<details><summary>port:192.0.2.12:3306 · internetdb</summary><p>Coletado: 2026-10-17T11:08:37.678702+00:00<br>Observado na fonte: não informado<br>Evidência: <code>59a01f053b229b878d2aa2130d956359d6b939f16017bec63d76b5b49a89d6b8</code></p><pre>{
+  &quot;from&quot;: &quot;192.0.2.12&quot;
+}</pre></details>
+<details><summary>port:192.0.2.12:8080 · internetdb</summary><p>Coletado: 2026-10-17T11:08:37.677649+00:00<br>Observado na fonte: não informado<br>Evidência: <code>decd0ebecf6a011456da5ddf26bfcf14e686b20398480dba359d8a59eca54eb3</code></p><pre>{
+  &quot;from&quot;: &quot;192.0.2.12&quot;
+}</pre></details>
+<details><summary>vulnerability:CVE-2021-44228 · internetdb</summary><p>Coletado: 2026-10-17T11:08:37.676670+00:00<br>Observado na fonte: não informado<br>Evidência: <code>fa7dc32fdfe0f67aab85403424bbc40fc4a09b48ea2a33391cedaf42016dc954</code></p><pre>{
+  &quot;from&quot;: &quot;192.0.2.11&quot;
+}</pre></details>
+<details><summary>port:192.0.2.11:22 · internetdb</summary><p>Coletado: 2026-10-17T11:08:37.675511+00:00<br>Observado na fonte: não informado<br>Evidência: <code>7fb50e41bd673a23424c66cc1aea3c0524d998574e7bed2370900c58846d5e5e</code></p><pre>{
+  &quot;from&quot;: &quot;192.0.2.11&quot;
+}</pre></details>
+<details><summary>port:192.0.2.11:443 · internetdb</summary><p>Coletado: 2026-10-17T11:08:37.674432+00:00<br>Observado na fonte: não informado<br>Evidência: <code>22d5227ed8680b64516e1769128b6c692518635c12a75aa064b80ef350e9b472</code></p><pre>{
+  &quot;from&quot;: &quot;192.0.2.11&quot;
+}</pre></details>
+<details><summary>favicon:vfav:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6 · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.673347+00:00<br>Observado na fonte: não informado<br>Evidência: <code>0044697cbb70d5a751d2d29843d9866d4abd0d9efff8632d8ffd850476b30ba1</code></p><pre>{
   &quot;bytes&quot;: 1150
 }</pre></details>
-<details><summary>url:https://api.aurora.example/v1/health · wayback</summary><p>Coletado: 2026-10-15T12:43:57.895603+00:00<br>Observado na fonte: não informado<br>Evidência: <code>0b0acedbf5cde12496415ea4143ea97adbcf8de9553fd9b051ce45cfcf199151</code></p><pre>{
+<details><summary>url:https://api.aurora.example/v1/health · wayback</summary><p>Coletado: 2026-10-17T11:08:37.671999+00:00<br>Observado na fonte: não informado<br>Evidência: <code>8f67b91b3c5778caf7437b154fa05d2bba34dd0e56517052d9616c7c37a74f98</code></p><pre>{
   &quot;source&quot;: &quot;wayback&quot;
 }</pre></details>
-<details><summary>url:https://old.aurora.example/backup.zip · wayback</summary><p>Coletado: 2026-10-15T12:43:57.895544+00:00<br>Observado na fonte: não informado<br>Evidência: <code>450050f1a82b1db8ed1f1d4e9d889a39d3e5bdb8d19836b0aa2640f50b7be6a2</code></p><pre>{
+<details><summary>url:https://old.aurora.example/backup.zip · wayback</summary><p>Coletado: 2026-10-17T11:08:37.670379+00:00<br>Observado na fonte: não informado<br>Evidência: <code>8b2fd1f5c5190746f3fab7f960e98c2189bb2c22510861f008e67ba1b58f1896</code></p><pre>{
   &quot;source&quot;: &quot;wayback&quot;
 }</pre></details>
-<details><summary>url:https://aurora.example/wp-login.php · wayback</summary><p>Coletado: 2026-10-15T12:43:57.895486+00:00<br>Observado na fonte: não informado<br>Evidência: <code>48d77183bce3920c091867934262bdc594a94a99db675691dda73966db12a0c8</code></p><pre>{
+<details><summary>url:https://aurora.example/wp-login.php · wayback</summary><p>Coletado: 2026-10-17T11:08:37.669542+00:00<br>Observado na fonte: não informado<br>Evidência: <code>de0dd00c46bfba2697a54c21677e6a144a1ea8ebf4654b86946d53b1da4acde9</code></p><pre>{
   &quot;source&quot;: &quot;wayback&quot;
 }</pre></details>
-<details><summary>email:noc@aurora.example · rdap</summary><p>Coletado: 2026-10-15T12:43:57.895419+00:00<br>Observado na fonte: não informado<br>Evidência: <code>14c0a29c97e1b29764e556f0f0fcf8a27912881b7b5edec242c1fa3b2f30f7b8</code></p><pre>{
+<details><summary>email:noc@aurora.example · rdap</summary><p>Coletado: 2026-10-17T11:08:37.668418+00:00<br>Observado na fonte: não informado<br>Evidência: <code>eef9a96f350e93f0ddd5ec4539448f837f07a2bc790d7f24f0f9ba1284069198</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;
 }</pre></details>
-<details><summary>email:ti@aurora.example · rdap</summary><p>Coletado: 2026-10-15T12:43:57.895249+00:00<br>Observado na fonte: não informado<br>Evidência: <code>0723a8db9a75fca928ee8d7d76cd1b5b1b3a52938993a9c067545d9af47510dc</code></p><pre>{
+<details><summary>email:ti@aurora.example · rdap</summary><p>Coletado: 2026-10-17T11:08:37.667248+00:00<br>Observado na fonte: não informado<br>Evidência: <code>f449de01adf45b5eecfd4cbff1f1da2ce740739891eb03bd7ae92fbc6aee15fa</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;
 }</pre></details>
-<details><summary>netblock:192.0.2.0/24 · rdap</summary><p>Coletado: 2026-10-15T12:43:57.895173+00:00<br>Observado na fonte: não informado<br>Evidência: <code>2b6cdd7b792e216eecefe8016a134a235d4a16064a88bdaa4ee50b028e497087</code></p><pre>{
+<details><summary>netblock:192.0.2.0/24 · rdap</summary><p>Coletado: 2026-10-17T11:08:37.666190+00:00<br>Observado na fonte: não informado<br>Evidência: <code>2b506529c8d179291e93e78c8543026f22a588a89a5bc5af8cfab26f192127fb</code></p><pre>{
   &quot;members&quot;: [
     &quot;192.0.2.10&quot;,
     &quot;192.0.2.11&quot;,
@@ -87,160 +121,160 @@ Sem execuções registradas (workspace legado ou demonstração original).
     &quot;192.0.2.14&quot;
   ]
 }</pre></details>
-<details><summary>technology:WooCommerce · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.895103+00:00<br>Observado na fonte: não informado<br>Evidência: <code>c58606e2645ed084be7e5352f628d60a9c69b99c7ba9095e0fbf323cc40217f2</code></p><pre>{
+<details><summary>technology:WooCommerce · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.665212+00:00<br>Observado na fonte: não informado<br>Evidência: <code>b16f570bdf141397041773d405dde25343dce81e86be795e6c31746fa60ba792</code></p><pre>{
   &quot;from&quot;: &quot;host:blog.aurora.example&quot;
 }</pre></details>
-<details><summary>technology:WordPress · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.895042+00:00<br>Observado na fonte: não informado<br>Evidência: <code>8a9f15938f6a381362b38d1440c2109d302fc4778be431e628f75be32aea487c</code></p><pre>{
+<details><summary>technology:WordPress · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.664133+00:00<br>Observado na fonte: não informado<br>Evidência: <code>d7102030f2cb9b7e4193ecd35c5f19fdfa3cfc3879f51ba85bafbe163b4d846a</code></p><pre>{
   &quot;from&quot;: &quot;host:blog.aurora.example&quot;
 }</pre></details>
-<details><summary>ip:192.0.2.10 · dns</summary><p>Coletado: 2026-10-15T12:43:57.894978+00:00<br>Observado na fonte: não informado<br>Evidência: <code>989b553c2b2946d12a64e724c7c49a95460ba4264304c123bf84f090e8611cc3</code></p><pre>{
+<details><summary>ip:192.0.2.10 · dns</summary><p>Coletado: 2026-10-17T11:08:37.662902+00:00<br>Observado na fonte: não informado<br>Evidência: <code>897e4ec36e87092640bd4ee968f1678fd390bcbb9b68acdc9deed1d013217717</code></p><pre>{
   &quot;from&quot;: &quot;host:blog.aurora.example&quot;,
   &quot;rtype&quot;: &quot;A&quot;
 }</pre></details>
-<details><summary>host:blog.aurora.example · crtsh</summary><p>Coletado: 2026-10-15T12:43:57.894787+00:00<br>Observado na fonte: não informado<br>Evidência: <code>5bacc7e356bd70296c03e5cbde22eee6c6dce7e0cd6050474b91d79ca1863720</code></p><pre>{
+<details><summary>host:blog.aurora.example · crtsh</summary><p>Coletado: 2026-10-17T11:08:37.661313+00:00<br>Observado na fonte: não informado<br>Evidência: <code>186039057f622e1f38e8fa769b3ac57c51d55a7d0ed4bb611c0b0ce72d2b54cd</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;,
   &quot;sources&quot;: [
     &quot;crtsh&quot;,
     &quot;dns&quot;
   ]
 }</pre></details>
-<details><summary>technology:AWS CloudFront · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.894720+00:00<br>Observado na fonte: não informado<br>Evidência: <code>de58c1c0f5b131ebf426eaab725b27460466aa492a31ab84296d0fcc6ef8d1df</code></p><pre>{
+<details><summary>technology:AWS CloudFront · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.659203+00:00<br>Observado na fonte: não informado<br>Evidência: <code>3906da95b77d021cc9ccf30bbf13fab67290dbc8f74324b4f34093f94d502841</code></p><pre>{
   &quot;from&quot;: &quot;host:cdn.aurora.example&quot;
 }</pre></details>
-<details><summary>ip:198.51.100.80 · dns</summary><p>Coletado: 2026-10-15T12:43:57.894659+00:00<br>Observado na fonte: não informado<br>Evidência: <code>d3b9e63287e31843d12904f0d32a76a70ef431ff93528bc4dea56f0afd9e8794</code></p><pre>{
+<details><summary>ip:198.51.100.80 · dns</summary><p>Coletado: 2026-10-17T11:08:37.657909+00:00<br>Observado na fonte: não informado<br>Evidência: <code>d9c5fdec508db2b0cc7f3969bda4eb5802ab5702ac5523d1781c97ad3b49f6db</code></p><pre>{
   &quot;from&quot;: &quot;host:cdn.aurora.example&quot;,
   &quot;rtype&quot;: &quot;A&quot;
 }</pre></details>
-<details><summary>host:cdn.aurora.example · crtsh</summary><p>Coletado: 2026-10-15T12:43:57.894581+00:00<br>Observado na fonte: não informado<br>Evidência: <code>2474df6a6ee6f0958f98c31c178c718dfe2ff94788287d3cde0e29ab5c3ac2e0</code></p><pre>{
+<details><summary>host:cdn.aurora.example · crtsh</summary><p>Coletado: 2026-10-17T11:08:37.655320+00:00<br>Observado na fonte: não informado<br>Evidência: <code>580d40627685b11bdb19f1aa60a78a8dbc4b5345b3280d09b374d76e9f243c06</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;,
   &quot;sources&quot;: [
     &quot;crtsh&quot;,
     &quot;dns&quot;
   ]
 }</pre></details>
-<details><summary>host:legacy.aurora.example · wayback</summary><p>Coletado: 2026-10-15T12:43:57.894278+00:00<br>Observado na fonte: não informado<br>Evidência: <code>7ef84b5168b0e80ebb2fa59f03f1162150660628bc0488e9a8d11257fbe8f3b3</code></p><pre>{
+<details><summary>host:legacy.aurora.example · wayback</summary><p>Coletado: 2026-10-17T11:08:37.653854+00:00<br>Observado na fonte: não informado<br>Evidência: <code>e630389d3d8302a2ec901a0ef6605ebc618a2c2359d5a30f8d59350c1adc6e08</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;,
   &quot;sources&quot;: [
     &quot;wayback&quot;
   ]
 }</pre></details>
-<details><summary>host:old.aurora.example · wayback</summary><p>Coletado: 2026-10-15T12:43:57.894213+00:00<br>Observado na fonte: não informado<br>Evidência: <code>298213f2019ac7e6f316c93167de142cf77c5ad42710efa0796980acab383b22</code></p><pre>{
+<details><summary>host:old.aurora.example · wayback</summary><p>Coletado: 2026-10-17T11:08:37.652728+00:00<br>Observado na fonte: não informado<br>Evidência: <code>d9fe585aed021a8b47fda59bee818f1cb8d1437652e405ab52b94768ddd7a0a5</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;,
   &quot;sources&quot;: [
     &quot;wayback&quot;
   ]
 }</pre></details>
-<details><summary>service:192.0.2.14:443/https · censys</summary><p>Coletado: 2026-10-15T12:43:57.894159+00:00<br>Observado na fonte: não informado<br>Evidência: <code>e0b40bf7b50a9881a5b42fc3b74012ad5dacb297b9ed67f71d188fffc607e214</code></p><pre>{
+<details><summary>service:192.0.2.14:443/https · censys</summary><p>Coletado: 2026-10-17T11:08:37.651801+00:00<br>Observado na fonte: não informado<br>Evidência: <code>3e48800819b4fcd7541b66e55d386f320b262c326109a9fa247145b434526155</code></p><pre>{
   &quot;from&quot;: &quot;host:gitlab.aurora.example&quot;
 }</pre></details>
-<details><summary>technology:Nginx · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.894103+00:00<br>Observado na fonte: não informado<br>Evidência: <code>72e2257f699195b650ad55aea3fa9098cddf358f5c00aa2ecdd5950b3bed070e</code></p><pre>{
+<details><summary>technology:Nginx · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.651002+00:00<br>Observado na fonte: não informado<br>Evidência: <code>f4ec30f8491ea12e55a953f41101b78f47bd799952cf8db62df480d112b90c30</code></p><pre>{
   &quot;from&quot;: &quot;host:gitlab.aurora.example&quot;
 }</pre></details>
-<details><summary>ip:192.0.2.14 · dns</summary><p>Coletado: 2026-10-15T12:43:57.894047+00:00<br>Observado na fonte: não informado<br>Evidência: <code>a0cdfa3d26feadf82aa2b5cf3ec4b89257d49a2d8b0810c5364af07a3241370b</code></p><pre>{
+<details><summary>ip:192.0.2.14 · dns</summary><p>Coletado: 2026-10-17T11:08:37.650206+00:00<br>Observado na fonte: não informado<br>Evidência: <code>14e102fffef235727a3ab5829fabba8189e9bf34df45fc081851bcad5a558ed6</code></p><pre>{
   &quot;from&quot;: &quot;host:gitlab.aurora.example&quot;,
   &quot;rtype&quot;: &quot;A&quot;
 }</pre></details>
-<details><summary>host:gitlab.aurora.example · crtsh</summary><p>Coletado: 2026-10-15T12:43:57.893987+00:00<br>Observado na fonte: não informado<br>Evidência: <code>2f7a1598b9274b0e30e7762d44048ece1258f7a1fc42ea4455e5cd533b2da697</code></p><pre>{
+<details><summary>host:gitlab.aurora.example · crtsh</summary><p>Coletado: 2026-10-17T11:08:37.649383+00:00<br>Observado na fonte: não informado<br>Evidência: <code>0cf7fea46c24c4e0627b12843de7da0018ee00571db516df440c7ba36f71ef58</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;,
   &quot;sources&quot;: [
     &quot;crtsh&quot;
   ]
 }</pre></details>
-<details><summary>service:203.0.113.25:25/smtp · censys</summary><p>Coletado: 2026-10-15T12:43:57.893930+00:00<br>Observado na fonte: não informado<br>Evidência: <code>a786767d493f6e33dd80a693f1a59cf241cd289c8ccab89fc438edb3e7e581c7</code></p><pre>{
+<details><summary>service:203.0.113.25:25/smtp · censys</summary><p>Coletado: 2026-10-17T11:08:37.648495+00:00<br>Observado na fonte: não informado<br>Evidência: <code>37951faf1675758d9c68a982d6f03a7caac43c0e17d1845fb3cc3824417adf5b</code></p><pre>{
   &quot;from&quot;: &quot;host:mail.aurora.example&quot;
 }</pre></details>
-<details><summary>ip:203.0.113.25 · dns</summary><p>Coletado: 2026-10-15T12:43:57.893872+00:00<br>Observado na fonte: não informado<br>Evidência: <code>ce94b2d71bac8d80089676bb8f7850e6789089a2f6b91d4a70f72419781331a9</code></p><pre>{
+<details><summary>ip:203.0.113.25 · dns</summary><p>Coletado: 2026-10-17T11:08:37.647686+00:00<br>Observado na fonte: não informado<br>Evidência: <code>2b2e86e48db7c734b36ead866cc51ee24cd53d798c9131cfcd24f684f068def8</code></p><pre>{
   &quot;from&quot;: &quot;host:mail.aurora.example&quot;,
   &quot;rtype&quot;: &quot;A&quot;
 }</pre></details>
-<details><summary>host:mail.aurora.example · dns</summary><p>Coletado: 2026-10-15T12:43:57.893816+00:00<br>Observado na fonte: não informado<br>Evidência: <code>4f1d16fa45c96d7f119ccfee628110aa1e9614006a246aebe83d43d382b0443a</code></p><pre>{
+<details><summary>host:mail.aurora.example · dns</summary><p>Coletado: 2026-10-17T11:08:37.646914+00:00<br>Observado na fonte: não informado<br>Evidência: <code>448aab30d3a44ae443c62ae83587ad155602e47e37fcf146e09724e9ce6af006</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;,
   &quot;sources&quot;: [
     &quot;dns&quot;,
     &quot;rdap&quot;
   ]
 }</pre></details>
-<details><summary>technology:Laravel · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.893757+00:00<br>Observado na fonte: não informado<br>Evidência: <code>61fce6d43c568a70de4ae6d686db3d4fddde93cd3ba9b43862d584221c472676</code></p><pre>{
+<details><summary>technology:Laravel · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.646116+00:00<br>Observado na fonte: não informado<br>Evidência: <code>8f9e00a40195e176923dc0bd31630a12d78675d08b06cb73b0e0bfe56a5c371b</code></p><pre>{
   &quot;from&quot;: &quot;host:hml.aurora.example&quot;
 }</pre></details>
-<details><summary>technology:Nginx · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.893697+00:00<br>Observado na fonte: não informado<br>Evidência: <code>9377f108d9c04428ace8697ed7400d1682a0075825f47cee0e7180d4dac36c4e</code></p><pre>{
+<details><summary>technology:Nginx · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.645343+00:00<br>Observado na fonte: não informado<br>Evidência: <code>6b64bfeb32dd2414056cf1b53552ebfd0d90ab718aa9e0ec3fe114707b58c309</code></p><pre>{
   &quot;from&quot;: &quot;host:hml.aurora.example&quot;
 }</pre></details>
-<details><summary>ip:192.0.2.13 · dns</summary><p>Coletado: 2026-10-15T12:43:57.893636+00:00<br>Observado na fonte: não informado<br>Evidência: <code>a6bd87dd4bd0537f57c8a4ad94e7797b26b3fd6389230ce02f992c491e5df36c</code></p><pre>{
+<details><summary>ip:192.0.2.13 · dns</summary><p>Coletado: 2026-10-17T11:08:37.644299+00:00<br>Observado na fonte: não informado<br>Evidência: <code>d3467a3e1d42ee8254d6f85ea4b27320a3aada5ea72ca8f05249fa0ad0563d3c</code></p><pre>{
   &quot;from&quot;: &quot;host:hml.aurora.example&quot;,
   &quot;rtype&quot;: &quot;A&quot;
 }</pre></details>
-<details><summary>host:hml.aurora.example · crtsh</summary><p>Coletado: 2026-10-15T12:43:57.893574+00:00<br>Observado na fonte: não informado<br>Evidência: <code>be49d08d1956a13b55c6d79117ecbfa25c376c6617052c7d606139b9b703a756</code></p><pre>{
+<details><summary>host:hml.aurora.example · crtsh</summary><p>Coletado: 2026-10-17T11:08:37.643033+00:00<br>Observado na fonte: não informado<br>Evidência: <code>6e233f1755effbe1b22caca7a51e87afca47beb416fd28274a887d7cbc77f1e3</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;,
   &quot;sources&quot;: [
     &quot;crtsh&quot;
   ]
 }</pre></details>
-<details><summary>service:198.51.100.5:443/https · censys</summary><p>Coletado: 2026-10-15T12:43:57.893502+00:00<br>Observado na fonte: não informado<br>Evidência: <code>34cbbeb0613331fc083d195de5686ec0c918e474758b14518d080df1ecf8ed20</code></p><pre>{
+<details><summary>service:198.51.100.5:443/https · censys</summary><p>Coletado: 2026-10-17T11:08:37.641685+00:00<br>Observado na fonte: não informado<br>Evidência: <code>f7c05991cf77f118461f217abf1dccbec38b7a3d75659941991feec1e48732d3</code></p><pre>{
   &quot;from&quot;: &quot;host:vpn.aurora.example&quot;
 }</pre></details>
-<details><summary>ip:198.51.100.5 · dns</summary><p>Coletado: 2026-10-15T12:43:57.893366+00:00<br>Observado na fonte: não informado<br>Evidência: <code>191307326d807325f6185517be7c01764acbf8c5e6d5e580fda3e0a4974040dd</code></p><pre>{
+<details><summary>ip:198.51.100.5 · dns</summary><p>Coletado: 2026-10-17T11:08:37.640733+00:00<br>Observado na fonte: não informado<br>Evidência: <code>e179080b2aa069020afbb12ce84e896d829146175d9c8dbe6968fe243a8260bf</code></p><pre>{
   &quot;from&quot;: &quot;host:vpn.aurora.example&quot;,
   &quot;rtype&quot;: &quot;A&quot;
 }</pre></details>
-<details><summary>host:vpn.aurora.example · crtsh</summary><p>Coletado: 2026-10-15T12:43:57.893266+00:00<br>Observado na fonte: não informado<br>Evidência: <code>dd72a9918ae115b3cf828100887731a7fed21e8b3dc40f7d9ba10dae52ae7b44</code></p><pre>{
+<details><summary>host:vpn.aurora.example · crtsh</summary><p>Coletado: 2026-10-17T11:08:37.639809+00:00<br>Observado na fonte: não informado<br>Evidência: <code>70bdf66e0f08685a6d89416d3940c944bd306d25be90181ca74c7c00ac3ca1e6</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;,
   &quot;sources&quot;: [
     &quot;crtsh&quot;,
     &quot;dns&quot;
   ]
 }</pre></details>
-<details><summary>service:192.0.2.12:8080/http-alt · censys</summary><p>Coletado: 2026-10-15T12:43:57.893205+00:00<br>Observado na fonte: não informado<br>Evidência: <code>84aa914db700bf0e9a33dfde529bab2ccf60411344492615aba77eb8a7e69660</code></p><pre>{
+<details><summary>service:192.0.2.12:8080/http-alt · censys</summary><p>Coletado: 2026-10-17T11:08:37.638943+00:00<br>Observado na fonte: não informado<br>Evidência: <code>26f30aff7e33537b76aded45b8c38f2dc11454eec98ae15985efd5ef9ece07f2</code></p><pre>{
   &quot;from&quot;: &quot;host:admin.aurora.example&quot;
 }</pre></details>
-<details><summary>technology:PHP · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.893150+00:00<br>Observado na fonte: não informado<br>Evidência: <code>0efaa79fa10bc33b59db39b18a3043d17b154b9800a98f61b759b0066a63bbff</code></p><pre>{
+<details><summary>technology:PHP · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.638143+00:00<br>Observado na fonte: não informado<br>Evidência: <code>883222784c9b7c8ddbe0b6fb4ae0039553e65bf038a88d5442cfba92ea4ab372</code></p><pre>{
   &quot;from&quot;: &quot;host:admin.aurora.example&quot;
 }</pre></details>
-<details><summary>technology:Apache · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.893093+00:00<br>Observado na fonte: não informado<br>Evidência: <code>cd167a559b884420e1a4d0ea94ee719c4f0c654b635083cc87b9359376877e30</code></p><pre>{
+<details><summary>technology:Apache · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.637071+00:00<br>Observado na fonte: não informado<br>Evidência: <code>ccaa776368f20b0fd9abe02726332f009640152619324a18b66f790367baf24c</code></p><pre>{
   &quot;from&quot;: &quot;host:admin.aurora.example&quot;
 }</pre></details>
-<details><summary>ip:192.0.2.12 · dns</summary><p>Coletado: 2026-10-15T12:43:57.893032+00:00<br>Observado na fonte: não informado<br>Evidência: <code>35c8eb671935e85db9f383742b4a6e4b79c1d5784b6a9fa1b0d988f4b0685e35</code></p><pre>{
+<details><summary>ip:192.0.2.12 · dns</summary><p>Coletado: 2026-10-17T11:08:37.635949+00:00<br>Observado na fonte: não informado<br>Evidência: <code>9636e50f3dc2ecb2fedf19d6f856c2380fd00a76846ebb5f8225fd1b8f39dd7f</code></p><pre>{
   &quot;from&quot;: &quot;host:admin.aurora.example&quot;,
   &quot;rtype&quot;: &quot;A&quot;
 }</pre></details>
-<details><summary>host:admin.aurora.example · crtsh</summary><p>Coletado: 2026-10-15T12:43:57.892947+00:00<br>Observado na fonte: não informado<br>Evidência: <code>ea8bd580ffb76576af2ce61ed2ae377737aae94c50f50ed0989dc02ff98a7ab7</code></p><pre>{
+<details><summary>host:admin.aurora.example · crtsh</summary><p>Coletado: 2026-10-17T11:08:37.635131+00:00<br>Observado na fonte: não informado<br>Evidência: <code>ed1e7dd363468e3c7e0a87833a7d399c5f66d0f53590fcceedf55a76d5a73b72</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;,
   &quot;sources&quot;: [
     &quot;crtsh&quot;,
     &quot;dns&quot;
   ]
 }</pre></details>
-<details><summary>service:192.0.2.11:443/https · censys</summary><p>Coletado: 2026-10-15T12:43:57.892887+00:00<br>Observado na fonte: não informado<br>Evidência: <code>e2c77a13f65a211fe4d92b205bc4effade45204c4da12d94677d8ee0d7a9b62d</code></p><pre>{
+<details><summary>service:192.0.2.11:443/https · censys</summary><p>Coletado: 2026-10-17T11:08:37.634396+00:00<br>Observado na fonte: não informado<br>Evidência: <code>dbf0e79a8a68d0948e4c8c10e1865480e756d6cd7e05f0b6b978198124d9cc90</code></p><pre>{
   &quot;from&quot;: &quot;host:api.aurora.example&quot;
 }</pre></details>
-<details><summary>technology:Express · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.892825+00:00<br>Observado na fonte: não informado<br>Evidência: <code>d8d7fbf0a22e714de44c3035c47ba550f54b3ed2742c6478cce45d42b0a44f7b</code></p><pre>{
+<details><summary>technology:Express · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.633648+00:00<br>Observado na fonte: não informado<br>Evidência: <code>75d20aa1bea1da726d245662537da4073b669a807cc25b172935e9ab97fef34b</code></p><pre>{
   &quot;from&quot;: &quot;host:api.aurora.example&quot;
 }</pre></details>
-<details><summary>technology:Nginx · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.892752+00:00<br>Observado na fonte: não informado<br>Evidência: <code>33bb92c715b587c6f71abe0153de2fe31855def06f87854dea7ee0f0063355e5</code></p><pre>{
+<details><summary>technology:Nginx · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.632909+00:00<br>Observado na fonte: não informado<br>Evidência: <code>1ba6e04026fadc02b0f157c30f7ce53f447a8da71a1c166bc27846084ce612b0</code></p><pre>{
   &quot;from&quot;: &quot;host:api.aurora.example&quot;
 }</pre></details>
-<details><summary>ip:192.0.2.11 · dns</summary><p>Coletado: 2026-10-15T12:43:57.892596+00:00<br>Observado na fonte: não informado<br>Evidência: <code>3caf969d4ddd41003e860c5f4a0c10dba897cd7f38abe86a75a19bd3c0057ad1</code></p><pre>{
+<details><summary>ip:192.0.2.11 · dns</summary><p>Coletado: 2026-10-17T11:08:37.632104+00:00<br>Observado na fonte: não informado<br>Evidência: <code>e6c742ad3d973480376e6176519d43af05e701b17e43ad1328d0c7f5d7645f2d</code></p><pre>{
   &quot;from&quot;: &quot;host:api.aurora.example&quot;,
   &quot;rtype&quot;: &quot;A&quot;
 }</pre></details>
-<details><summary>host:api.aurora.example · crtsh</summary><p>Coletado: 2026-10-15T12:43:57.892534+00:00<br>Observado na fonte: não informado<br>Evidência: <code>23c5d6d26cde2def8624da3aa89b3037ee4964ccbc14562ba24fa32184a87c8f</code></p><pre>{
+<details><summary>host:api.aurora.example · crtsh</summary><p>Coletado: 2026-10-17T11:08:37.631250+00:00<br>Observado na fonte: não informado<br>Evidência: <code>182c5c98922f8e9be45238c19d561d37694272f90893cdb43235624746849c33</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;,
   &quot;sources&quot;: [
     &quot;crtsh&quot;,
     &quot;dns&quot;
   ]
 }</pre></details>
-<details><summary>technology:WordPress · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.892476+00:00<br>Observado na fonte: não informado<br>Evidência: <code>5f0bae345952d5c504456f425f242333af16079c5cce4bfd30de41de4c349a99</code></p><pre>{
+<details><summary>technology:WordPress · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.630401+00:00<br>Observado na fonte: não informado<br>Evidência: <code>154784f3aba64f881a5887f2985c4ab24ae64e19ec3620b2884ca3367867bcc2</code></p><pre>{
   &quot;from&quot;: &quot;host:www.aurora.example&quot;
 }</pre></details>
-<details><summary>technology:Nginx · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.892412+00:00<br>Observado na fonte: não informado<br>Evidência: <code>99f159680cbd0eba1ba620834826ce8b4080e49c5d24a1c53d0aa0cea98e70e2</code></p><pre>{
+<details><summary>technology:Nginx · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.629342+00:00<br>Observado na fonte: não informado<br>Evidência: <code>b5ea6f949fd91fee6ec14ea71da96ae8de98ea113fc1dbee683b8eac9debe21f</code></p><pre>{
   &quot;from&quot;: &quot;host:www.aurora.example&quot;
 }</pre></details>
-<details><summary>ip:192.0.2.10 · dns</summary><p>Coletado: 2026-10-15T12:43:57.892291+00:00<br>Observado na fonte: não informado<br>Evidência: <code>0672ea00cce8a18053636e7749d337d0d3e3e2323a142ddf79a4cd330798e349</code></p><pre>{
+<details><summary>ip:192.0.2.10 · dns</summary><p>Coletado: 2026-10-17T11:08:37.628399+00:00<br>Observado na fonte: não informado<br>Evidência: <code>a0d638410cfabf2a207ab9311ad9cf31a99b8ec8f8cd981b25e58c0d95ae5d62</code></p><pre>{
   &quot;from&quot;: &quot;host:www.aurora.example&quot;,
   &quot;rtype&quot;: &quot;A&quot;
 }</pre></details>
-<details><summary>host:www.aurora.example · crtsh</summary><p>Coletado: 2026-10-15T12:43:57.892221+00:00<br>Observado na fonte: não informado<br>Evidência: <code>fbabacf4e5e32a8a669a5e1cb7f1f9c687ff9cd9f5f426604a36fec220c15af9</code></p><pre>{
+<details><summary>host:www.aurora.example · crtsh</summary><p>Coletado: 2026-10-17T11:08:37.627372+00:00<br>Observado na fonte: não informado<br>Evidência: <code>8bccc809ab40d58568e7026dee38c84327f76216cfb2f8512d11c26c0276ecc7</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;,
   &quot;sources&quot;: [
     &quot;crtsh&quot;,
@@ -248,171 +282,203 @@ Sem execuções registradas (workspace legado ou demonstração original).
     &quot;wayback&quot;
   ]
 }</pre></details>
-<details><summary>technology:PHP · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.892154+00:00<br>Observado na fonte: não informado<br>Evidência: <code>5cc25b3dc57e3ee7aee65ec65309d700d350976d685c046be7fc2bdef8530b97</code></p><pre>{
+<details><summary>technology:PHP · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.626303+00:00<br>Observado na fonte: não informado<br>Evidência: <code>9b9f087bd854da3a21e97530331bde7e142f5329f64933e2b5c9afd8582c0ac2</code></p><pre>{
   &quot;from&quot;: &quot;host:aurora.example&quot;
 }</pre></details>
-<details><summary>technology:WordPress · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.892077+00:00<br>Observado na fonte: não informado<br>Evidência: <code>802abbcfb463e1405d1bb3d2e8f781c287417465f8cb5a5c85f9d5a0c1a54817</code></p><pre>{
+<details><summary>technology:WordPress · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.625164+00:00<br>Observado na fonte: não informado<br>Evidência: <code>0139eda756b3b06e65ae44132eaaad9b163c695403153f80bf9ab71ca7d0ebda</code></p><pre>{
   &quot;from&quot;: &quot;host:aurora.example&quot;
 }</pre></details>
-<details><summary>technology:Nginx · fingerprint</summary><p>Coletado: 2026-10-15T12:43:57.891917+00:00<br>Observado na fonte: não informado<br>Evidência: <code>5eff424ff59546f93800f3ae41c432451a86201a736d94d1bca4aa0d848e63b7</code></p><pre>{
+<details><summary>technology:Nginx · fingerprint</summary><p>Coletado: 2026-10-17T11:08:37.623995+00:00<br>Observado na fonte: não informado<br>Evidência: <code>b806daf4e7ef341bad8e494f8907def19a573c90e481be1272c6c0531e8f8310</code></p><pre>{
   &quot;from&quot;: &quot;host:aurora.example&quot;
 }</pre></details>
-<details><summary>ip:192.0.2.10 · dns</summary><p>Coletado: 2026-10-15T12:43:57.891852+00:00<br>Observado na fonte: não informado<br>Evidência: <code>9bbd29e0ad219899839d08b3287d8bbbf71008e85649ca04cd4fb59cc004cad2</code></p><pre>{
+<details><summary>ip:192.0.2.10 · dns</summary><p>Coletado: 2026-10-17T11:08:37.621797+00:00<br>Observado na fonte: não informado<br>Evidência: <code>62fbbd60c716d634e230e252a5c80298f1015c98e4da687b6703e651b48fd02e</code></p><pre>{
   &quot;from&quot;: &quot;host:aurora.example&quot;,
   &quot;rtype&quot;: &quot;A&quot;
 }</pre></details>
-<details><summary>host:aurora.example · crtsh</summary><p>Coletado: 2026-10-15T12:43:57.891781+00:00<br>Observado na fonte: não informado<br>Evidência: <code>4ad3aca775e551adf85bbb053adbfcf747518445f3a0120af088c4d3e783d7b7</code></p><pre>{
+<details><summary>host:aurora.example · crtsh</summary><p>Coletado: 2026-10-17T11:08:37.620713+00:00<br>Observado na fonte: não informado<br>Evidência: <code>19d0b52a00dd208e1bc28a23febdacb5ac7bbb9d89e2a537cf177e27b91e300b</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;,
   &quot;sources&quot;: [
     &quot;crtsh&quot;,
     &quot;dns&quot;
   ]
 }</pre></details>
-<details><summary>organization:Aurora Pagamentos S.A. · rdap</summary><p>Coletado: 2026-10-15T12:43:57.891690+00:00<br>Observado na fonte: não informado<br>Evidência: <code>51a8933d0a3546204d4111ebb496bee336e3d9c370df77c773a05240f17d8411</code></p><pre>{
+<details><summary>organization:Aurora Pagamentos S.A. · rdap</summary><p>Coletado: 2026-10-17T11:08:37.619761+00:00<br>Observado na fonte: não informado<br>Evidência: <code>4d513408bac3462bb6782ef53687a071a2e5744870f3bd098dd7a017441bbfa0</code></p><pre>{
   &quot;from&quot;: &quot;domain:aurora.example&quot;
 }</pre></details>
-<details><summary>domain:aurora.example · seed</summary><p>Coletado: 2026-10-15T12:43:57.891554+00:00<br>Observado na fonte: não informado<br>Evidência: <code>be67352be352e4b69cec5453018569796ce727a660877a678fe51af661a5969f</code></p><pre>{
+<details><summary>domain:aurora.example · seed</summary><p>Coletado: 2026-10-17T11:08:37.618449+00:00<br>Observado na fonte: não informado<br>Evidência: <code>abe95eaf1046779da92a7bed9b2a2d2e77a6322daf741f63e3c19c5209496a6b</code></p><pre>{
   &quot;note&quot;: &quot;semente&quot;
 }</pre></details>
 <p class='sub'>Últimas 100 observações; histórico completo no evidence.db.</p></div>
 <h2>Grafo de superfície (visão de vínculos)</h2>
 <div class='card'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 820" width="100%" style="max-width:1100px;font-family:system-ui,sans-serif;background:transparent">
 <rect width="100%" height="100%" fill="none"/>
-<line x1="550.0" y1="410.0" x2="377.9" y2="567.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="611.4" y2="436.0" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="611.4" y1="436.0" x2="619.7" y2="481.7" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="611.4" y1="436.0" x2="545.1" y2="576.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="611.4" y1="436.0" x2="428.8" y2="524.4" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="611.4" y1="436.0" x2="383.4" y2="405.1" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="590.2" y2="463.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="590.2" y1="463.2" x2="619.7" y2="481.7" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="590.2" y1="463.2" x2="545.1" y2="576.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="590.2" y1="463.2" x2="428.8" y2="524.4" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="558.2" y2="476.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="558.2" y1="476.2" x2="548.5" y2="510.0" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="558.2" y1="476.2" x2="545.1" y2="576.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="558.2" y1="476.2" x2="435.6" y2="288.8" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="558.2" y1="476.2" x2="598.3" y2="534.3" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="524.0" y2="471.4" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="524.0" y1="471.4" x2="478.3" y2="479.7" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="524.0" y1="471.4" x2="554.9" y2="243.4" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="524.0" y1="471.4" x2="383.4" y2="405.1" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="524.0" y1="471.4" x2="446.7" y2="494.4" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="496.8" y2="450.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="496.8" y1="450.2" x2="450.0" y2="408.5" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="496.8" y1="450.2" x2="437.9" y2="337.9" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="483.8" y2="418.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="483.8" y1="418.2" x2="480.3" y2="338.3" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="483.8" y1="418.2" x2="545.1" y2="576.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="483.8" y1="418.2" x2="671.2" y2="295.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="488.6" y2="384.0" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="488.6" y1="384.0" x2="551.5" y2="310.0" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="488.6" y1="384.0" x2="584.0" y2="281.1" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="509.8" y2="356.8" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="509.8" y1="356.8" x2="621.7" y2="340.3" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="509.8" y1="356.8" x2="545.1" y2="576.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="509.8" y1="356.8" x2="683.1" y2="402.5" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="541.8" y2="343.8" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="576.0" y2="348.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="603.2" y2="369.8" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="603.2" y1="369.8" x2="650.0" y2="411.5" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="603.2" y1="369.8" x2="716.6" y2="414.9" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="616.2" y2="401.8" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="616.2" y1="401.8" x2="619.7" y2="481.7" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="616.2" y1="401.8" x2="428.8" y2="524.4" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="616.2" y1="401.8" x2="664.4" y2="531.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="619.7" y1="481.7" x2="466.8" y2="591.9" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="548.5" y1="510.0" x2="466.8" y2="591.9" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="478.3" y1="479.7" x2="466.8" y2="591.9" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="480.3" y1="338.3" x2="466.8" y2="591.9" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="621.7" y1="340.3" x2="466.8" y2="591.9" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="298.7" y2="499.3" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="801.3" y2="320.7" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
-<line x1="550.0" y1="410.0" x2="251.1" y2="262.5" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="416.2" y2="532.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="597.8" y2="430.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="597.8" y1="430.2" x2="604.2" y2="465.8" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="597.8" y1="430.2" x2="546.2" y2="539.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="597.8" y1="430.2" x2="455.7" y2="498.9" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="597.8" y1="430.2" x2="420.4" y2="406.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="581.3" y2="451.4" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="581.3" y1="451.4" x2="604.2" y2="465.8" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="581.3" y1="451.4" x2="546.2" y2="539.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="581.3" y1="451.4" x2="455.7" y2="498.9" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="556.4" y2="461.5" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="556.4" y1="461.5" x2="548.9" y2="487.8" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="556.4" y1="461.5" x2="546.2" y2="539.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="556.4" y1="461.5" x2="461.1" y2="315.7" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="556.4" y1="461.5" x2="587.6" y2="506.7" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="529.8" y2="457.8" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="529.8" y1="457.8" x2="494.2" y2="464.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="529.8" y1="457.8" x2="553.8" y2="280.4" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="529.8" y1="457.8" x2="420.4" y2="406.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="529.8" y1="457.8" x2="469.7" y2="475.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="508.6" y2="441.3" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="508.6" y1="441.3" x2="472.2" y2="408.9" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="508.6" y1="441.3" x2="462.8" y2="353.9" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="498.5" y2="416.4" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="498.5" y1="416.4" x2="495.8" y2="354.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="498.5" y1="416.4" x2="546.2" y2="539.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="498.5" y1="416.4" x2="644.3" y2="321.1" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="502.2" y2="389.8" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="502.2" y1="389.8" x2="551.1" y2="332.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="502.2" y1="389.8" x2="576.4" y2="309.7" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="518.7" y2="368.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="518.7" y1="368.6" x2="605.8" y2="355.8" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="518.7" y1="368.6" x2="546.2" y2="539.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="518.7" y1="368.6" x2="653.5" y2="404.1" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="543.6" y2="358.5" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="570.2" y2="362.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="591.4" y2="378.7" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="591.4" y1="378.7" x2="627.8" y2="411.1" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="591.4" y1="378.7" x2="679.6" y2="413.8" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="601.5" y2="403.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="601.5" y1="403.6" x2="604.2" y2="465.8" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="601.5" y1="403.6" x2="455.7" y2="498.9" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="601.5" y1="403.6" x2="638.9" y2="504.3" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="604.2" y1="465.8" x2="485.3" y2="551.4" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="548.9" y1="487.8" x2="485.3" y2="551.4" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="494.2" y1="464.2" x2="485.3" y2="551.4" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="495.8" y1="354.2" x2="485.3" y2="551.4" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="605.8" y1="355.8" x2="485.3" y2="551.4" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="354.6" y2="479.5" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="745.4" y2="340.5" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="317.5" y2="295.3" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="581.3" y1="451.4" x2="317.5" y2="295.3" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="601.5" y1="403.6" x2="317.5" y2="295.3" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="548.9" y1="487.8" x2="363.6" y2="194.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="548.9" y1="487.8" x2="697.7" y2="166.0" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="548.9" y1="487.8" x2="454.4" y2="113.9" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="494.2" y1="464.2" x2="827.7" y2="475.0" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="494.2" y1="464.2" x2="573.9" y2="694.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="494.2" y1="464.2" x2="854.2" y2="475.2" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="494.2" y1="464.2" x2="341.4" y2="640.8" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="472.2" y1="408.9" x2="287.1" y2="520.6" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="579.5" y2="74.3" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
+<line x1="550.0" y1="410.0" x2="520.5" y2="745.7" stroke="#94a3b8" stroke-width="0.7" stroke-opacity="0.45"/>
 <circle cx="550.0" cy="410.0" r="7" fill="#2563eb" stroke="#ffffff" stroke-width="1"><title>domain: aurora.example</title></circle>
 <text x="559.0" y="413.0" font-size="9" fill="#334155">aurora.example</text>
-<circle cx="377.9" cy="567.6" r="5" fill="#4f46e5" stroke="#ffffff" stroke-width="1"><title>organization: Aurora Pagamentos S.A.</title></circle>
-<text x="384.9" y="570.6" font-size="9" fill="#334155">Aurora Pagamentos S.A.</text>
-<circle cx="611.4" cy="436.0" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: aurora.example</title></circle>
-<text x="618.4" y="439.0" font-size="9" fill="#334155">aurora.example</text>
-<circle cx="619.7" cy="481.7" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 192.0.2.10</title></circle>
-<text x="626.7" y="484.7" font-size="9" fill="#334155">192.0.2.10</text>
-<circle cx="545.1" cy="576.6" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: Nginx</title></circle>
-<text x="552.1" y="579.6" font-size="9" fill="#334155">Nginx</text>
-<circle cx="428.8" cy="524.4" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: WordPress</title></circle>
-<text x="435.8" y="527.4" font-size="9" fill="#334155">WordPress</text>
-<circle cx="383.4" cy="405.1" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: PHP</title></circle>
-<text x="390.4" y="408.1" font-size="9" fill="#334155">PHP</text>
-<circle cx="590.2" cy="463.2" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: www.aurora.example</title></circle>
-<text x="597.2" y="466.2" font-size="9" fill="#334155">www.aurora.example</text>
-<circle cx="558.2" cy="476.2" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: api.aurora.example</title></circle>
-<text x="565.2" y="479.2" font-size="9" fill="#334155">api.aurora.example</text>
-<circle cx="548.5" cy="510.0" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 192.0.2.11</title></circle>
-<text x="555.5" y="513.0" font-size="9" fill="#334155">192.0.2.11</text>
-<circle cx="435.6" cy="288.8" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: Express</title></circle>
-<text x="442.6" y="291.8" font-size="9" fill="#334155">Express</text>
-<circle cx="598.3" cy="534.3" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1"><title>service: 192.0.2.11:443/https</title></circle>
-<text x="605.3" y="537.3" font-size="9" fill="#334155">192.0.2.11:443/https</text>
-<circle cx="524.0" cy="471.4" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: admin.aurora.example</title></circle>
-<text x="531.0" y="474.4" font-size="9" fill="#334155">admin.aurora.example</text>
-<circle cx="478.3" cy="479.7" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 192.0.2.12</title></circle>
-<text x="485.3" y="482.7" font-size="9" fill="#334155">192.0.2.12</text>
-<circle cx="554.9" cy="243.4" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: Apache</title></circle>
-<text x="561.9" y="246.4" font-size="9" fill="#334155">Apache</text>
-<circle cx="446.7" cy="494.4" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1"><title>service: 192.0.2.12:8080/http-alt</title></circle>
-<text x="453.7" y="497.4" font-size="9" fill="#334155">192.0.2.12:8080/http-alt</text>
-<circle cx="496.8" cy="450.2" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: vpn.aurora.example</title></circle>
-<text x="503.8" y="453.2" font-size="9" fill="#334155">vpn.aurora.example</text>
-<circle cx="450.0" cy="408.5" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 198.51.100.5</title></circle>
-<text x="457.0" y="411.5" font-size="9" fill="#334155">198.51.100.5</text>
-<circle cx="437.9" cy="337.9" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1"><title>service: 198.51.100.5:443/https</title></circle>
-<text x="444.9" y="340.9" font-size="9" fill="#334155">198.51.100.5:443/https</text>
-<circle cx="483.8" cy="418.2" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: hml.aurora.example</title></circle>
-<text x="490.8" y="421.2" font-size="9" fill="#334155">hml.aurora.example</text>
-<circle cx="480.3" cy="338.3" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 192.0.2.13</title></circle>
-<text x="487.3" y="341.3" font-size="9" fill="#334155">192.0.2.13</text>
-<circle cx="671.2" cy="295.6" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: Laravel</title></circle>
-<text x="678.2" y="298.6" font-size="9" fill="#334155">Laravel</text>
-<circle cx="488.6" cy="384.0" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: mail.aurora.example</title></circle>
-<text x="495.6" y="387.0" font-size="9" fill="#334155">mail.aurora.example</text>
-<circle cx="551.5" cy="310.0" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 203.0.113.25</title></circle>
-<text x="558.5" y="313.0" font-size="9" fill="#334155">203.0.113.25</text>
-<circle cx="584.0" cy="281.1" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1"><title>service: 203.0.113.25:25/smtp</title></circle>
-<text x="591.0" y="284.1" font-size="9" fill="#334155">203.0.113.25:25/smtp</text>
-<circle cx="509.8" cy="356.8" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: gitlab.aurora.example</title></circle>
-<text x="516.8" y="359.8" font-size="9" fill="#334155">gitlab.aurora.example</text>
-<circle cx="621.7" cy="340.3" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 192.0.2.14</title></circle>
-<text x="628.7" y="343.3" font-size="9" fill="#334155">192.0.2.14</text>
-<circle cx="683.1" cy="402.5" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1"><title>service: 192.0.2.14:443/https</title></circle>
-<text x="690.1" y="405.5" font-size="9" fill="#334155">192.0.2.14:443/https</text>
-<circle cx="541.8" cy="343.8" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: old.aurora.example</title></circle>
-<text x="548.8" y="346.8" font-size="9" fill="#334155">old.aurora.example</text>
-<circle cx="576.0" cy="348.6" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: legacy.aurora.example</title></circle>
-<text x="583.0" y="351.6" font-size="9" fill="#334155">legacy.aurora.example</text>
-<circle cx="603.2" cy="369.8" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: cdn.aurora.example</title></circle>
-<text x="610.2" y="372.8" font-size="9" fill="#334155">cdn.aurora.example</text>
-<circle cx="650.0" cy="411.5" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 198.51.100.80</title></circle>
-<text x="657.0" y="414.5" font-size="9" fill="#334155">198.51.100.80</text>
-<circle cx="716.6" cy="414.9" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: AWS CloudFront</title></circle>
-<text x="723.6" y="417.9" font-size="9" fill="#334155">AWS CloudFront</text>
-<circle cx="616.2" cy="401.8" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: blog.aurora.example</title></circle>
-<text x="623.2" y="404.8" font-size="9" fill="#334155">blog.aurora.example</text>
-<circle cx="664.4" cy="531.2" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: WooCommerce</title></circle>
-<text x="671.4" y="534.2" font-size="9" fill="#334155">WooCommerce</text>
-<circle cx="466.8" cy="591.9" r="5" fill="#7c3aed" stroke="#ffffff" stroke-width="1"><title>netblock: 192.0.2.0/24</title></circle>
-<text x="473.8" y="594.9" font-size="9" fill="#334155">192.0.2.0/24</text>
-<circle cx="298.7" cy="499.3" r="5" fill="#db2777" stroke="#ffffff" stroke-width="1"><title>email: ti@aurora.example</title></circle>
-<text x="305.7" y="502.3" font-size="9" fill="#334155">ti@aurora.example</text>
-<circle cx="801.3" cy="320.7" r="5" fill="#db2777" stroke="#ffffff" stroke-width="1"><title>email: noc@aurora.example</title></circle>
-<text x="808.3" y="323.7" font-size="9" fill="#334155">noc@aurora.example</text>
-<circle cx="250.5" cy="392.5" r="5" fill="#0d9488" stroke="#ffffff" stroke-width="1"><title>url: https://aurora.example/wp-login.php</title></circle>
-<text x="257.5" y="395.5" font-size="9" fill="#334155">https://aurora.example/wp-…</text>
-<circle cx="714.9" cy="159.4" r="5" fill="#0d9488" stroke="#ffffff" stroke-width="1"><title>url: https://old.aurora.example/backup.zip</title></circle>
-<text x="721.9" y="162.4" font-size="9" fill="#334155">https://old.aurora.example…</text>
-<circle cx="684.6" cy="678.1" r="5" fill="#0d9488" stroke="#ffffff" stroke-width="1"><title>url: https://api.aurora.example/v1/health</title></circle>
-<text x="691.6" y="681.1" font-size="9" fill="#334155">https://api.aurora.example…</text>
-<circle cx="251.1" cy="262.5" r="5" fill="#c2410c" stroke="#ffffff" stroke-width="1"><title>favicon: vfav:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6</title></circle>
-<text x="258.1" y="265.5" font-size="9" fill="#334155">vfav:a1b2c3d4e5f6a7b8c9d0e…</text>
+<circle cx="416.2" cy="532.6" r="5" fill="#4f46e5" stroke="#ffffff" stroke-width="1"><title>organization: Aurora Pagamentos S.A.</title></circle>
+<text x="423.2" y="535.6" font-size="9" fill="#334155">Aurora Pagamentos S.A.</text>
+<circle cx="597.8" cy="430.2" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: aurora.example</title></circle>
+<text x="604.8" y="433.2" font-size="9" fill="#334155">aurora.example</text>
+<circle cx="604.2" cy="465.8" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 192.0.2.10</title></circle>
+<text x="611.2" y="468.8" font-size="9" fill="#334155">192.0.2.10</text>
+<circle cx="546.2" cy="539.6" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: Nginx</title></circle>
+<text x="553.2" y="542.6" font-size="9" fill="#334155">Nginx</text>
+<circle cx="455.7" cy="498.9" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: WordPress</title></circle>
+<text x="462.7" y="501.9" font-size="9" fill="#334155">WordPress</text>
+<circle cx="420.4" cy="406.2" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: PHP</title></circle>
+<text x="427.4" y="409.2" font-size="9" fill="#334155">PHP</text>
+<circle cx="581.3" cy="451.4" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: www.aurora.example</title></circle>
+<text x="588.3" y="454.4" font-size="9" fill="#334155">www.aurora.example</text>
+<circle cx="556.4" cy="461.5" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: api.aurora.example</title></circle>
+<text x="563.4" y="464.5" font-size="9" fill="#334155">api.aurora.example</text>
+<circle cx="548.9" cy="487.8" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 192.0.2.11</title></circle>
+<text x="555.9" y="490.8" font-size="9" fill="#334155">192.0.2.11</text>
+<circle cx="461.1" cy="315.7" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: Express</title></circle>
+<text x="468.1" y="318.7" font-size="9" fill="#334155">Express</text>
+<circle cx="587.6" cy="506.7" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1"><title>service: 192.0.2.11:443/https</title></circle>
+<text x="594.6" y="509.7" font-size="9" fill="#334155">192.0.2.11:443/https</text>
+<circle cx="529.8" cy="457.8" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: admin.aurora.example</title></circle>
+<text x="536.8" y="460.8" font-size="9" fill="#334155">admin.aurora.example</text>
+<circle cx="494.2" cy="464.2" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 192.0.2.12</title></circle>
+<text x="501.2" y="467.2" font-size="9" fill="#334155">192.0.2.12</text>
+<circle cx="553.8" cy="280.4" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: Apache</title></circle>
+<text x="560.8" y="283.4" font-size="9" fill="#334155">Apache</text>
+<circle cx="469.7" cy="475.6" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1"><title>service: 192.0.2.12:8080/http-alt</title></circle>
+<text x="476.7" y="478.6" font-size="9" fill="#334155">192.0.2.12:8080/http-alt</text>
+<circle cx="508.6" cy="441.3" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: vpn.aurora.example</title></circle>
+<text x="515.6" y="444.3" font-size="9" fill="#334155">vpn.aurora.example</text>
+<circle cx="472.2" cy="408.9" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 198.51.100.5</title></circle>
+<text x="479.2" y="411.9" font-size="9" fill="#334155">198.51.100.5</text>
+<circle cx="462.8" cy="353.9" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1"><title>service: 198.51.100.5:443/https</title></circle>
+<text x="469.8" y="356.9" font-size="9" fill="#334155">198.51.100.5:443/https</text>
+<circle cx="498.5" cy="416.4" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: hml.aurora.example</title></circle>
+<text x="505.5" y="419.4" font-size="9" fill="#334155">hml.aurora.example</text>
+<circle cx="495.8" cy="354.2" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 192.0.2.13</title></circle>
+<text x="502.8" y="357.2" font-size="9" fill="#334155">192.0.2.13</text>
+<circle cx="644.3" cy="321.1" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: Laravel</title></circle>
+<text x="651.3" y="324.1" font-size="9" fill="#334155">Laravel</text>
+<circle cx="502.2" cy="389.8" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: mail.aurora.example</title></circle>
+<text x="509.2" y="392.8" font-size="9" fill="#334155">mail.aurora.example</text>
+<circle cx="551.1" cy="332.2" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 203.0.113.25</title></circle>
+<text x="558.1" y="335.2" font-size="9" fill="#334155">203.0.113.25</text>
+<circle cx="576.4" cy="309.7" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1"><title>service: 203.0.113.25:25/smtp</title></circle>
+<text x="583.4" y="312.7" font-size="9" fill="#334155">203.0.113.25:25/smtp</text>
+<circle cx="518.7" cy="368.6" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: gitlab.aurora.example</title></circle>
+<text x="525.7" y="371.6" font-size="9" fill="#334155">gitlab.aurora.example</text>
+<circle cx="605.8" cy="355.8" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 192.0.2.14</title></circle>
+<text x="612.8" y="358.8" font-size="9" fill="#334155">192.0.2.14</text>
+<circle cx="653.5" cy="404.1" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="1"><title>service: 192.0.2.14:443/https</title></circle>
+<text x="660.5" y="407.1" font-size="9" fill="#334155">192.0.2.14:443/https</text>
+<circle cx="543.6" cy="358.5" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: old.aurora.example</title></circle>
+<text x="550.6" y="361.5" font-size="9" fill="#334155">old.aurora.example</text>
+<circle cx="570.2" cy="362.2" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: legacy.aurora.example</title></circle>
+<text x="577.2" y="365.2" font-size="9" fill="#334155">legacy.aurora.example</text>
+<circle cx="591.4" cy="378.7" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: cdn.aurora.example</title></circle>
+<text x="598.4" y="381.7" font-size="9" fill="#334155">cdn.aurora.example</text>
+<circle cx="627.8" cy="411.1" r="5" fill="#16a34a" stroke="#ffffff" stroke-width="1"><title>ip: 198.51.100.80</title></circle>
+<text x="634.8" y="414.1" font-size="9" fill="#334155">198.51.100.80</text>
+<circle cx="679.6" cy="413.8" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: AWS CloudFront</title></circle>
+<text x="686.6" y="416.8" font-size="9" fill="#334155">AWS CloudFront</text>
+<circle cx="601.5" cy="403.6" r="5" fill="#0891b2" stroke="#ffffff" stroke-width="1"><title>host: blog.aurora.example</title></circle>
+<text x="608.5" y="406.6" font-size="9" fill="#334155">blog.aurora.example</text>
+<circle cx="638.9" cy="504.3" r="5" fill="#ea580c" stroke="#ffffff" stroke-width="1"><title>technology: WooCommerce</title></circle>
+<text x="645.9" y="507.3" font-size="9" fill="#334155">WooCommerce</text>
+<circle cx="485.3" cy="551.4" r="5" fill="#7c3aed" stroke="#ffffff" stroke-width="1"><title>netblock: 192.0.2.0/24</title></circle>
+<text x="492.3" y="554.4" font-size="9" fill="#334155">192.0.2.0/24</text>
+<circle cx="354.6" cy="479.5" r="5" fill="#db2777" stroke="#ffffff" stroke-width="1"><title>email: ti@aurora.example</title></circle>
+<text x="361.6" y="482.5" font-size="9" fill="#334155">ti@aurora.example</text>
+<circle cx="745.4" cy="340.5" r="5" fill="#db2777" stroke="#ffffff" stroke-width="1"><title>email: noc@aurora.example</title></circle>
+<text x="752.4" y="343.5" font-size="9" fill="#334155">noc@aurora.example</text>
+<circle cx="317.1" cy="396.4" r="5" fill="#0d9488" stroke="#ffffff" stroke-width="1"><title>url: https://aurora.example/wp-login.php</title></circle>
+<text x="324.1" y="399.4" font-size="9" fill="#334155">https://aurora.example/wp-…</text>
+<circle cx="678.3" cy="215.1" r="5" fill="#0d9488" stroke="#ffffff" stroke-width="1"><title>url: https://old.aurora.example/backup.zip</title></circle>
+<text x="685.3" y="218.1" font-size="9" fill="#334155">https://old.aurora.example…</text>
+<circle cx="654.7" cy="618.5" r="5" fill="#0d9488" stroke="#ffffff" stroke-width="1"><title>url: https://api.aurora.example/v1/health</title></circle>
+<text x="661.7" y="621.5" font-size="9" fill="#334155">https://api.aurora.example…</text>
+<circle cx="317.5" cy="295.3" r="5" fill="#c2410c" stroke="#ffffff" stroke-width="1"><title>favicon: vfav:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6</title></circle>
+<text x="324.5" y="298.3" font-size="9" fill="#334155">vfav:a1b2c3d4e5f6a7b8c9d0e…</text>
+<circle cx="363.6" cy="194.2" r="5" fill="#64748b" stroke="#ffffff" stroke-width="1"><title>port: 192.0.2.11:443</title></circle>
+<text x="370.6" y="197.2" font-size="9" fill="#334155">192.0.2.11:443</text>
+<circle cx="697.7" cy="166.0" r="5" fill="#64748b" stroke="#ffffff" stroke-width="1"><title>port: 192.0.2.11:22</title></circle>
+<text x="704.7" y="169.0" font-size="9" fill="#334155">192.0.2.11:22</text>
+<circle cx="454.4" cy="113.9" r="5" fill="#64748b" stroke="#ffffff" stroke-width="1"><title>vulnerability: CVE-2021-44228</title></circle>
+<text x="461.4" y="116.9" font-size="9" fill="#334155">CVE-2021-44228</text>
+<circle cx="827.7" cy="475.0" r="5" fill="#64748b" stroke="#ffffff" stroke-width="1"><title>port: 192.0.2.12:8080</title></circle>
+<text x="834.7" y="478.0" font-size="9" fill="#334155">192.0.2.12:8080</text>
+<circle cx="573.9" cy="694.2" r="5" fill="#64748b" stroke="#ffffff" stroke-width="1"><title>port: 192.0.2.12:3306</title></circle>
+<text x="580.9" y="697.2" font-size="9" fill="#334155">192.0.2.12:3306</text>
+<circle cx="854.2" cy="475.2" r="5" fill="#64748b" stroke="#ffffff" stroke-width="1"><title>vulnerability: CVE-2017-5638</title></circle>
+<text x="861.2" y="478.2" font-size="9" fill="#334155">CVE-2017-5638</text>
+<circle cx="341.4" cy="640.8" r="5" fill="#64748b" stroke="#ffffff" stroke-width="1"><title>vulnerability: CVE-2019-0708</title></circle>
+<text x="348.4" y="643.8" font-size="9" fill="#334155">CVE-2019-0708</text>
+<circle cx="287.1" cy="520.6" r="5" fill="#64748b" stroke="#ffffff" stroke-width="1"><title>port: 198.51.100.5:443</title></circle>
+<text x="294.1" y="523.6" font-size="9" fill="#334155">198.51.100.5:443</text>
+<circle cx="579.5" cy="74.3" r="5" fill="#64748b" stroke="#ffffff" stroke-width="1"><title>finding: DMARC ausente em aurora.example</title></circle>
+<text x="586.5" y="77.3" font-size="9" fill="#334155">DMARC ausente em aurora.ex…</text>
+<circle cx="520.5" cy="745.7" r="5" fill="#64748b" stroke="#ffffff" stroke-width="1"><title>finding: SPF presente em aurora.example</title></circle>
+<text x="527.5" y="748.7" font-size="9" fill="#334155">SPF presente em aurora.exa…</text>
 <g transform="translate(16,16)">
 <circle cx="6" cy="16" r="5" fill="#2563eb"/><text x="18" y="20" font-size="11" fill="#334155">domain (1)</text>
 <circle cx="6" cy="34" r="5" fill="#0891b2"/><text x="18" y="38" font-size="11" fill="#334155">host (12)</text>
@@ -424,33 +490,50 @@ Sem execuções registradas (workspace legado ou demonstração original).
 <circle cx="6" cy="142" r="5" fill="#db2777"/><text x="18" y="146" font-size="11" fill="#334155">email (2)</text>
 <circle cx="6" cy="160" r="5" fill="#0d9488"/><text x="18" y="164" font-size="11" fill="#334155">url (3)</text>
 <circle cx="6" cy="178" r="5" fill="#c2410c"/><text x="18" y="182" font-size="11" fill="#334155">favicon (1)</text>
+<circle cx="6" cy="196" r="5" fill="#64748b"/><text x="18" y="200" font-size="11" fill="#334155">port (5)</text>
+<circle cx="6" cy="214" r="5" fill="#64748b"/><text x="18" y="218" font-size="11" fill="#334155">vulnerability (3)</text>
+<circle cx="6" cy="232" r="5" fill="#64748b"/><text x="18" y="236" font-size="11" fill="#334155">finding (2)</text>
 </g>
 </svg></div>
 <h2>Alvos priorizados — preparação de pentest</h2>
 <div class='sub'>Pontuação é auxílio de triagem, explicável e ajustável — não é veredito nem autorização para testar.</div>
 <div class='card'>
 <input class='filter' placeholder='filtrar alvos…' oninput="vfilter('tgt',this)">
-<div style='max-height:520px;overflow:auto'><table id='tgt'><thead><tr><th>Score</th><th>Host</th><th>IPs</th><th>Tecnologias</th><th>Serviços</th><th>Fontes</th></tr></thead><tbody>
-<tr><td class='score hi'>8.5<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; serviço exposto +3.0; 2 tecnologia(s) +1.0; nome sensível +2.5</span></td><td><b>api.aurora.example</b></td><td>192.0.2.11</td><td><span class='chip tech'>Express</span><span class='chip tech'>Nginx</span></td><td><span class='chip'>192.0.2.11:443/https</span></td><td><span class='chip'>crtsh</span><span class='chip'>dns</span></td></tr>
-<tr><td class='score hi'>8.5<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; serviço exposto +3.0; 2 tecnologia(s) +1.0; nome sensível +2.5</span></td><td><b>admin.aurora.example</b></td><td>192.0.2.12</td><td><span class='chip tech'>Apache</span><span class='chip tech'>PHP</span></td><td><span class='chip'>192.0.2.12:8080/http-alt</span></td><td><span class='chip'>crtsh</span><span class='chip'>dns</span></td></tr>
-<tr><td class='score hi'>8.0<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; serviço exposto +3.0; 1 tecnologia(s) +0.5; nome sensível +2.5</span></td><td><b>gitlab.aurora.example</b></td><td>192.0.2.14</td><td><span class='chip tech'>Nginx</span></td><td><span class='chip'>192.0.2.14:443/https</span></td><td><span class='chip'>crtsh</span></td></tr>
-<tr><td class='score hi'>7.5<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; serviço exposto +3.0; nome sensível +2.5</span></td><td><b>vpn.aurora.example</b></td><td>198.51.100.5</td><td>—</td><td><span class='chip'>198.51.100.5:443/https</span></td><td><span class='chip'>crtsh</span><span class='chip'>dns</span></td></tr>
-<tr><td class='score hi'>7.5<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; serviço exposto +3.0; nome sensível +2.5</span></td><td><b>mail.aurora.example</b></td><td>203.0.113.25</td><td>—</td><td><span class='chip'>203.0.113.25:25/smtp</span></td><td><span class='chip'>dns</span><span class='chip'>rdap</span></td></tr>
-<tr><td class='score hi'>5.5<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; 2 tecnologia(s) +1.0; nome sensível +2.5</span></td><td><b>hml.aurora.example</b></td><td>192.0.2.13</td><td><span class='chip tech'>Laravel</span><span class='chip tech'>Nginx</span></td><td>—</td><td><span class='chip'>crtsh</span></td></tr>
-<tr><td class='score md'>3.5<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; 3 tecnologia(s) +1.5</span></td><td><b>aurora.example</b></td><td>192.0.2.10</td><td><span class='chip tech'>Nginx</span><span class='chip tech'>PHP</span><span class='chip tech'>WordPress</span></td><td>—</td><td><span class='chip'>crtsh</span><span class='chip'>dns</span></td></tr>
-<tr><td class='score md'>3.0<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; 2 tecnologia(s) +1.0</span></td><td><b>www.aurora.example</b></td><td>192.0.2.10</td><td><span class='chip tech'>Nginx</span><span class='chip tech'>WordPress</span></td><td>—</td><td><span class='chip'>crtsh</span><span class='chip'>dns</span><span class='chip'>wayback</span></td></tr>
-<tr><td class='score md'>3.0<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; 2 tecnologia(s) +1.0</span></td><td><b>blog.aurora.example</b></td><td>192.0.2.10</td><td><span class='chip tech'>WooCommerce</span><span class='chip tech'>WordPress</span></td><td>—</td><td><span class='chip'>crtsh</span><span class='chip'>dns</span></td></tr>
-<tr><td class='score md'>2.5<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; 1 tecnologia(s) +0.5</span></td><td><b>cdn.aurora.example</b></td><td>198.51.100.80</td><td><span class='chip tech'>AWS CloudFront</span></td><td>—</td><td><span class='chip'>crtsh</span><span class='chip'>dns</span></td></tr>
-<tr><td class='score lo'>1.5<br><span class='sub' style='font-weight:400'>nome sensível +2.5; só histórico -1.0</span></td><td><b>old.aurora.example</b></td><td>—</td><td>—</td><td>—</td><td><span class='chip'>wayback</span></td></tr>
-<tr><td class='score lo'>1.5<br><span class='sub' style='font-weight:400'>nome sensível +2.5; só histórico -1.0</span></td><td><b>legacy.aurora.example</b></td><td>—</td><td>—</td><td>—</td><td><span class='chip'>wayback</span></td></tr>
-<tr><td class='score lo'>0.0<br><span class='sub' style='font-weight:400'></span></td><td><b>aurora.example</b></td><td>—</td><td>—</td><td>—</td><td><span class='chip'>seed</span></td></tr>
+<div style='max-height:520px;overflow:auto'><table id='tgt'><thead><tr><th>Score</th><th>Host</th><th>Conf.</th><th>IPs</th><th>Tecnologias</th><th>Serviços/Portas</th><th>Vulns</th><th>Fontes</th></tr></thead><tbody>
+<tr><td class='score hi'>18.9<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; serviço/porta exposto +3.0; 3 porta(s) +2.4; 2 CVE conhecida(s) +8.0; 2 tecnologia(s) +1.0; nome sensível +2.5</span></td><td><b>admin.aurora.example</b></td><td><span class='sub'>0.75</span></td><td>192.0.2.12</td><td><span class='chip tech'>Apache</span><span class='chip tech'>PHP</span></td><td><span class='chip'>192.0.2.12:3306</span><span class='chip'>192.0.2.12:8080</span><span class='chip'>192.0.2.12:8080/http-alt</span></td><td><span class='chip bad-chip'>CVE-2017-5638</span><span class='chip bad-chip'>CVE-2019-0708</span></td><td><span class='chip'>crtsh</span><span class='chip'>dns</span></td></tr>
+<tr><td class='score hi'>14.9<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; serviço/porta exposto +3.0; 3 porta(s) +2.4; 1 CVE conhecida(s) +4.0; 2 tecnologia(s) +1.0; nome sensível +2.5</span></td><td><b>api.aurora.example</b></td><td><span class='sub'>0.75</span></td><td>192.0.2.11</td><td><span class='chip tech'>Express</span><span class='chip tech'>Nginx</span></td><td><span class='chip'>192.0.2.11:22</span><span class='chip'>192.0.2.11:443</span><span class='chip'>192.0.2.11:443/https</span></td><td><span class='chip bad-chip'>CVE-2021-44228</span></td><td><span class='chip'>crtsh</span><span class='chip'>dns</span></td></tr>
+<tr><td class='score hi'>9.1<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; serviço/porta exposto +3.0; 2 porta(s) +1.6; nome sensível +2.5</span></td><td><b>vpn.aurora.example</b></td><td><span class='sub'>0.75</span></td><td>198.51.100.5</td><td>—</td><td><span class='chip'>198.51.100.5:443</span><span class='chip'>198.51.100.5:443/https</span></td><td>—</td><td><span class='chip'>crtsh</span><span class='chip'>dns</span></td></tr>
+<tr><td class='score hi'>8.8<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; serviço/porta exposto +3.0; 1 porta(s) +0.8; 1 tecnologia(s) +0.5; nome sensível +2.5</span></td><td><b>gitlab.aurora.example</b></td><td><span class='sub'>0.50</span></td><td>192.0.2.14</td><td><span class='chip tech'>Nginx</span></td><td><span class='chip'>192.0.2.14:443/https</span></td><td>—</td><td><span class='chip'>crtsh</span></td></tr>
+<tr><td class='score hi'>8.3<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; serviço/porta exposto +3.0; 1 porta(s) +0.8; nome sensível +2.5</span></td><td><b>mail.aurora.example</b></td><td><span class='sub'>0.75</span></td><td>203.0.113.25</td><td>—</td><td><span class='chip'>203.0.113.25:25/smtp</span></td><td>—</td><td><span class='chip'>dns</span><span class='chip'>rdap</span></td></tr>
+<tr><td class='score hi'>5.5<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; 2 tecnologia(s) +1.0; nome sensível +2.5</span></td><td><b>hml.aurora.example</b></td><td><span class='sub'>0.50</span></td><td>192.0.2.13</td><td><span class='chip tech'>Laravel</span><span class='chip tech'>Nginx</span></td><td>—</td><td>—</td><td><span class='chip'>crtsh</span></td></tr>
+<tr><td class='score md'>3.5<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; 3 tecnologia(s) +1.5</span></td><td><b>aurora.example</b></td><td><span class='sub'>0.75</span></td><td>192.0.2.10</td><td><span class='chip tech'>Nginx</span><span class='chip tech'>PHP</span><span class='chip tech'>WordPress</span></td><td>—</td><td>—</td><td><span class='chip'>crtsh</span><span class='chip'>dns</span></td></tr>
+<tr><td class='score md'>3.0<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; 2 tecnologia(s) +1.0</span></td><td><b>www.aurora.example</b></td><td><span class='sub'>0.88</span></td><td>192.0.2.10</td><td><span class='chip tech'>Nginx</span><span class='chip tech'>WordPress</span></td><td>—</td><td>—</td><td><span class='chip'>crtsh</span><span class='chip'>dns</span><span class='chip'>wayback</span></td></tr>
+<tr><td class='score md'>3.0<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; 2 tecnologia(s) +1.0</span></td><td><b>blog.aurora.example</b></td><td><span class='sub'>0.75</span></td><td>192.0.2.10</td><td><span class='chip tech'>WooCommerce</span><span class='chip tech'>WordPress</span></td><td>—</td><td>—</td><td><span class='chip'>crtsh</span><span class='chip'>dns</span></td></tr>
+<tr><td class='score md'>2.5<br><span class='sub' style='font-weight:400'>resolve (1 IP) +2.0; 1 tecnologia(s) +0.5</span></td><td><b>cdn.aurora.example</b></td><td><span class='sub'>0.75</span></td><td>198.51.100.80</td><td><span class='chip tech'>AWS CloudFront</span></td><td>—</td><td>—</td><td><span class='chip'>crtsh</span><span class='chip'>dns</span></td></tr>
+<tr><td class='score lo'>1.5<br><span class='sub' style='font-weight:400'>nome sensível +2.5; só histórico -1.0</span></td><td><b>old.aurora.example</b></td><td><span class='sub'>0.50</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class='chip'>wayback</span></td></tr>
+<tr><td class='score lo'>1.5<br><span class='sub' style='font-weight:400'>nome sensível +2.5; só histórico -1.0</span></td><td><b>legacy.aurora.example</b></td><td><span class='sub'>0.50</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class='chip'>wayback</span></td></tr>
+<tr><td class='score lo'>1.5<br><span class='sub' style='font-weight:400'>1 postura alta +1.5</span></td><td><b>aurora.example</b></td><td><span class='sub'>1.00</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class='chip'>seed</span></td></tr>
 </tbody></table></div></div>
+<h2>Vulnerabilidades e postura</h2><div class='card'>
+<b>CVEs observadas (InternetDB/Shodan):</b><br>
+<div><span class='chip bad-chip'>CVE-2017-5638</span> <a href='https://nvd.nist.gov/vuln/detail/CVE-2017-5638' target='_blank' rel='noopener'>NVD</a> <span class='sub'>192.0.2.12</span></div>
+<div><span class='chip bad-chip'>CVE-2019-0708</span> <a href='https://nvd.nist.gov/vuln/detail/CVE-2019-0708' target='_blank' rel='noopener'>NVD</a> <span class='sub'>192.0.2.12</span></div>
+<div><span class='chip bad-chip'>CVE-2021-44228</span> <a href='https://nvd.nist.gov/vuln/detail/CVE-2021-44228' target='_blank' rel='noopener'>NVD</a> <span class='sub'>192.0.2.11</span></div>
+<br><b>Postura (SPF/DMARC):</b><table><thead><tr><th>Achado</th><th>Controle</th><th>Severidade</th></tr></thead><tbody>
+<tr><td>DMARC ausente em aurora.example</td><td>DMARC</td><td class='sev-high'>high</td></tr>
+<tr><td>SPF presente em aurora.example</td><td>SPF</td><td class='sev-low'>low</td></tr>
+</tbody></table>
+</div>
+<h2>Correlação de ativos (clusters)</h2><div class='card'><div class='sub'>Hosts que compartilham pista — provável mesmo dono/infra (pivô estilo FOFA/Censys sobre o grafo).</div>
+<details><summary>Co-hospedagem (mesmo IP): <code>192.0.2.10</code> <span class='sub'>(3 hosts)</span></summary><div>aurora.example, blog.aurora.example, www.aurora.example</div></details>
+<details><summary>Mesmo favicon: <code>vfav:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6</code> <span class='sub'>(3 hosts)</span></summary><div>aurora.example, blog.aurora.example, www.aurora.example</div></details>
+</div>
 <h2>Por tecnologia</h2><div class='card'><table><thead><tr><th>Tecnologia</th><th>Hosts</th></tr></thead><tbody>
 <tr><td><b>Nginx</b></td><td>5 — api.aurora.example, gitlab.aurora.example, hml.aurora.example, aurora.example, www.aurora.example</td></tr>
 <tr><td><b>WordPress</b></td><td>3 — aurora.example, www.aurora.example, blog.aurora.example</td></tr>
 <tr><td><b>PHP</b></td><td>2 — admin.aurora.example, aurora.example</td></tr>
-<tr><td><b>Express</b></td><td>1 — api.aurora.example</td></tr>
 <tr><td><b>Apache</b></td><td>1 — admin.aurora.example</td></tr>
+<tr><td><b>Express</b></td><td>1 — api.aurora.example</td></tr>
 <tr><td><b>Laravel</b></td><td>1 — hml.aurora.example</td></tr>
 <tr><td><b>WooCommerce</b></td><td>1 — blog.aurora.example</td></tr>
 <tr><td><b>AWS CloudFront</b></td><td>1 — cdn.aurora.example</td></tr>
@@ -486,11 +569,34 @@ Sem execuções registradas (workspace legado ou demonstração original).
 <details><summary>url: https://api.aurora.example/v1/health <span class='sub'>(3 pivôs)</span></summary><div class='pivots'><a href='https://www.virustotal.com/gui/search/https%3A%2F%2Fapi.aurora.example%2Fv1%2Fhealth' target='_blank' rel='noopener'>VirusTotal</a> <a href='https://web.archive.org/web/*/https%3A%2F%2Fapi.aurora.example%2Fv1%2Fhealth' target='_blank' rel='noopener'>Wayback</a> <a href='https://urlscan.io/search/#https%3A%2F%2Fapi.aurora.example%2Fv1%2Fhealth' target='_blank' rel='noopener'>URLScan</a></div></details>
 <details><summary>favicon: vfav:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6 <span class='sub'>(1 pivôs)</span></summary><div class='pivots'><a href='https://en.fofa.info/ (buscar por icon_hash: vfav%3Aa1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6)' target='_blank' rel='noopener'>FOFA favicon</a></div></details>
 </div>
+<h2>Dorks de busca (Google/Bing/GitHub)</h2><div class='card'>
+<details><summary><code>aurora.example</code> <span class='sub'>(19 dorks)</span></summary><div class='pivots'>
+<a href='https://www.google.com/search?q=site%3Aaurora.example%20ext%3Aenv%20OR%20ext%3Abak%20OR%20ext%3Asql%20OR%20ext%3Alog' target='_blank' rel='noopener'>[Google] Arquivos sensíveis</a>
+<a href='https://www.bing.com/search?q=site%3Aaurora.example%20ext%3Aenv%20OR%20ext%3Abak%20OR%20ext%3Asql%20OR%20ext%3Alog' target='_blank' rel='noopener'>[Bing] Arquivos sensíveis</a>
+<a href='https://www.google.com/search?q=site%3Aaurora.example%20ext%3Apdf%20OR%20ext%3Axls%20OR%20ext%3Adoc%20OR%20ext%3Acsv' target='_blank' rel='noopener'>[Google] Documentos expostos</a>
+<a href='https://www.bing.com/search?q=site%3Aaurora.example%20ext%3Apdf%20OR%20ext%3Axls%20OR%20ext%3Adoc%20OR%20ext%3Acsv' target='_blank' rel='noopener'>[Bing] Documentos expostos</a>
+<a href='https://www.google.com/search?q=site%3Aaurora.example%20inurl%3Alogin%20OR%20inurl%3Aadmin%20OR%20inurl%3Asignin' target='_blank' rel='noopener'>[Google] Painéis de login</a>
+<a href='https://www.bing.com/search?q=site%3Aaurora.example%20inurl%3Alogin%20OR%20inurl%3Aadmin%20OR%20inurl%3Asignin' target='_blank' rel='noopener'>[Bing] Painéis de login</a>
+<a href='https://www.google.com/search?q=site%3Aaurora.example%20intitle%3A%22index%20of%22' target='_blank' rel='noopener'>[Google] Diretórios abertos</a>
+<a href='https://www.bing.com/search?q=site%3Aaurora.example%20intitle%3A%22index%20of%22' target='_blank' rel='noopener'>[Bing] Diretórios abertos</a>
+<a href='https://www.google.com/search?q=site%3Aaurora.example%20inurl%3Aconfig%20OR%20inurl%3Abackup%20OR%20inurl%3A.git' target='_blank' rel='noopener'>[Google] Config/backup</a>
+<a href='https://www.bing.com/search?q=site%3Aaurora.example%20inurl%3Aconfig%20OR%20inurl%3Abackup%20OR%20inurl%3A.git' target='_blank' rel='noopener'>[Bing] Config/backup</a>
+<a href='https://www.google.com/search?q=site%3A%2A.aurora.example%20-www' target='_blank' rel='noopener'>[Google] Subdomínios</a>
+<a href='https://www.bing.com/search?q=site%3A%2A.aurora.example%20-www' target='_blank' rel='noopener'>[Bing] Subdomínios</a>
+<a href='https://www.google.com/search?q=site%3Aaurora.example%20%22sql%20syntax%20near%22%20OR%20%22stack%20trace%22%20OR%20%22fatal%20error%22' target='_blank' rel='noopener'>[Google] Erros/stack traces</a>
+<a href='https://www.bing.com/search?q=site%3Aaurora.example%20%22sql%20syntax%20near%22%20OR%20%22stack%20trace%22%20OR%20%22fatal%20error%22' target='_blank' rel='noopener'>[Bing] Erros/stack traces</a>
+<a href='https://www.google.com/search?q=site%3Aaurora.example%20intext%3Apassword%20OR%20intext%3Asenha' target='_blank' rel='noopener'>[Google] Credenciais em texto</a>
+<a href='https://www.bing.com/search?q=site%3Aaurora.example%20intext%3Apassword%20OR%20intext%3Asenha' target='_blank' rel='noopener'>[Bing] Credenciais em texto</a>
+<a href='https://github.com/search?type=code&amp;q=%22aurora.example%22' target='_blank' rel='noopener'>[GitHub] Código mencionando o domínio</a>
+<a href='https://github.com/search?type=code&amp;q=%22aurora.example%22%20password%20OR%20secret%20OR%20api_key%20OR%20token' target='_blank' rel='noopener'>[GitHub] Segredos + domínio</a>
+<a href='https://github.com/search?type=code&amp;q=%22aurora.example%22%20filename%3A.env%20OR%20filename%3Aconfig' target='_blank' rel='noopener'>[GitHub] Config + domínio</a>
+</div></details>
+</div>
 <h2>Outros ativos</h2><div class='card'>
 <b>E-mails:</b> <span class='chip'>noc@aurora.example</span> <span class='chip'>ti@aurora.example</span><br>
 <b>Netblocks:</b> <span class='chip'>192.0.2.0/24</span>
 </div>
-<footer>VÉRTICE v1.1.0 · família DEIVOSINT · Attack Surface Mapping &amp; Intelligence Gathering<br>Coleta passiva por padrão. Use apenas sobre ativos que você está autorizado a investigar.</footer>
+<footer>VÉRTICE v2.0.0 · família DEIVOSINT · Attack Surface Mapping &amp; Intelligence Gathering<br>Coleta passiva por padrão. Use apenas sobre ativos que você está autorizado a investigar.</footer>
 <script>
 function vfilter(id,inp){var q=inp.value.toLowerCase();
 var rows=document.querySelectorAll('#'+id+' tbody tr');

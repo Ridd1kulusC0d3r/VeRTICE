@@ -11,7 +11,8 @@ from __future__ import annotations
 
 from .core.workspace import Workspace
 from .core.entities import (make, T_DOMAIN, T_HOST, T_IP, T_TECH, T_SERVICE,
-                            T_EMAIL, T_NETBLOCK, T_ORG, T_URL, T_FAVICON)
+                            T_EMAIL, T_NETBLOCK, T_ORG, T_URL, T_FAVICON,
+                            T_PORT, T_VULN, T_FINDING)
 
 # Ground truth sintético: (host, [ips], [techs], [services], [sources])
 _HOSTS = [
@@ -114,6 +115,50 @@ def build_demo(path: str) -> Workspace:
     g.add_entity(fav)
     g.link(root, fav, "has-favicon", source="fingerprint")
     ws.evidence.record("fingerprint", "entity", fav.key, {"bytes": 1150})
+    # favicon compartilhado por dois hosts (gera cluster na correlação)
+    for h in ("www.aurora.example", "blog.aurora.example"):
+        he = g.get(h, T_HOST)
+        if he:
+            g.link(he, fav, "has-favicon", source="fingerprint")
+
+    # --- v2: portas, CVEs e postura (sintéticos, via InternetDB/emailsec) --- #
+    _PORTS_VULNS = {
+        "192.0.2.11": ([443, 22], ["CVE-2021-44228"]),          # api
+        "192.0.2.12": ([8080, 3306], ["CVE-2017-5638", "CVE-2019-0708"]),  # admin
+        "198.51.100.5": ([443], []),                             # vpn
+    }
+    for ip, (ports, vulns) in _PORTS_VULNS.items():
+        ip_ent = g.get(ip, T_IP)
+        if not ip_ent:
+            continue
+        for port in ports:
+            pe = make(f"{ip}:{port}", T_PORT, source="internetdb", port=port)
+            g.add_entity(pe)
+            g.link(ip_ent, pe, "exposes-port", source="internetdb")
+            ws.evidence.record("internetdb", "entity", pe.key, {"from": ip})
+        for cve in vulns:
+            ve = make(cve, T_VULN, source="internetdb", cve=cve)
+            g.add_entity(ve)
+            g.link(ip_ent, ve, "affected-by", source="internetdb")
+            ws.evidence.record("internetdb", "entity", ve.key, {"from": ip})
+
+    # postura de e-mail (emailsec): DMARC ausente = severidade alta
+    for finding, control, sev in [
+        ("DMARC ausente em aurora.example", "DMARC", "high"),
+        ("SPF presente em aurora.example", "SPF", "low"),
+    ]:
+        fe = make(finding, T_FINDING, source="emailsec",
+                  control=control, severity=sev)
+        g.add_entity(fe)
+        g.link(root, fe, "posture", source="emailsec")
+        ws.evidence.record("emailsec", "entity", fe.key, {"severity": sev})
+
+    # dorks (offline) anexados ao domínio — para o dossiê exibir o menu
+    from .collectors.dorks import DorksCollector
+    for fnd in DorksCollector().collect(root):
+        for k, v in fnd.attrs.items():
+            root.attrs[k] = v
 
     ws.save()
+    ws.save_snapshot(label="demo-base")
     return ws

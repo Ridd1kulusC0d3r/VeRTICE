@@ -12,7 +12,12 @@ from __future__ import annotations
 import ipaddress
 import re
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from typing import Optional
+
+
+def _utc() -> str:
+    return datetime.now(timezone.utc).isoformat()
 
 # --------------------------------------------------------------------------- #
 # Tipos de entidade (vocabulário fechado — herdado de Maltego/Amass)
@@ -32,10 +37,20 @@ T_ORG = "organization"
 T_PERSON = "person"
 T_HASH = "hash"
 T_CVE = "cve"
+# --- tipos novos na v2 ----------------------------------------------------- #
+T_PORT = "port"            # porta aberta (InternetDB/Shodan)
+T_CPE = "cpe"              # produto/versão (CPE) detectado
+T_VULN = "vulnerability"   # vulnerabilidade associada a um host/serviço
+T_ENDPOINT = "endpoint"    # endpoint/rota interno do host (FAROL/Photon)
+T_PARAM = "parameter"      # parâmetro de query/campo observado (FAROL)
+T_FORM = "form"            # formulário observado (FAROL)
+T_SECRET = "secret"        # possível segredo/chave exposta (FAROL) — rótulo, nunca o valor
+T_FINDING = "finding"      # achado de postura (ex.: SPF ausente)
 
 ALL_TYPES = (
     T_DOMAIN, T_HOST, T_IP, T_ASN, T_NETBLOCK, T_EMAIL, T_URL, T_CERT,
     T_FAVICON, T_TECH, T_SERVICE, T_ORG, T_PERSON, T_HASH, T_CVE,
+    T_PORT, T_CPE, T_VULN, T_ENDPOINT, T_PARAM, T_FORM, T_SECRET, T_FINDING,
 )
 
 # --------------------------------------------------------------------------- #
@@ -152,18 +167,46 @@ class Entity:
     `key` é o identificador único no grafo (tipo + valor normalizado).
     `sources` preserva a proveniência (qual collector afirmou isto) — resolve
     a lacuna do Sublist3r de não saber a origem de cada achado.
+
+    v2: `first_seen`/`last_seen` (temporalidade, para diff de superfície) e
+    `confidence` 0..1 (derivada da corroboração entre fontes — ver intel).
+    Campos novos têm default, então workspaces v1 carregam sem migração.
     """
     value: str
     etype: str
     attrs: dict = field(default_factory=dict)
     sources: set = field(default_factory=set)
+    first_seen: Optional[str] = None
+    last_seen: Optional[str] = None
+    confidence: float = 0.0
 
     def __post_init__(self):
         self.value = normalize(self.value, self.etype)
+        now = _utc()
+        if self.first_seen is None:
+            self.first_seen = now
+        if self.last_seen is None:
+            self.last_seen = now
 
     @property
     def key(self) -> str:
         return f"{self.etype}:{self.value}"
+
+    def touch(self):
+        """Marca que a entidade foi reafirmada agora (atualiza last_seen)."""
+        self.last_seen = _utc()
+
+    def recompute_confidence(self):
+        """Confiança cresce com a corroboração entre fontes distintas.
+
+        1 fonte → 0.50; 2 → 0.70; 3 → 0.82; satura perto de 1. 'seed' é
+        verdade declarada pelo analista: confiança 1.0.
+        """
+        if "seed" in self.sources:
+            self.confidence = 1.0
+            return
+        n = len(self.sources)
+        self.confidence = round(1.0 - 0.5 ** max(n, 0), 3) if n else 0.0
 
     def to_dict(self) -> dict:
         return {
@@ -171,6 +214,9 @@ class Entity:
             "etype": self.etype,
             "attrs": self.attrs,
             "sources": sorted(self.sources),
+            "first_seen": self.first_seen,
+            "last_seen": self.last_seen,
+            "confidence": self.confidence,
             "key": self.key,
         }
 
@@ -184,4 +230,5 @@ def make(value: str, etype: Optional[str] = None, source: Optional[str] = None,
     e = Entity(value=value, etype=etype, attrs=dict(attrs))
     if source:
         e.sources.add(source)
+    e.recompute_confidence()
     return e

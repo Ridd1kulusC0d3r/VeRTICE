@@ -9,6 +9,6 @@ Módulos:
   - report      : dossiê HTML + grafo SVG + preparação de pentest
 """
 
-__version__ = "1.1.0"
+__version__ = "2.0.0"
 __author__ = "Deivison Lourenço (DEIVOSINT)"
 __all__ = ["__version__"]
